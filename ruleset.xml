@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<ruleset name="MO4">
+    <description>The MO4 Symfony PSR-2 coding standard.</description>
+    <!-- There should not be any code in the bundle Resources directory. -->
+    <exclude-pattern>*/Resources/*</exclude-pattern>
+
+    <!-- Include the whole Symfony PSR-2 standard -->
+    <rule ref="Symfony">
+        <exclude name="PEAR.Functions.FunctionCallSignature"/>
+    </rule>
+</ruleset>
+
