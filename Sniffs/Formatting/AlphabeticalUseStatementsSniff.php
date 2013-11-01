@@ -84,7 +84,7 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
 
         if ($this->_lastUseStatement !== '') {
             if (strcmp($this->_lastUseStatement, $currentUseStatement) > 0) {
-                $msg = 'USE statements mus be sorted alphabetically';
+                $msg = 'USE statements must be sorted alphabetically';
 
                 $phpcsFile->addError($msg, $stackPtr);
             }
