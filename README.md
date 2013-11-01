@@ -6,8 +6,8 @@ Provides a CodeSniffer ruleset
 
 Requires
 
-* PHP CodeSniffer
-* Symfony Coding Standard
+* [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+* [Symfony Coding Standard](https://github.com/xalopp/symfony-coding-standard)
 
 ## Installation
 
@@ -23,6 +23,7 @@ Requires
    phpcs `Standards` directory:
 
         cd /path/to/pear/PHP/CodeSniffer/Standards
+        git clone git://github.com/xalopp/symfony-coding-standard.git Symfony
         git clone git://github.com/Mayflower/mo4-coding-standard.git MO4
 
 4. Select the Symfony ruleset as your default coding standard:
