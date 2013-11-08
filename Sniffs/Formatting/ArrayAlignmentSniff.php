@@ -1,0 +1,175 @@
+<?php
+
+/**
+ * This file is part of the mo4-coding-standard (phpcs standard)
+ *
+ * PHP version 5
+ *
+ * @category PHP
+ * @package  PHP_CodeSniffer-MO4
+ * @author   Xaver Loppenstedt <xaver@loppenstedt.de>
+ * @license  http://spdx.org/licenses/MIT MIT License
+ * @version  GIT: master
+ * @link     https://github.com/Mayflower/mo4-coding-standard
+ */
+
+/**
+ * Array Alignment sniff.
+ *
+ * '=>' must be aligned in arrays, and the key and the '=>' must be in the same line
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer-MO4
+ * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
+ * @copyright 2013 Xaver Loppenstedt, some rights reserved.
+ * @license   http://spdx.org/licenses/MIT MIT License
+ * @link      https://github.com/Mayflower/mo4-coding-standard
+ */
+class MO4_Sniffs_Formatting_ArrayAlignmentSniff implements PHP_CodeSniffer_Sniff
+{
+    /**
+     * @var array
+     */
+    protected  $arrayTokens = array(T_ARRAY, T_OPEN_SHORT_ARRAY);
+
+    /**
+     * Registers the tokens that this sniff wants to listen for.
+     *
+     * @return array(int)
+     * @see    Tokens.php
+     */
+    public function register()
+    {
+        return $this->arrayTokens;
+    }
+
+    /**
+     * Processes this test, when one of its tokens is encountered.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param int                  $stackPtr  The position of the current token in
+     *                                        the stack passed in $tokens.
+     *
+     * @return void
+     */
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    {
+        $tokens  = $phpcsFile->getTokens();
+        $current = $tokens[$stackPtr];
+
+        if ($current['code'] === T_ARRAY) {
+            $start = $current['parenthesis_opener'];
+            $end   = $current['parenthesis_closer'];
+        } else {
+            $start = $current['bracket_opener'];
+            $end   = $current['bracket_closer'];
+        }
+
+        if ($tokens[$start]['line'] === $tokens[$end]['line']) {
+            return;
+        }
+
+        $assignments = array();
+        $keyEndColumn = -1;
+        $lastLine    = -1;
+
+        for ($i = $start + 1; $i < $end; $i++) {
+            $current  = $tokens[$i];
+            $previous = $tokens[$i - 1];
+
+            // skip nested arrays
+            if (in_array($current['code'], $this->arrayTokens)) {
+                if ($current['code'] === T_ARRAY) {
+                    $i = $current['parenthesis_closer'] + 1;
+                } else {
+                    $i = $current['bracket_closer'] + 1;
+                }
+                continue;
+            }
+            // skip closures in array
+            if ($current['code'] === T_CLOSURE) {
+                $i = $current['scope_closer'] + 1;
+                continue;
+            }
+
+            if ($current['code'] === T_DOUBLE_ARROW) {
+                $assignments[] = $i;
+                $column        = $previous['column'];
+                $line          = $current['line'];
+
+                if ($lastLine === $line) {
+                    $msg = 'only one "=>" assignments per line is allowed in a multi line array';
+                    $phpcsFile->addError($msg, $i);
+                }
+
+                $hasKeyInLine =  false;
+
+                $j = $i - 1;
+                while (($j >= 0) && ($tokens[$j]['line'] === $current['line'])) {
+                    if (!in_array($tokens[$j]['code'], PHP_CodeSniffer_Tokens::$emptyTokens)) {
+                        $hasKeyInLine = true;
+                    }
+                    $j--;
+                }
+
+                if ($hasKeyInLine === false) {
+                    $phpcsFile->addError(
+                        'in arrays, keys and "=>" must be on the same line',
+                        $i
+                    );
+                }
+
+                $keyEndColumn = ($column > $keyEndColumn) ? $column: $keyEndColumn;
+                $lastLine  = $line;
+            }
+        }
+
+        foreach ($assignments as $ptr) {
+            $current = $tokens[$ptr];
+            $column  = $current['column'];
+
+            if ($column !== ($keyEndColumn + 1)) {
+                $phpcsFile->addError('each "=>" assignments must be aligned', $ptr);
+            }
+        }
+
+    }
+
+    /**
+     * get start end end pointer of the array we're in
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned
+     * @param int                  $stackPtr  stack pointer
+     *
+     * @return array(int, int)
+     */
+    private function _getArrayStartAndEnd(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    {
+        $tokens  = $phpcsFile->getTokens();
+        $current = $tokens[$stackPtr];
+
+        $start = -1;
+        $end = -1;
+
+        if (isset($current['nested_parenthesis'])) {
+            foreach ($current['nested_parenthesis'] as $start => $end) {
+                $owner = $tokens[$start]['parenthesis_owner'];
+                if ($tokens[$owner]['type'] !== 'T_ARRAY') {
+                    $start = -1;
+                    $end   = -1;
+                }
+            }
+        } else {
+            $start = $stackPtr;
+            do {
+                // search for bracket_opener
+                $start = $phpcsFile->findPrevious(T_OPEN_SHORT_ARRAY, $start - 1);
+                if ($start) {
+                    $end   = $tokens[$start]['bracket_closer'];
+                }
+            } while ($start && ($stackPtr < $start) || ($stackPtr > $end));
+        }
+
+        return array($start, $end);
+    }
+}
