@@ -53,7 +53,6 @@ class MO4_Tests_Formatting_UseArrayShortTagUnitTest extends AbstractSniffUnitTes
         }
 
         return null;
-
     }
 
     /**
