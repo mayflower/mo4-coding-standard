@@ -11,5 +11,7 @@
         <exclude name="PSR2.Namespaces.UseDeclaration"/>
         <exclude name="Generic.Formatting.MultipleStatementAlignment"/>
     </rule>
+
+    <rule ref="Generic.Formatting.SpaceAfterCast"/>
 </ruleset>
 
