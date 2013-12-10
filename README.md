@@ -9,6 +9,21 @@ Requires
 * [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
 * [Symfony Coding Standard](https://github.com/xalopp/symfony-coding-standard)
 
+##MO4 Coding Standard
+
+The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://symfony.com/doc/current/contributing/code/standards.html) and adds following rules:
+
+* short tags "[...]" must be used instead of  "array(...)",
+* in associates arrays, the "=>" operators must be aligned,
+* in arrays, the key and '=>' operator must be on the same line.
+* each consecutive variable assignements must align on the assigment operator,
+* use statements must be sorted,
+* you should use the imported class name, whenever it was imported with a use statement,
+* variables in double quoted strings must be surrounded by { }, e.g. "{$VAR}" instead of "$VAR",
+* sprintf or "{$VAR1} {$VAR2}" must be used instead of the concat operator, concat opetor are only allowed to concat constant an multi line strings,
+* a white space is requried after each cast opetor, e.g. "(int) $value" instead of "(int)$value",
+
+
 ## Installation
 
 1. Install phpcs:
@@ -36,7 +51,7 @@ Requires
 
 ## Contributing
 
-If you do contribute code to these sniffs, please make sure it conforms to the PEAR coding standard and that the unit tests still pass.
+If you contribute code to these sniffs, please make sure it conforms to the PEAR coding standard and that the unit tests still pass.
 
 To check the coding standard, run from the Symfony-coding-standard source root:
 
@@ -45,7 +60,8 @@ To check the coding standard, run from the Symfony-coding-standard source root:
 The unit-tests are run from within the PHP_CodeSniffer directory
 
 * get the [CodeSniffer repository](https://github.com/squizlabs/PHP_CodeSniffer)
-* symlink, copy or clone this repository at CodeSniffer/Standard/Symfony
+* get the [Symfony Coding Standard](https://github.com/xalopp/symfony-coding-standard) and symlink, copy or clone it at CodeSniffer/Standards/Symfony
+* symlink, copy or clone this repository at CodeSniffer/Standards/MO4
 * from the CodeSniffer repository root run `phpunit --filter Symfony_ tests/AllTests.php`
 
 ## Credit
