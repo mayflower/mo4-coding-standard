@@ -22,10 +22,11 @@ class Foo extends DOMComment
      *
      * @param B $b b
      * @param D $d d
+     * @param D|int $f f
      *
      * @throws Exception
      */
-    public function foo(B $b, D $d)
+    public function foo(B $b, D $d, $f)
     {
         /** @var Exception $e */
         $e = new Exception('ups!');

@@ -65,12 +65,13 @@ class MO4_Tests_Formatting_UnnecessaryNamespaceUsageUnitTest extends AbstractSni
                 18 => 1,
                 23 => 1,
                 24 => 1,
-                26 => 1,
-                28 => 2,
-                30 => 1,
+                25 => 1,
+                27 => 1,
+                29 => 2,
                 31 => 1,
-                38 => 1,
-                42 => 1,
+                32 => 1,
+                39 => 1,
+                43 => 1,
             );
         }
 
