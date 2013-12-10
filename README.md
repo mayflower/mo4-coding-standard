@@ -45,7 +45,8 @@ To check the coding standard, run from the Symfony-coding-standard source root:
 The unit-tests are run from within the PHP_CodeSniffer directory
 
 * get the [CodeSniffer repository](https://github.com/squizlabs/PHP_CodeSniffer)
-* symlink, copy or clone this repository at CodeSniffer/Standard/Symfony
+* get the [Symfony Coding Standard](https://github.com/xalopp/symfony-coding-standard) and symlink, copy or clone it at CodeSniffer/Standards/Symfony
+* symlink, copy or clone this repository at CodeSniffer/Standards/MO4
 * from the CodeSniffer repository root run `phpunit --filter Symfony_ tests/AllTests.php`
 
 ## Credit
