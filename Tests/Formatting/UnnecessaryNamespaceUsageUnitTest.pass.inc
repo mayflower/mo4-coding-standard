@@ -42,6 +42,8 @@ class Foo extends DOMComment
      */
     public function bar()
     {
+        /** @var A\Be $g */
+        $g = new A\Be();
         return new D();
     }
 }

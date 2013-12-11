@@ -6,6 +6,7 @@
 namespace BarFail;
 
 use A\B;
+use A\Be;
 use \DOMDocument as D;
 use \Exception;
 use \DOMComment;
@@ -40,6 +41,8 @@ class Foo extends \DOMComment
      */
     public function bar()
     {
+        /** @var A\Be $g */
+        $g = new A\Be();
         throw new \BarFail\FooException();
     }
 }

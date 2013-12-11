@@ -22,6 +22,7 @@
  * @package   PHP_CodeSniffer-MO4
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
  * @author    Marco Jantke <marco.jantke@gmail.com>
+ * @author    Steffen Ritter <steffenritter1@gmail.com>
  * @copyright 2013 Xaver Loppenstedt, some rights reserved.
  * @license   http://spdx.org/licenses/MIT MIT License
  * @link      https://github.com/Mayflower/mo4-coding-standard
@@ -96,13 +97,20 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
                 $docLine = $tokens[$nsSep]['content'];
                 if (preg_match('/\s+@(param|return|throws|var)/', $docLine) ===  1) {
                     foreach ($useStatements as $className => $useName) {
-                        if (strstr($docLine, $className) !== false) {
-                            $msg = sprintf(
-                                $baseMsg,
-                                $className,
-                                $useStatements[$className]
-                            );
-                            $phpcsFile->addWarning($msg, $nsSep);
+                        $pos    = strpos($docLine, $className);
+                        $length = strlen($className);
+
+                        if ($pos !== false) {
+                            $endOfComment = substr($docLine, $pos + $length);
+
+                            if (1 === preg_match('/^(\s|\||\*).*/', $endOfComment)) {
+                                $msg = sprintf(
+                                    $baseMsg,
+                                    $className,
+                                    $useStatements[$className]
+                                );
+                                $phpcsFile->addWarning($msg, $nsSep);
+                            }
                         }
                     }
 

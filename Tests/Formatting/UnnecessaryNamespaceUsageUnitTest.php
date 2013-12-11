@@ -62,17 +62,19 @@ class MO4_Tests_Formatting_UnnecessaryNamespaceUsageUnitTest extends AbstractSni
             return array();
         case 'UnnecessaryNamespaceUsageUnitTest.fail.inc':
             return array(
-                16 => 1,
-                18 => 1,
-                23 => 1,
+                17 => 1,
+                19 => 1,
                 24 => 1,
-                25 => 2,
-                27 => 1,
-                29 => 2,
-                31 => 1,
+                25 => 1,
+                26 => 2,
+                28 => 1,
+                30 => 2,
                 32 => 1,
-                39 => 1,
-                43 => 1,
+                33 => 1,
+                40 => 1,
+                44 => 1,
+                45 => 1,
+                46 => 1,
             );
         }
 
