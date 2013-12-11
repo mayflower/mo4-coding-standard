@@ -23,6 +23,7 @@
  * @package   PHP_CodeSniffer-MO4
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
  * @author    Marco Jantke <marco.jantke@gmail.com>
+ * @author    Steffen Ritter <steffenritter1@gmail.com>
  * @copyright 2013 Xaver Loppenstedt, some rights reserved.
  * @license   http://spdx.org/licenses/MIT MIT License
  * @link      https://github.com/Mayflower/mo4-coding-standard
@@ -65,7 +66,7 @@ class MO4_Tests_Formatting_UnnecessaryNamespaceUsageUnitTest extends AbstractSni
                 18 => 1,
                 23 => 1,
                 24 => 1,
-                25 => 1,
+                25 => 2,
                 27 => 1,
                 29 => 2,
                 31 => 1,

@@ -22,7 +22,7 @@ class Foo extends DOMComment
      *
      * @param B $b b
      * @param D $d d
-     * @param D|int $f f
+     * @param D|int|B $f f
      *
      * @throws Exception
      */

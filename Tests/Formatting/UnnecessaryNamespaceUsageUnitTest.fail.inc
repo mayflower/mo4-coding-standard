@@ -22,7 +22,7 @@ class Foo extends \DOMComment
      *
      * @param A\B          $b b
      * @param \DOMDocument $d d
-     * @param \DOMDocument|int $f f
+     * @param \DOMDocument|int|A\B $f f
      *
      * @throws \Exception
      */
