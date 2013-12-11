@@ -63,6 +63,7 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
         $nsSep = $phpcsFile->findNext([T_NS_SEPARATOR, T_DOC_COMMENT], $stackPtr + 1);
 
         while ($nsSep !== false) {
+            $classRe = '[\w\x7f-\xff]';
             $classNameEnd = $phpcsFile->findNext(
                 [T_NS_SEPARATOR, T_STRING],
                 $nsSep,
@@ -75,39 +76,52 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
                     $nsSep -= 1;
                 }
                 $className = $phpcsFile->getTokensAsString($nsSep, $classNameEnd - $nsSep);
+                $fullClassName = $this->_getFullyQualifiedClassName($className);
 
-                if (array_key_exists($className, $useStatements)) {
+                if (array_key_exists($fullClassName, $useStatements)) {
                     $msg = sprintf(
                         $baseMsg,
                         $className,
-                        $useStatements[$className]
+                        $useStatements[$fullClassName]
                     );
                     $phpcsFile->addWarning($msg, $nsSep);
                 }
 
-                if (strpos($className, $nameSpace) === 0) {
+                // TODO test
+                if (strpos($fullClassName, $nameSpace) === 0) {
                     $msg = sprintf(
                         $baseMsg,
                         $className,
-                        substr($className, strlen($nameSpace) + 1)
+                        substr($fullClassName, strlen($nameSpace))
                     );
                     $phpcsFile->addWarning($msg, $nsSep);
                 }
             } else {
                 $docLine = $tokens[$nsSep]['content'];
                 if (preg_match('/\s+@(param|return|throws|var)/', $docLine) ===  1) {
-                    foreach ($useStatements as $className => $useName) {
+                    foreach ($useStatements as $fullClassName => $useName) {
+                        $className = substr($fullClassName, 1);
+
                         $pos    = strpos($docLine, $className);
                         $length = strlen($className);
 
                         if ($pos !== false) {
+                            if (1 === preg_match("/$classRe/", $docLine[$pos - 1])) {
+                                continue;
+                            }
+
                             $endOfComment = substr($docLine, $pos + $length);
 
                             if (1 === preg_match('/^(\s|\||\*).*/', $endOfComment)) {
+                                // ignore isomorph imports, like "use Exception;"
+                                if (($className === $useName) && ($docLine[$pos - 1] != '\\')) {
+                                    continue;
+                                }
+
                                 $msg = sprintf(
                                     $baseMsg,
                                     $className,
-                                    $useStatements[$className]
+                                    $useStatements[$fullClassName]
                                 );
                                 $phpcsFile->addWarning($msg, $nsSep);
                             }
@@ -175,8 +189,8 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
 
             $className = $phpcsFile->getTokensAsString($classNameStart, $classNameEnd - $classNameStart);
 
+            $className = $this->_getFullyQualifiedClassName($className);
             $useStatements[$className] = $tokens[$aliasNamePtr]['content'];
-
             $i = $useEnd + 1;
             $useTokenPtr = $phpcsFile->findNext(T_USE, $i, $end);
         }
@@ -212,6 +226,24 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
         $name = $phpcsFile->getTokensAsString($namespaceStart, $namespaceEnd - $namespaceStart);
 
         return "\\{$name}\\";
+    }
+
+    /**
+     * return the fully qualified class name, e.g. '\Foo\Bar\Faz'
+     *
+     * @param string $className class name
+     *
+     * @return string
+     */
+    private function _getFullyQualifiedClassName($className)
+    {
+        if ($className[0] !== '\\') {
+            $className = "\\{$className}";
+
+            return $className;
+        }
+
+        return $className;
     }
 }
  

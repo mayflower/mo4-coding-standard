@@ -7,8 +7,9 @@ namespace BarPass;
 
 use A\B;
 use \DOMDocument as D;
-use \Exception;
+use Exception;
 use \DOMComment;
+use Closure as MyClosure;
 
 /**
  * Class Foo
@@ -45,5 +46,16 @@ class Foo extends DOMComment
         /** @var A\Be $g */
         $g = new A\Be();
         return new D();
+    }
+
+    /**
+     * foo
+     *
+     * @param MyClosure $c
+     *
+     * @return void
+     */
+    public function myClosureFoo(MyClosure $c)
+    {
     }
 }

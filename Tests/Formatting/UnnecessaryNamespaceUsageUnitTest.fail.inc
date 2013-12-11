@@ -8,9 +8,9 @@ namespace BarFail;
 use A\B;
 use A\Be;
 use \DOMDocument as D;
-use \Exception;
+use Exception;
 use \DOMComment;
-
+use Closure as MyClosure;
 /**
  * Class Foo
  */
@@ -44,5 +44,16 @@ class Foo extends \DOMComment
         /** @var A\Be $g */
         $g = new A\Be();
         throw new \BarFail\FooException();
+    }
+
+    /**
+     * foo
+     *
+     * @param \Closure $c
+     *
+     * @return void
+     */
+    public function myClosureFoo(\Closure $c)
+    {
     }
 }
