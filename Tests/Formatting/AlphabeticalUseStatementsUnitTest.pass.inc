@@ -14,5 +14,8 @@ use X;
 
 class Foo ()
 {
-
+    $bar = 'foo';
+    $foo = function () use ($bar) {
+        //do sth.
+    };
 }
