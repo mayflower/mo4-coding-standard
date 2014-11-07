@@ -11,7 +11,6 @@ use A\B\A as AA;
 use Z;
 use X;
 
-class Foo ()
-{
+class Foo {
 
 }

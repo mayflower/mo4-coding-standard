@@ -21,7 +21,9 @@
  * @category  PHP
  * @package   PHP_CodeSniffer-MO4
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
- * @copyright 2013 Xaver Loppenstedt, some rights reserved.
+ * @author    Steffen Ritter <steffenritter1@gmail.com>
+ * @author    Christian Albrecht <christian.albrecht@mayflower.de>
+ * @copyright 2013-2014 Xaver Loppenstedt, some rights reserved.
  * @license   http://spdx.org/licenses/MIT MIT License
  * @link      https://github.com/Mayflower/mo4-coding-standard
  */
@@ -70,6 +72,26 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
 
         $tokens = $phpcsFile->getTokens();
         $line   = $tokens[$stackPtr]['line'];
+
+        // ignore function () use () {...}
+        $prev = $phpcsFile->findPrevious(
+            [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT],
+            $stackPtr - 1,
+            null,
+            true,
+            null,
+            true
+        );
+
+        if (false !== $prev) {
+            $prevToken = $tokens[$prev];
+
+            if ($prevToken['code'] === T_CLOSE_PARENTHESIS) {
+                return;
+            }
+        }
+
+
         $start  = $phpcsFile->findNext(T_STRING, $stackPtr + 1);
         $end    = $phpcsFile->findNext([T_AS, T_SEMICOLON, T_COMMA], $stackPtr + 1);
 
