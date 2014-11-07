@@ -91,9 +91,12 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
             }
         }
 
+        $start = $phpcsFile->findNext(T_STRING, $stackPtr + 1);
+        if ($start === false) {
+            return;
+        }
 
-        $start  = $phpcsFile->findNext(T_STRING, $stackPtr + 1);
-        $end    = $phpcsFile->findNext([T_AS, T_SEMICOLON, T_COMMA], $stackPtr + 1);
+        $end = $phpcsFile->findNext([T_AS, T_SEMICOLON, T_COMMA], $stackPtr + 1);
 
         $currentUseStatement = $phpcsFile->getTokensAsString($start, $end - $start);
 

@@ -22,4 +22,7 @@ class Foo {
     $foo2 = function () /*comment */ use ($bar) {
         //do sth.
     };
+
+    // test run away tokens
+    use () {};
 }
