@@ -8,7 +8,7 @@ class X
     public $publicProperty = 1;
 
     /**
-     * @var array
+     * @varx array
      *
      * array of foo => bar arrays
      */
@@ -22,4 +22,7 @@ class X
      * @var array
      */
     private $_tmi;
+
+    /** stuff */
+    private $_moar;
 }

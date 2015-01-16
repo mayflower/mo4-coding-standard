@@ -73,6 +73,7 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
             T_COMMENT,
             T_DOC_COMMENT,
             T_CLASS,
+            T_CONST,
             T_FUNCTION,
             T_VARIABLE,
             T_OPEN_TAG,
@@ -83,7 +84,6 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
         if ($commentEnd === false) {
             return;
         }
-
 
         $conditions = $tokens[$commentEnd]['conditions'];
         $lastCondition = array_pop($conditions);
@@ -100,42 +100,33 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
                 true
             ) + 1;
 
-            $content = $tokens[$commentEnd]['content'];
             if ($commentStart === $commentEnd) {
                 $phpcsFile->addError(
                     'property doc comment must be multi line',
                     $commentEnd,
                     'NotMultiLineDocBlock'
                 );
-
-                return;
             }
 
-            $secondLast = $commentEnd - 1;
-            $content    = $tokens[$secondLast]['content'];
-            if (strstr($content, ' @var ') === false) {
-                $phpcsFile->addError(
-                    'property doc comment must have one @var on last line',
-                    $secondLast,
-                    'NoVarDefined'
-                );
-
-                return;
-            }
-
-            $length         = $secondLast - $commentStart - 1;
+            $length         = $commentEnd - $commentStart + 1;
             $tokensAsString = $phpcsFile->getTokensAsString(
                 $commentStart,
                 $length
             );
-            if (strstr($tokensAsString, '@var') !== false) {
+
+            $varCount = count(preg_split('/\s+@var\s+/', $tokensAsString)) - 1;
+            if ($varCount === 0) {
                 $phpcsFile->addError(
-                    'property doc comment must have only one @var on last line',
+                    'property doc comment must have one @var annotation',
                     $commentStart,
                     'NoVarDefined'
                 );
-
-                return;
+            } else if ($varCount > 1) {
+                $phpcsFile->addError(
+                    'property doc comment must no multiple @var annotations',
+                    $commentStart,
+                    'MultipleVarDefined'
+                );
             }
         }
     }

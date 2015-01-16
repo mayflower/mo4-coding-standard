@@ -46,8 +46,9 @@ class MO4_Tests_Commenting_PropertyCommentUnitTest extends AbstractSniffUnitTest
         case 'PropertyCommentUnitTest.fail.inc':
             return array(
                 7  => 1,
-                13  => 1,
-                17  => 1,
+                10 => 1,
+                17 => 1,
+                26 => 2,
             );
         }
 

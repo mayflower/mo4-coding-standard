@@ -20,6 +20,14 @@ class X
     private $_privateProperty = [['foo' => 'bar']];
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="SECT_ID", type="integer", nullable=false)
+     * @ORM\Id
+     */
+    protected $id;
+
+    /**
      * foo
      */
     public function foo()
@@ -31,4 +39,11 @@ class X
     }
 
     private $_endThing;
+
+    /**
+     * stuff
+     */
+    const STUFF = 1;
+
+    public $stuff = [self::STUFF];
 }
