@@ -28,7 +28,7 @@ function foo($p1 = 1, $p22 = 2)
     $blafaseln = 1;
     $bb      = 2;
     $ccc        = 3;
-    $a /* a */ = 1;
+    $a         = 1;
     $x[]       = 4;
 
     $a        = 4;

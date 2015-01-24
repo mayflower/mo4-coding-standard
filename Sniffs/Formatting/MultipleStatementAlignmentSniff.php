@@ -35,26 +35,4 @@ class MO4_Sniffs_Formatting_MultipleStatementAlignmentSniff extends
      * @var bool
      */
     public $error = true;
-
-    /**
-     * Processes this test, when one of its tokens is encountered.
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in
-     *                                        the stack passed in $tokens.
-     *
-     * @return void
-     */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
-    {
-        $tokens  = $phpcsFile->getTokens();
-        $current = $tokens[$stackPtr];
-
-        if ($current['type'] === 'T_DOUBLE_ARROW') {
-            // we use our own array alignment sniff, because the Generic Sniff
-            // doesn't consider alignment of T_DOUBLE_ARROW
-            return;
-        }
-        parent::process($phpcsFile, $stackPtr);
-    }
 }
