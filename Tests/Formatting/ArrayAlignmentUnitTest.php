@@ -75,6 +75,8 @@ class MO4_Tests_Formatting_ArrayAlignmentUnitTest extends AbstractSniffUnitTest
                 132 => 1,
                 134 => 1,
                 136 => 2,
+                145 => 1,
+                151 => 2,
             );
         }
 
