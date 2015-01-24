@@ -67,6 +67,14 @@ class MO4_Sniffs_Formatting_ArrayAlignmentSniff implements PHP_CodeSniffer_Sniff
 
         if ($tokens[$start]['line'] === $tokens[$end]['line']) {
             return;
+        } if ($tokens[$end - 2]['line'] === $tokens[$end]['line']) {
+            $phpcsFile->addError(
+                sprintf(
+                    'closing %s of array must in own line',
+                    ($current['code'] === T_ARRAY) ? 'parenthesis' : 'bracket'
+                ),
+                $end
+            );
         }
 
         $assignments = array();
