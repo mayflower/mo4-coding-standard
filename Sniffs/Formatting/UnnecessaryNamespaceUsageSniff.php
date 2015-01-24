@@ -54,16 +54,21 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
+        $docCommentTags = array('@param', '@return', '@throws', '@var');
+        $classRe        = '[\w\x7f-\xff]';
+
         $baseMsg = 'Shorthand possible. Replace "%s" with "%s"';
 
         $tokens = $phpcsFile->getTokens();
         $useStatements = $this->getUseStatements($phpcsFile, 0, $stackPtr - 1);
         $nameSpace = $this->getNameSpace($phpcsFile, 0, $stackPtr - 1);
 
-        $nsSep = $phpcsFile->findNext([T_NS_SEPARATOR, T_DOC_COMMENT], $stackPtr + 1);
+        $nsSep = $phpcsFile->findNext(
+            [T_NS_SEPARATOR, T_DOC_COMMENT_OPEN_TAG],
+            $stackPtr + 1
+        );
 
         while ($nsSep !== false) {
-            $classRe = '[\w\x7f-\xff]';
             $classNameEnd = $phpcsFile->findNext(
                 [T_NS_SEPARATOR, T_STRING],
                 $nsSep,
@@ -97,8 +102,16 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
                     $phpcsFile->addWarning($msg, $nsSep);
                 }
             } else {
-                $docLine = $tokens[$nsSep]['content'];
-                if (preg_match('/\s+@(param|return|throws|var)/', $docLine) ===  1) {
+                foreach ($tokens[$nsSep]['comment_tags'] as $tag) {
+                    if (!in_array($tokens[$tag]['content'], $docCommentTags)) {
+                        continue;
+                    }
+
+                    $lineEnd = $phpcsFile->findNext(
+                        [T_DOC_COMMENT_CLOSE_TAG, T_DOC_COMMENT_STAR],
+                        $tag + 1
+                    );
+                    $docLine = $phpcsFile->getTokensAsString($tag, $lineEnd - $tag);
                     foreach ($useStatements as $fullClassName => $useName) {
                         $className = substr($fullClassName, 1);
 
@@ -114,7 +127,7 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
 
                             if (1 === preg_match('/^(\s|\||\*).*/', $endOfComment)) {
                                 // ignore isomorph imports, like "use Exception;"
-                                if (($className === $useName) && ($docLine[$pos - 1] != '\\')) {
+                                if (($className === $useName) && ($docLine[$pos - 1] !== '\\')) {
                                     continue;
                                 }
 
@@ -123,7 +136,7 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
                                     $className,
                                     $useStatements[$fullClassName]
                                 );
-                                $phpcsFile->addWarning($msg, $nsSep);
+                                $phpcsFile->addWarning($msg, $tag);
                             }
                         }
                     }
@@ -136,13 +149,12 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
                             $matches[0],
                             $matches[1]
                         );
-                        $phpcsFile->addWarning($msg, $nsSep);
+                        $phpcsFile->addWarning($msg, $tag);
                     }
                 }
-
             }
 
-            $nsSep = $phpcsFile->findNext([T_NS_SEPARATOR, T_DOC_COMMENT], $classNameEnd + 1);
+            $nsSep = $phpcsFile->findNext([T_NS_SEPARATOR, T_DOC_COMMENT_OPEN_TAG], $classNameEnd + 1);
         }
     }
 
