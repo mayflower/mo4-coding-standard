@@ -49,6 +49,8 @@ class MO4_Tests_Commenting_PropertyCommentUnitTest extends AbstractSniffUnitTest
                 10 => 1,
                 17 => 1,
                 26 => 2,
+                29 => 1,
+                34 => 1,
             );
         }
 

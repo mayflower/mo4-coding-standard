@@ -25,4 +25,12 @@ class X
 
     /** stuff */
     private $_moar;
+
+    /*
+     * no doc block
+     */
+    private $_priv;
+
+    // no doc block
+    private $_otherPriv;
 }

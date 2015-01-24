@@ -71,7 +71,7 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
     ) {
         $find   = array(
             T_COMMENT,
-            T_DOC_COMMENT,
+            T_DOC_COMMENT_CLOSE_TAG,
             T_CLASS,
             T_CONST,
             T_FUNCTION,
@@ -92,15 +92,10 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
         }
 
         $code = $tokens[$commentEnd]['code'];
-        if ($code === T_DOC_COMMENT) {
-            $commentStart = $phpcsFile->findPrevious(
-                T_DOC_COMMENT,
-                $commentEnd - 1,
-                null,
-                true
-            ) + 1;
+        if ($code === T_DOC_COMMENT_CLOSE_TAG) {
+            $commentStart = $tokens[$commentEnd]['comment_opener'];
 
-            if ($commentStart === $commentEnd) {
+            if ($tokens[$commentStart]['line'] === $tokens[$commentEnd]['line']) {
                 $phpcsFile->addError(
                     'property doc comment must be multi line',
                     $commentEnd,
@@ -128,6 +123,13 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
                     'MultipleVarDefined'
                 );
             }
+        } elseif ($code === T_COMMENT) {
+            $commentStart = $phpcsFile->findPrevious([T_COMMENT], $commentEnd, null, true);
+            $phpcsFile->addError(
+                'property doc comment must begin with /**',
+                $commentStart + 1,
+                'NotADocBlock'
+            );
         }
     }
 }
