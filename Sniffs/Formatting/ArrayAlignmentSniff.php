@@ -134,42 +134,4 @@ class MO4_Sniffs_Formatting_ArrayAlignmentSniff implements PHP_CodeSniffer_Sniff
         }
 
     }
-
-    /**
-     * get start end end pointer of the array we're in
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned
-     * @param int                  $stackPtr  stack pointer
-     *
-     * @return array(int, int)
-     */
-    private function _getArrayStartAndEnd(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
-    {
-        $tokens  = $phpcsFile->getTokens();
-        $current = $tokens[$stackPtr];
-
-        $start = -1;
-        $end = -1;
-
-        if (isset($current['nested_parenthesis'])) {
-            foreach ($current['nested_parenthesis'] as $start => $end) {
-                $owner = $tokens[$start]['parenthesis_owner'];
-                if ($tokens[$owner]['type'] !== 'T_ARRAY') {
-                    $start = -1;
-                    $end   = -1;
-                }
-            }
-        } else {
-            $start = $stackPtr;
-            do {
-                // search for bracket_opener
-                $start = $phpcsFile->findPrevious(T_OPEN_SHORT_ARRAY, $start - 1);
-                if ($start) {
-                    $end   = $tokens[$start]['bracket_closer'];
-                }
-            } while ($start && ($stackPtr < $start) || ($stackPtr > $end));
-        }
-
-        return array($start, $end);
-    }
 }
