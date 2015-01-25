@@ -9,9 +9,14 @@
         <!-- exclude sniffs that are extended by this standard -->
         <exclude name="PEAR.Functions.FunctionCallSignature"/>
         <exclude name="PSR2.Namespaces.UseDeclaration"/>
-        <exclude name="Generic.Formatting.MultipleStatementAlignment"/>
+        <!-- <exclude name="Generic.Formatting.MultipleStatementAlignment"/> -->
     </rule>
 
     <rule ref="Generic.Formatting.SpaceAfterCast"/>
+    <rule ref="Generic.Formatting.MultipleStatementAlignment">
+        <properties>
+            <property name="error" value="true"/>
+        </properties>
+    </rule>
 </ruleset>
 
