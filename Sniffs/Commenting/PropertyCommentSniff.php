@@ -95,13 +95,7 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
         if ($code === T_DOC_COMMENT_CLOSE_TAG) {
             $commentStart = $tokens[$commentEnd]['comment_opener'];
 
-            if ($tokens[$commentStart]['line'] === $tokens[$commentEnd]['line']) {
-                $phpcsFile->addError(
-                    'property doc comment must be multi line',
-                    $commentEnd,
-                    'NotMultiLineDocBlock'
-                );
-            }
+            $isCommentOneLiner = $tokens[$commentStart]['line'] === $tokens[$commentEnd]['line'];
 
             $length         = $commentEnd - $commentStart + 1;
             $tokensAsString = $phpcsFile->getTokensAsString(
@@ -116,15 +110,44 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
                     $commentStart,
                     'NoVarDefined'
                 );
-            } else if ($varCount > 1) {
+            } elseif ($varCount > 1) {
                 $phpcsFile->addError(
                     'property doc comment must no multiple @var annotations',
                     $commentStart,
                     'MultipleVarDefined'
                 );
             }
+
+            if ($varCount === 1) {
+                if ($isCommentOneLiner) {
+                    $fix = $phpcsFile->addFixableError(
+                        'property doc comment must be multi line',
+                        $commentEnd,
+                        'NotMultiLineDocBlock'
+                    );
+
+                    if ($fix) {
+                        $phpcsFile->fixer->beginChangeset();
+                        $phpcsFile->fixer->addContent($commentStart, "\n     *");
+                        $phpcsFile->fixer->replaceToken(
+                            $commentEnd - 1,
+                            rtrim($tokens[$commentEnd - 1]['content'])
+                        );
+                        $phpcsFile->fixer->addContentBefore($commentEnd, "\n     ");
+                        $phpcsFile->fixer->endChangeset();
+                    }
+                }
+            } else {
+                if ($isCommentOneLiner) {
+                    $phpcsFile->addError(
+                        'property doc comment must be multi line',
+                        $commentEnd,
+                        'NotMultiLineDocBlock'
+                    );
+                }
+            }
         } elseif ($code === T_COMMENT) {
-            $commentStart = $phpcsFile->findPrevious([T_COMMENT], $commentEnd, null, true);
+            $commentStart = $phpcsFile->findPrevious(T_COMMENT, $commentEnd, null, true);
             $phpcsFile->addError(
                 'property doc comment must begin with /**',
                 $commentStart + 1,
