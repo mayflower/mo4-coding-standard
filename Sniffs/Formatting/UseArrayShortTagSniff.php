@@ -52,7 +52,21 @@ class MO4_Sniffs_Formatting_UseArrayShortTagSniff implements PHP_CodeSniffer_Sni
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $phpcsFile->addError('Array short tag [ ... ] must be used', $stackPtr);
+        $fix = $phpcsFile->addFixableError('Array short tag [ ... ] must be used', $stackPtr);
+
+        if ($fix) {
+            $tokens = $phpcsFile->getTokens();
+            $token  = $tokens[$stackPtr];
+
+            $phpcsFile->fixer->beginChangeset();
+            $phpcsFile->fixer->replaceToken($stackPtr, '');
+            $phpcsFile->fixer->replaceToken($token['parenthesis_opener'], '[');
+            for ($i = $stackPtr +  1; $i < $token['parenthesis_opener']; $i++) {
+                $phpcsFile->fixer->replaceToken($i, '');
+            }
+            $phpcsFile->fixer->replaceToken($token['parenthesis_closer'], ']');
+            $phpcsFile->fixer->endChangeset();
+        }
     }
 }
  

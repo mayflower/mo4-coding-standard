@@ -9,3 +9,9 @@ $b = array(
     $a,
     array(4, 5, 6),
 );
+
+array
+(
+    array/* will be deleted */( ),
+    array (1),  array   (3)
+);

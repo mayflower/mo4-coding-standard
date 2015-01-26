@@ -49,6 +49,9 @@ class MO4_Tests_Formatting_UseArrayShortTagUnitTest extends AbstractSniffUnitTes
                 4  => 1,
                 8  => 1,
                 10 => 1,
+                13 => 1,
+                15 => 1,
+                16 => 2,
             );
         }
 
