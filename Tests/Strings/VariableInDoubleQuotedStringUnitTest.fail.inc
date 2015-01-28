@@ -2,8 +2,8 @@
 
 $a = "$a";
 $a = "\\\\$a";
-$a = "blafasel $a";
-$b = "blafasel \\$a";
+$a = "blafasel $a $b";
+$b = "blafasel \\$a$b";
 $d = "blafasel $$a";
 $d = "blafasel $_a";
 $f = "100$missing needed";

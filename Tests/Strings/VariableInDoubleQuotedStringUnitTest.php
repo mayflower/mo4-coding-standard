@@ -48,8 +48,8 @@ class MO4_Tests_Strings_VariableInDoubleQuotedStringUnitTest extends
             return array(
                 3 => 1,
                 4 => 1,
-                5 => 1,
-                6 => 1,
+                5 => 2,
+                6 => 2,
                 7 => 1,
                 8 => 1,
                 9 => 1,

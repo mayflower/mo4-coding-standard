@@ -59,39 +59,47 @@ class MO4_Sniffs_Strings_VariableInDoubleQuotedStringSniff implements PHP_CodeSn
 
         $matches = array();
 
-        if (preg_match_all($varRegExp, $content, $matches, PREG_OFFSET_CAPTURE) !== 1) {
+        if (preg_match_all($varRegExp, $content, $matches, PREG_OFFSET_CAPTURE) === 0) {
             return;
         }
 
         foreach ($matches as $match) {
-            list($var, $pos) = $match[0];
+            foreach ($match as $info) {
+                list($var, $pos) = $info;
 
-            if ($pos === 1 || $content[$pos - 1] !== '{') {
-                // look for backslashes
-                if ($content[$pos - 1] === "\\") {
-                    $bsPos = $pos - 1;
+                if ($pos === 1 || $content[$pos - 1] !== '{') {
+                    // look for backslashes
+                    if ($content[$pos - 1] === "\\") {
+                        $bsPos = $pos - 1;
 
-                    while ($content[$bsPos] === "\\") {
-                        $bsPos--;
+                        while ($content[$bsPos] === "\\") {
+                            $bsPos--;
+                        }
+
+                        if ((($pos - 1 - $bsPos) % 2) === 1) {
+                            continue;
+                        }
                     }
 
-                    if ((($pos - 1 - $bsPos) % 2) === 1) {
-                        continue;
+                    $fix = $phpcsFile->addFixableError(
+                        sprintf(
+                            'must surround variable %s with { }',
+                            $var
+                        ),
+                        $stackPtr
+                    );
+
+                    if ($fix) {
+                        $before     = substr($content, 0, $pos);
+                        $after      = substr($content, $pos + strlen($var));
+                        $newContent = $before . "{" . $var . "}" . $after;
+
+                        $phpcsFile->fixer->beginChangeset();
+                        $phpcsFile->fixer->replaceToken($stackPtr, $newContent);
+                        $phpcsFile->fixer->endChangeset();
                     }
                 }
-
-                $phpcsFile->addError(
-                    sprintf(
-                        'must surround variable %s with { }',
-                        $var
-                    ),
-                    $stackPtr
-                );
-                continue;
             }
-
-
-
         }
     }
 }
