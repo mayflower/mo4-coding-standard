@@ -228,6 +228,11 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
             $end,
             true
         );
+
+        if (false === $namespaceStart) {
+            return '';
+        }
+
         $namespaceEnd = $phpcsFile->findNext(
             [T_NS_SEPARATOR, T_STRING],
             $namespaceStart + 1,

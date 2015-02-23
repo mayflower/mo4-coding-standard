@@ -60,6 +60,7 @@ class MO4_Tests_Formatting_UnnecessaryNamespaceUsageUnitTest extends AbstractSni
         switch ($testFile) {
         case 'UnnecessaryNamespaceUsageUnitTest.pass.inc':
         case 'UnnecessaryNamespaceUsageUnitTest.pass.2.inc':
+        case 'UnnecessaryNamespaceUsageUnitTest.pass.3.inc':
             return array();
         case 'UnnecessaryNamespaceUsageUnitTest.fail.inc':
             return array(
