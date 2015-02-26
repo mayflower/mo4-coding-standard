@@ -28,6 +28,13 @@
 class MO4_Sniffs_Strings_VariableInDoubleQuotedStringSniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * The PHP_CodeSniffer object controlling this run.
+     *
+     * @var PHP_CodeSniffer
+     */
+    private $phpCsFile = null;
+
+    /**
      * Registers the tokens that this sniff wants to listen for.
      *
      * @return array(int)
@@ -52,6 +59,8 @@ class MO4_Sniffs_Strings_VariableInDoubleQuotedStringSniff implements PHP_CodeSn
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
+        $this->phpCsFile = $phpcsFile;
+
         $varRegExp = '/\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/';
 
         $tokens  = $phpcsFile->getTokens();
@@ -68,20 +77,14 @@ class MO4_Sniffs_Strings_VariableInDoubleQuotedStringSniff implements PHP_CodeSn
                 list($var, $pos) = $info;
 
                 if ($pos === 1 || $content[$pos - 1] !== '{') {
-                    // look for backslashes
-                    if ($content[$pos - 1] === "\\") {
-                        $bsPos = $pos - 1;
-
-                        while ($content[$bsPos] === "\\") {
-                            $bsPos--;
-                        }
-
-                        if ((($pos - 1 - $bsPos) % 2) === 1) {
-                            continue;
-                        }
+                    if (strpos(substr($content, 0, $pos), '{') && !strpos(substr($content, 0, $pos), '}')) {
+                        continue;
                     }
 
-                    $fix = $phpcsFile->addFixableError(
+                    $this->searchForBackslashes($content, $pos);
+
+
+                    $fix = $this->phpCsFile->addFixableError(
                         sprintf(
                             'must surround variable %s with { }',
                             $var
@@ -90,15 +93,56 @@ class MO4_Sniffs_Strings_VariableInDoubleQuotedStringSniff implements PHP_CodeSn
                     );
 
                     if ($fix) {
-                        $before     = substr($content, 0, $pos);
-                        $after      = substr($content, $pos + strlen($var));
-                        $newContent = $before . "{" . $var . "}" . $after;
-
-                        $phpcsFile->fixer->beginChangeset();
-                        $phpcsFile->fixer->replaceToken($stackPtr, $newContent);
-                        $phpcsFile->fixer->endChangeset();
+                        $correctVariable = $this->surroundVariableWithBraces($content, $pos, $var);
+                        $this->fixPhpCsFile($stackPtr, $correctVariable);
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * @param $content
+     * @param $pos
+     * @param $var
+     * @return string
+     */
+    private function surroundVariableWithBraces($content, $pos, $var)
+    {
+        $before = substr($content, 0, $pos);
+        $after = substr($content, $pos + strlen($var));
+        $newContent = $before . "{" . $var . "}" . $after;
+        return $newContent;
+    }
+
+    /**
+     * @param $stackPtr
+     * @param $correctVariable
+     */
+    private function fixPhpCsFile($stackPtr, $correctVariable)
+    {
+        $phpCsFile = $this->phpCsFile;
+
+        $phpCsFile->fixer->beginChangeset();
+        $phpCsFile->fixer->replaceToken($stackPtr, $correctVariable);
+        $phpCsFile->fixer->endChangeset();
+    }
+
+    /**
+     * @param $content
+     * @param $pos
+     */
+    private function searchForBackslashes($content, $pos)
+    {
+        if ($content[$pos - 1] === "\\") {
+            $backslashPos = $pos - 1;
+
+            while ($content[$backslashPos] === "\\") {
+                $backslashPos--;
+            }
+
+            if ((($pos - 1 - $backslashPos) % 2) === 1) {
+                return;
             }
         }
     }
