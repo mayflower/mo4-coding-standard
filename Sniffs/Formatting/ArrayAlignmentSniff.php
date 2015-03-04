@@ -28,9 +28,15 @@
 class MO4_Sniffs_Formatting_ArrayAlignmentSniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * Define all types of arrays.
+     *
      * @var array
      */
-    protected  $arrayTokens = array(T_ARRAY, T_OPEN_SHORT_ARRAY);
+    protected  $arrayTokens = array(
+                               T_ARRAY,
+                               T_OPEN_SHORT_ARRAY,
+                              );
+
 
     /**
      * Registers the tokens that this sniff wants to listen for.
@@ -41,7 +47,9 @@ class MO4_Sniffs_Formatting_ArrayAlignmentSniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
         return $this->arrayTokens;
-    }
+
+    }//end register()
+
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -67,36 +75,44 @@ class MO4_Sniffs_Formatting_ArrayAlignmentSniff implements PHP_CodeSniffer_Sniff
 
         if ($tokens[$start]['line'] === $tokens[$end]['line']) {
             return;
-        } if ($tokens[$end - 2]['line'] === $tokens[$end]['line']) {
+        } if ($tokens[($end - 2)]['line'] === $tokens[$end]['line']) {
+            if ($current['code'] === T_ARRAY) {
+                $arrayBrackets = 'parenthesis';
+            } else {
+                $arrayBrackets = 'bracket';
+            }
+
             $phpcsFile->addError(
                 sprintf(
                     'closing %s of array must in own line',
-                    ($current['code'] === T_ARRAY) ? 'parenthesis' : 'bracket'
+                    $arrayBrackets
                 ),
                 $end
             );
         }
 
-        $assignments = array();
+        $assignments  = array();
         $keyEndColumn = -1;
-        $lastLine    = -1;
+        $lastLine     = -1;
 
-        for ($i = $start + 1; $i < $end; $i++) {
+        for ($i = ($start + 1); $i < $end; $i++) {
             $current  = $tokens[$i];
-            $previous = $tokens[$i - 1];
+            $previous = $tokens[($i - 1)];
 
-            // skip nested arrays
-            if (in_array($current['code'], $this->arrayTokens)) {
+            // Skip nested arrays.
+            if ((in_array($current['code'], $this->arrayTokens)) === true) {
                 if ($current['code'] === T_ARRAY) {
-                    $i = $current['parenthesis_closer'] + 1;
+                    $i = ($current['parenthesis_closer'] + 1);
                 } else {
-                    $i = $current['bracket_closer'] + 1;
+                    $i = ($current['bracket_closer'] + 1);
                 }
+
                 continue;
             }
-            // skip closures in array
+
+            // Skip closures in array.
             if ($current['code'] === T_CLOSURE) {
-                $i = $current['scope_closer'] + 1;
+                $i = ($current['scope_closer'] + 1);
                 continue;
             }
 
@@ -110,13 +126,14 @@ class MO4_Sniffs_Formatting_ArrayAlignmentSniff implements PHP_CodeSniffer_Sniff
                     $phpcsFile->addError($msg, $i);
                 }
 
-                $hasKeyInLine =  false;
+                $hasKeyInLine = false;
 
-                $j = $i - 1;
+                $j = ($i - 1);
                 while (($j >= 0) && ($tokens[$j]['line'] === $current['line'])) {
-                    if (!in_array($tokens[$j]['code'], PHP_CodeSniffer_Tokens::$emptyTokens)) {
+                    if ((in_array($tokens[$j]['code'], PHP_CodeSniffer_Tokens::$emptyTokens)) === true) {
                         $hasKeyInLine = true;
                     }
+
                     $j--;
                 }
 
@@ -127,10 +144,15 @@ class MO4_Sniffs_Formatting_ArrayAlignmentSniff implements PHP_CodeSniffer_Sniff
                     );
                 }
 
-                $keyEndColumn = ($column > $keyEndColumn) ? $column: $keyEndColumn;
-                $lastLine  = $line;
-            }
-        }
+                if ($column > $keyEndColumn) {
+                    $keyEndColumn = $column;
+                } else {
+                    $keyEndColumn = $keyEndColumn;
+                }
+
+                $lastLine = $line;
+            }//end if
+        }//end for
 
         foreach ($assignments as $ptr) {
             $current = $tokens[$ptr];
@@ -141,5 +163,7 @@ class MO4_Sniffs_Formatting_ArrayAlignmentSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-    }
-}
+    }//end process()
+
+
+}//end class

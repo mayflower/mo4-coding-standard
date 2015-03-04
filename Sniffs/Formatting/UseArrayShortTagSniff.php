@@ -27,6 +27,8 @@
  */
 class MO4_Sniffs_Formatting_UseArrayShortTagSniff implements PHP_CodeSniffer_Sniff
 {
+
+
     /**
      * Registers the tokens that this sniff wants to listen for.
      *
@@ -36,7 +38,9 @@ class MO4_Sniffs_Formatting_UseArrayShortTagSniff implements PHP_CodeSniffer_Sni
     public function register()
     {
         return array(T_ARRAY);
-    }
+
+    }//end register()
+
 
     /**
      * Called when one of the token types that this sniff is listening for
@@ -54,19 +58,22 @@ class MO4_Sniffs_Formatting_UseArrayShortTagSniff implements PHP_CodeSniffer_Sni
     {
         $fix = $phpcsFile->addFixableError('Array short tag [ ... ] must be used', $stackPtr);
 
-        if ($fix) {
+        if ($fix === true) {
             $tokens = $phpcsFile->getTokens();
             $token  = $tokens[$stackPtr];
 
             $phpcsFile->fixer->beginChangeset();
             $phpcsFile->fixer->replaceToken($stackPtr, '');
             $phpcsFile->fixer->replaceToken($token['parenthesis_opener'], '[');
-            for ($i = $stackPtr +  1; $i < $token['parenthesis_opener']; $i++) {
+            for ($i = ($stackPtr + 1); $i < $token['parenthesis_opener']; $i++) {
                 $phpcsFile->fixer->replaceToken($i, '');
             }
+
             $phpcsFile->fixer->replaceToken($token['parenthesis_closer'], ']');
             $phpcsFile->fixer->endChangeset();
         }
-    }
-}
- 
+
+    }//end process()
+
+
+}//end class

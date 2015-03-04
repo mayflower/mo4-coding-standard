@@ -1,0 +1,16 @@
+sudo: false
+language: php
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+
+before_script:
+  - composer install --dev
+  - mkdir -p vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Symfony
+  - cp -R Sniffs/ vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Symfony/Sniffs/
+  - cp -R Tests/ vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Symfony/Tests/
+
+script:
+  - (cd vendor/squizlabs/php_codesniffer ; phpunit)
+  - ./vendor/squizlabs/php_codesniffer/scripts/phpcs ./vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Symfony/Sniffs --standard=PHPCS --report=summary -np

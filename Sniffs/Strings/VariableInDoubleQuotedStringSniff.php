@@ -27,6 +27,8 @@
  */
 class MO4_Sniffs_Strings_VariableInDoubleQuotedStringSniff implements PHP_CodeSniffer_Sniff
 {
+
+
     /**
      * Registers the tokens that this sniff wants to listen for.
      *
@@ -36,7 +38,9 @@ class MO4_Sniffs_Strings_VariableInDoubleQuotedStringSniff implements PHP_CodeSn
     public function register()
     {
         return array(T_DOUBLE_QUOTED_STRING);
-    }
+
+    }//end register()
+
 
     /**
      * Called when one of the token types that this sniff is listening for
@@ -67,10 +71,10 @@ class MO4_Sniffs_Strings_VariableInDoubleQuotedStringSniff implements PHP_CodeSn
             foreach ($match as $info) {
                 list($var, $pos) = $info;
 
-                if ($pos === 1 || $content[$pos - 1] !== '{') {
-                    // look for backslashes
-                    if ($content[$pos - 1] === "\\") {
-                        $bsPos = $pos - 1;
+                if ($pos === 1 || $content[($pos - 1)] !== '{') {
+                    // Look for backslashes.
+                    if ($content[($pos - 1)] === "\\") {
+                        $bsPos = ($pos - 1);
 
                         while ($content[$bsPos] === "\\") {
                             $bsPos--;
@@ -89,18 +93,20 @@ class MO4_Sniffs_Strings_VariableInDoubleQuotedStringSniff implements PHP_CodeSn
                         $stackPtr
                     );
 
-                    if ($fix) {
+                    if ($fix === true) {
                         $before     = substr($content, 0, $pos);
-                        $after      = substr($content, $pos + strlen($var));
-                        $newContent = $before . "{" . $var . "}" . $after;
+                        $after      = substr($content, ($pos + strlen($var)));
+                        $newContent = $before."{".$var."}".$after;
 
                         $phpcsFile->fixer->beginChangeset();
                         $phpcsFile->fixer->replaceToken($stackPtr, $newContent);
                         $phpcsFile->fixer->endChangeset();
                     }
-                }
-            }
-        }
-    }
-}
- 
+                }//end if
+            }//end foreach
+        }//end foreach
+
+    }//end process()
+
+
+}//end class
