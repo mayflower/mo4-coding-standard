@@ -1,4 +1,4 @@
-# MO4 CodeSniffer ruleset <a href="https://travis-ci.org/Mayflower/mo4-coding-standard/"><img src="https://secure.travis-ci.org/Mayflower/mo4-coding-standard.png?branch=master"
+# MO4 CodeSniffer ruleset <a href="https://travis-ci.org/Mayflower/mo4-coding-standard/"><img src="https://secure.travis-ci.org/Mayflower/mo4-coding-standard.png?branch=master"></a>
 
 Provides a CodeSniffer ruleset
 
