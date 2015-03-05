@@ -29,6 +29,8 @@
  */
 class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSniffer_Sniff
 {
+
+
     /**
      * Registers the tokens that this sniff wants to listen for.
      *
@@ -38,7 +40,9 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
     public function register()
     {
         return array(T_CLASS);
-    }
+
+    }//end register()
+
 
     /**
      * Called when one of the token types that this sniff is listening for
@@ -54,36 +58,48 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $docCommentTags = array('@param', '@return', '@throws', '@var');
+        $docCommentTags = array(
+                           '@param',
+                           '@return',
+                           '@throws',
+                           '@var',
+                          );
         $classRe        = '[\w\x7f-\xff]';
 
         $baseMsg = 'Shorthand possible. Replace "%s" with "%s"';
 
-        $tokens = $phpcsFile->getTokens();
-        $useStatements = $this->getUseStatements($phpcsFile, 0, $stackPtr - 1);
-        $nameSpace = $this->getNameSpace($phpcsFile, 0, $stackPtr - 1);
+        $tokens        = $phpcsFile->getTokens();
+        $useStatements = $this->getUseStatements($phpcsFile, 0, ($stackPtr - 1));
+        $nameSpace     = $this->getNameSpace($phpcsFile, 0, ($stackPtr - 1));
 
         $nsSep = $phpcsFile->findNext(
-            [T_NS_SEPARATOR, T_DOC_COMMENT_OPEN_TAG],
-            $stackPtr + 1
+            [
+             T_NS_SEPARATOR,
+             T_DOC_COMMENT_OPEN_TAG,
+            ],
+            ($stackPtr + 1)
         );
 
         while ($nsSep !== false) {
             $classNameEnd = $phpcsFile->findNext(
-                [T_NS_SEPARATOR, T_STRING],
+                [
+                 T_NS_SEPARATOR,
+                 T_STRING,
+                ],
                 $nsSep,
                 null,
                 true
             );
 
             if ($tokens[$nsSep]['code'] === T_NS_SEPARATOR) {
-                if ($tokens[$nsSep - 1]['code'] === T_STRING) {
+                if ($tokens[($nsSep - 1)]['code'] === T_STRING) {
                     $nsSep -= 1;
                 }
-                $className = $phpcsFile->getTokensAsString($nsSep, $classNameEnd - $nsSep);
+
+                $className     = $phpcsFile->getTokensAsString($nsSep, ($classNameEnd - $nsSep));
                 $fullClassName = $this->_getFullyQualifiedClassName($className);
 
-                if (array_key_exists($fullClassName, $useStatements)) {
+                if ((array_key_exists($fullClassName, $useStatements)) === true) {
                     $msg = sprintf(
                         $baseMsg,
                         $className,
@@ -92,7 +108,7 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
                     $phpcsFile->addWarning($msg, $nsSep);
                 }
 
-                // TODO test
+                // TODO test.
                 if (strpos($fullClassName, $nameSpace) === 0) {
                     $msg = sprintf(
                         $baseMsg,
@@ -103,15 +119,18 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
                 }
             } else {
                 foreach ($tokens[$nsSep]['comment_tags'] as $tag) {
-                    if (!in_array($tokens[$tag]['content'], $docCommentTags)) {
+                    if ((in_array($tokens[$tag]['content'], $docCommentTags)) === false) {
                         continue;
                     }
 
                     $lineEnd = $phpcsFile->findNext(
-                        [T_DOC_COMMENT_CLOSE_TAG, T_DOC_COMMENT_STAR],
-                        $tag + 1
+                        [
+                         T_DOC_COMMENT_CLOSE_TAG,
+                         T_DOC_COMMENT_STAR,
+                        ],
+                        ($tag + 1)
                     );
-                    $docLine = $phpcsFile->getTokensAsString($tag, $lineEnd - $tag);
+                    $docLine = $phpcsFile->getTokensAsString($tag, ($lineEnd - $tag));
                     foreach ($useStatements as $fullClassName => $useName) {
                         $className = substr($fullClassName, 1);
 
@@ -119,15 +138,15 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
                         $length = strlen($className);
 
                         if ($pos !== false) {
-                            if (1 === preg_match("/$classRe/", $docLine[$pos - 1])) {
+                            if (1 === preg_match("/$classRe/", $docLine[($pos - 1)])) {
                                 continue;
                             }
 
-                            $endOfComment = substr($docLine, $pos + $length);
+                            $endOfComment = substr($docLine, ($pos + $length));
 
                             if (1 === preg_match('/^(\s|\||\*).*/', $endOfComment)) {
-                                // ignore isomorph imports, like "use Exception;"
-                                if (($className === $useName) && ($docLine[$pos - 1] !== '\\')) {
+                                // Ignore isomorph imports, like "use Exception;".
+                                if (($className === $useName) && ($docLine[($pos - 1)] !== '\\')) {
                                     continue;
                                 }
 
@@ -138,8 +157,8 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
                                 );
                                 $phpcsFile->addWarning($msg, $tag);
                             }
-                        }
-                    }
+                        }//end if
+                    }//end foreach
 
                     $pattern = sprintf("/%s(\w+)/", preg_quote($nameSpace));
                     $matches = array();
@@ -151,15 +170,17 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
                         );
                         $phpcsFile->addWarning($msg, $tag);
                     }
-                }
-            }
+                }//end foreach
+            }//end if
 
-            $nsSep = $phpcsFile->findNext([T_NS_SEPARATOR, T_DOC_COMMENT_OPEN_TAG], $classNameEnd + 1);
-        }
-    }
+            $nsSep = $phpcsFile->findNext([T_NS_SEPARATOR, T_DOC_COMMENT_OPEN_TAG], ($classNameEnd + 1));
+        }//end while
+
+    }//end process()
+
 
     /**
-     * get all use statements in range
+     * Get all use statements in range
      *
      * @param PHP_CodeSniffer_File $phpcsFile PHP CS File
      * @param int                  $start     start pointer
@@ -170,48 +191,53 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
     protected  function getUseStatements(PHP_CodeSniffer_File $phpcsFile, $start, $end)
     {
         $useStatements = array();
-        $i             = $start;
-        $tokens        = $phpcsFile->getTokens();
-        $useTokenPtr   = $phpcsFile->findNext(T_USE, $i, $end);
+        $i           = $start;
+        $tokens      = $phpcsFile->getTokens();
+        $useTokenPtr = $phpcsFile->findNext(T_USE, $i, $end);
 
         while ($useTokenPtr !== false) {
             $classNameStart = $phpcsFile->findNext(
                 PHP_CodeSniffer_Tokens::$emptyTokens,
-                $useTokenPtr + 1,
+                ($useTokenPtr + 1),
                 $end,
                 true
             );
-            $classNameEnd = $phpcsFile->findNext(
-                [T_NS_SEPARATOR, T_STRING],
-                $classNameStart + 1,
+            $classNameEnd   = $phpcsFile->findNext(
+                [
+                 T_NS_SEPARATOR,
+                 T_STRING,
+                ],
+                ($classNameStart + 1),
                 $end,
                 true
             );
-            $useEnd = $phpcsFile->findNext(
+            $useEnd         = $phpcsFile->findNext(
                 T_SEMICOLON,
                 $classNameEnd,
                 $end
             );
-            $aliasNamePtr = $phpcsFile->findPrevious(
+            $aliasNamePtr   = $phpcsFile->findPrevious(
                 PHP_CodeSniffer_Tokens::$emptyTokens,
-                $useEnd - 1,
+                ($useEnd - 1),
                 null,
                 true
             );
 
-            $className = $phpcsFile->getTokensAsString($classNameStart, $classNameEnd - $classNameStart);
+            $className = $phpcsFile->getTokensAsString($classNameStart, ($classNameEnd - $classNameStart));
 
             $className = $this->_getFullyQualifiedClassName($className);
             $useStatements[$className] = $tokens[$aliasNamePtr]['content'];
-            $i = $useEnd + 1;
+            $i           = ($useEnd + 1);
             $useTokenPtr = $phpcsFile->findNext(T_USE, $i, $end);
-        }
+        }//end while
 
         return $useStatements;
-    }
+
+    }//end getUseStatements()
+
 
     /**
-     * get the namespace of the current class file
+     * Get the namespace of the current class file
      *
      * @param PHP_CodeSniffer_File $phpcsFile PHP CS File
      * @param int                  $start     start pointer
@@ -221,10 +247,10 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
      */
     protected  function getNamespace(PHP_CodeSniffer_File $phpcsFile, $start, $end)
     {
-        $namespace = $phpcsFile->findNext(T_NAMESPACE, $start, $end);
+        $namespace      = $phpcsFile->findNext(T_NAMESPACE, $start, $end);
         $namespaceStart = $phpcsFile->findNext(
             PHP_CodeSniffer_Tokens::$emptyTokens,
-            $namespace + 1,
+            ($namespace + 1),
             $end,
             true
         );
@@ -234,19 +260,24 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
         }
 
         $namespaceEnd = $phpcsFile->findNext(
-            [T_NS_SEPARATOR, T_STRING],
-            $namespaceStart + 1,
+            [
+             T_NS_SEPARATOR,
+             T_STRING,
+            ],
+            ($namespaceStart + 1),
             $end,
             true
         );
 
-        $name = $phpcsFile->getTokensAsString($namespaceStart, $namespaceEnd - $namespaceStart);
+        $name = $phpcsFile->getTokensAsString($namespaceStart, ($namespaceEnd - $namespaceStart));
 
         return "\\{$name}\\";
-    }
+
+    }//end getNamespace()
+
 
     /**
-     * return the fully qualified class name, e.g. '\Foo\Bar\Faz'
+     * Return the fully qualified class name, e.g. '\Foo\Bar\Faz'
      *
      * @param string $className class name
      *
@@ -261,6 +292,8 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
         }
 
         return $className;
-    }
-}
- 
+
+    }//end _getFullyQualifiedClassName()
+
+
+}//end class

@@ -31,25 +31,26 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
     extends PSR2_Sniffs_Namespaces_UseDeclarationSniff
 {
     /**
-     * last use statement seen in group
+     * Last use statement seen in group
      *
      * @var string
      */
     private $_lastUseStatement = '';
 
     /**
-     * line number of the last seen use statement
+     * Line number of the last seen use statement
      *
      * @var int
      */
     private $_lastLine = -1;
 
     /**
-     * current file
+     * Current file
      *
      * @var string
      */
     private $_currentFile = null;
+
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -65,18 +66,22 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
         parent::process($phpcsFile, $stackPtr);
 
         if ($this->_currentFile !== $phpcsFile->getFilename()) {
-            $this->_lastLine = -1;
+            $this->_lastLine         = -1;
             $this->_lastUseStatement = '';
-            $this->_currentFile = $phpcsFile->getFilename();
+            $this->_currentFile      = $phpcsFile->getFilename();
         }
 
         $tokens = $phpcsFile->getTokens();
         $line   = $tokens[$stackPtr]['line'];
 
-        // ignore function () use () {...}
+        // Ignore function () use () {...}.
         $prev = $phpcsFile->findPrevious(
-            [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT],
-            $stackPtr - 1,
+            [
+             T_WHITESPACE,
+             T_COMMENT,
+             T_DOC_COMMENT,
+            ],
+            ($stackPtr - 1),
             null,
             true,
             null,
@@ -91,14 +96,14 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
             }
         }
 
-        $start = $phpcsFile->findNext(T_STRING, $stackPtr + 1);
+        $start = $phpcsFile->findNext(T_STRING, ($stackPtr + 1));
         if ($start === false) {
             return;
         }
 
-        $end = $phpcsFile->findNext([T_AS, T_SEMICOLON, T_COMMA], $stackPtr + 1);
+        $end = $phpcsFile->findNext([T_AS, T_SEMICOLON, T_COMMA], ($stackPtr + 1));
 
-        $currentUseStatement = $phpcsFile->getTokensAsString($start, $end - $start);
+        $currentUseStatement = $phpcsFile->getTokensAsString($start, ($end - $start));
 
         if (($this->_lastLine + 1) < $line) {
             $this->_lastLine         = $line;
@@ -117,6 +122,8 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
 
         $this->_lastUseStatement = $currentUseStatement;
         $this->_lastLine         = $line;
-    }
-}
- 
+
+    }//end process()
+
+
+}//end class

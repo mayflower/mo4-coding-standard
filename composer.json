@@ -1,0 +1,44 @@
+{
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "squizlabs/php_codesniffer",
+                "version": "master",
+                "source": {
+                    "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        }
+    ],
+    "name": "playbloom/php_codesniffer_symfony",
+    "description": "PHP_CodeSniffer ruleset for Symfony PSR coding standards.",
+    "type": "library",
+    "keywords": [
+        "phpcs",
+        "Symfony",
+        "standards",
+        "PSR"
+    ],
+    "homepage": "https://github.com/Mayflower/mo4-coding-standard",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Xaver Loppenstedt",
+            "email": "xaver@loppenstedt.de"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Mayflower/mo4-coding-standard/issues",
+        "source": "https://github.com/Mayflower/mo4-coding-standard"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "*"
+    },
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "minimum-stability": "dev"
+}
