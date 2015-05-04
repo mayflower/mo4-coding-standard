@@ -1,4 +1,4 @@
-# MO4 CodeSniffer ruleset <a href="https://travis-ci.org/Mayflower/mo4-coding-standard/"><img src="https://secure.travis-ci.org/Mayflower/mo4-coding-standard.png?branch=master"></a>
+# MO4 CodeSniffer ruleset <a href="https://travis-ci.org/mayflower/mo4-coding-standard/"><img src="https://secure.travis-ci.org/mayflower/mo4-coding-standard.png?branch=master"></a>
 
 Provides a CodeSniffer ruleset
 
@@ -39,7 +39,7 @@ The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://
 
         cd /path/to/pear/PHP/CodeSniffer/Standards
         git clone git://github.com/xalopp/symfony-coding-standard.git Symfony
-        git clone git://github.com/Mayflower/mo4-coding-standard.git MO4
+        git clone git://github.com/mayflower/mo4-coding-standard.git MO4
 
 4. Select the Symfony ruleset as your default coding standard:
 
