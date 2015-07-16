@@ -146,12 +146,19 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
                 }
             }//end if
         } else if ($code === T_COMMENT) {
-            $commentStart = $phpcsFile->findPrevious(T_COMMENT, $commentEnd, null, true);
-            $phpcsFile->addError(
-                'property doc comment must begin with /**',
-                ($commentStart + 1),
-                'NotADocBlock'
-            );
+            // It seems that when we are in here, then we have a line comment at $commentEnd.
+            // Now, check if the same comment has a variable definition on the same line.
+            // If yes, it doesn't count.
+            $firstOnLine = $phpcsFile->findFirstOnLine(array(T_VARIABLE, T_CONST), $commentEnd);
+
+            if ($firstOnLine === false) {
+                $commentStart = $phpcsFile->findPrevious(T_COMMENT, $commentEnd, null, true);
+                $phpcsFile->addError(
+                    'property doc comment must begin with /**',
+                    ($commentStart + 1),
+                    'NotADocBlock'
+                );
+            }
         }//end if
 
     }//end processTokenWithinScope()
