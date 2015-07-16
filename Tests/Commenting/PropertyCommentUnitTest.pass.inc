@@ -13,9 +13,10 @@ class X
     public $publicProperty = 1; // Random comment
     private $foo = 15; //add
     private $bar = null; //delete
-    private $baz = 16; //change
     const MUH = 'KUH'; // even more wat
+    private $y = null; /* y is null by default */
     public static $whatever = 'foobar'; // wat
+    private $baz = 16; //change
 
     /**
      * array of foo => bar arrays

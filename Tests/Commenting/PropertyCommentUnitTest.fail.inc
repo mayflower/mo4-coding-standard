@@ -33,4 +33,11 @@ class X
 
     // no doc block
     private $_otherPriv;
+
+    private $z = null; /* invalid
+                         multiline
+                         comment */
+
+    private $y = null; /** invalid doc block y is null by default */
+    private $x = null;
 }

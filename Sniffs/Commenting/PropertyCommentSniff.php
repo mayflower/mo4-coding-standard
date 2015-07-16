@@ -35,6 +35,16 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
      */
     public $supportedTokenizers = array('PHP');
 
+    /**
+     * List of token types this sniff analyzes
+     *
+     * @var array
+     */
+    private $_tokenTypes = array(
+                            T_VARIABLE,
+                            T_CONST,
+                           );
+
 
     /**
      * Construct PropertyCommentSniff
@@ -43,9 +53,7 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
     {
         $scopes = array(T_CLASS);
 
-        $listen = array(T_VARIABLE);
-
-        parent::__construct($scopes, $listen, true);
+        parent::__construct($scopes, $this->_tokenTypes, true);
 
     }//end __construct()
 
@@ -79,6 +87,38 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
                   );
         $tokens = $phpcsFile->getTokens();
 
+        // Before even checking the docblocks above the current var/const,
+        // check if we have a single line comment after it on the same line,
+        // and if that one is OK.
+        $postComment = $phpcsFile->findNext(
+            array(T_DOC_COMMENT_OPEN_TAG),
+            $stackPtr
+        );
+        if ($postComment !== false && $tokens[$postComment]['line'] === $tokens[$stackPtr]['line']) {
+            if ($tokens[$postComment]['content'] === '/**') {
+                // That's an error already.
+                $phpcsFile->addError(
+                    'no doc blocks are allowed after declaration',
+                    $stackPtr,
+                    'NoDocBlockAllowed'
+                );
+            } else {
+                $postCommentEnd = $tokens[$postComment]['comment_closer'];
+                if ($tokens[$postComment]['line'] !== $tokens[$postCommentEnd]['line']) {
+                    $phpcsFile->addError(
+                        'no multiline comments after declarations allowed',
+                        $stackPtr,
+                        'MustBeOneLine'
+                    );
+                }
+            }
+        }
+
+        // Don't do constants for now.
+        if ($tokens[$stackPtr]['code'] === T_CONST) {
+            return;
+        }
+
         $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1));
         if ($commentEnd === false) {
             return;
@@ -91,8 +131,18 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
         }
 
         $code = $tokens[$commentEnd]['code'];
+
         if ($code === T_DOC_COMMENT_CLOSE_TAG) {
             $commentStart = $tokens[$commentEnd]['comment_opener'];
+
+            // Check if this comment is completely in one line, above the current line,
+            // and has a variable preceding it in the same line. If yes, it doesn't count.
+            if ($tokens[$commentStart]['line'] === $tokens[$commentEnd]['line']
+                && $tokens[$stackPtr]['line'] > $tokens[$commentEnd]['line']
+                && $phpcsFile->findFirstOnLine($this->_tokenTypes, $commentEnd) !== false
+            ) {
+                return;
+            }
 
             $isCommentOneLiner = $tokens[$commentStart]['line'] === $tokens[$commentEnd]['line'];
 
@@ -149,7 +199,7 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
             // It seems that when we are in here, then we have a line comment at $commentEnd.
             // Now, check if the same comment has a variable definition on the same line.
             // If yes, it doesn't count.
-            $firstOnLine = $phpcsFile->findFirstOnLine(array(T_VARIABLE, T_CONST), $commentEnd);
+            $firstOnLine = $phpcsFile->findFirstOnLine($this->_tokenTypes, $commentEnd);
 
             if ($firstOnLine === false) {
                 $commentStart = $phpcsFile->findPrevious(T_COMMENT, $commentEnd, null, true);
