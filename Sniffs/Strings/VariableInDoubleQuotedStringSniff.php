@@ -89,7 +89,7 @@ class MO4_Sniffs_Strings_VariableInDoubleQuotedStringSniff
                 list($var, $pos) = $info;
 
                 if ($pos === 1 || $content[($pos - 1)] !== '{') {
-                    if (strpos(substr($content, 0, $pos), '{') === true
+                    if (strpos(substr($content, 0, $pos), '{') > 0
                         && strpos(substr($content, 0, $pos), '}') === false
                     ) {
                         continue;

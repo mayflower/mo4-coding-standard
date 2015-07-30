@@ -53,6 +53,8 @@ class MO4_Tests_Strings_VariableInDoubleQuotedStringUnitTest extends
                 7 => 1,
                 8 => 1,
                 9 => 1,
+                10 => 1,
+                11 => 1,
             );
         }
 
@@ -72,4 +74,3 @@ class MO4_Tests_Strings_VariableInDoubleQuotedStringUnitTest extends
         return array();
     }
 }
- 
