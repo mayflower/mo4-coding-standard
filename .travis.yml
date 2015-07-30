@@ -7,10 +7,10 @@ php:
 
 before_script:
   - composer install --dev
-  - mkdir -p vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Symfony
-  - cp -R Sniffs/ vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Symfony/Sniffs/
-  - cp -R Tests/ vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Symfony/Tests/
+  - mkdir -p vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/MO4
+  - cp -R Sniffs vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/MO4
+  - cp -R Tests vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/MO4
 
 script:
-  - (cd vendor/squizlabs/php_codesniffer ; phpunit)
-  - ./vendor/squizlabs/php_codesniffer/scripts/phpcs ./vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/Symfony/Sniffs --standard=PHPCS --report=summary -np
+  - (cd vendor/squizlabs/php_codesniffer ; phpunit --filter MO4)
+  - ./vendor/squizlabs/php_codesniffer/scripts/phpcs ./vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/MO4/Sniffs --standard=PHPCS --report=summary -np
