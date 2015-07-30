@@ -130,7 +130,7 @@ class MO4_Sniffs_Formatting_ArrayAlignmentSniff implements PHP_CodeSniffer_Sniff
 
                 $j = ($i - 1);
                 while (($j >= 0) && ($tokens[$j]['line'] === $current['line'])) {
-                    if ((in_array($tokens[$j]['code'], PHP_CodeSniffer_Tokens::$emptyTokens)) === true) {
+                    if ((in_array($tokens[$j]['code'], PHP_CodeSniffer_Tokens::$emptyTokens)) === false) {
                         $hasKeyInLine = true;
                     }
 
