@@ -103,7 +103,8 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
 
         $end = $phpcsFile->findNext([T_AS, T_SEMICOLON, T_COMMA], ($stackPtr + 1));
 
-        $currentUseStatement = $phpcsFile->getTokensAsString($start, ($end - $start));
+        $currentUseStatement
+            = $phpcsFile->getTokensAsString($start, ($end - $start));
 
         if (($this->_lastLine + 1) < $line) {
             $this->_lastLine         = $line;
@@ -116,7 +117,7 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
             if (strcmp($this->_lastUseStatement, $currentUseStatement) > 0) {
                 $msg = 'USE statements must be sorted alphabetically';
 
-                $phpcsFile->addError($msg, $stackPtr);
+                $phpcsFile->addError($msg, $stackPtr, 'MustBeSortedAlphabetically');
             }
         }
 
