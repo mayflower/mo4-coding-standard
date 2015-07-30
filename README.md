@@ -34,14 +34,14 @@ The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://
 
         pear config-show | grep php_dir
 
-3. Copy, symlink or check out this repo to a folder called Symfony inside the
+3. Copy, symlink or check out the Symfony coding standard and this repository to their respecting folders inside the
    phpcs `Standards` directory:
 
         cd /path/to/pear/PHP/CodeSniffer/Standards
         git clone git://github.com/xalopp/symfony-coding-standard.git Symfony
         git clone git://github.com/mayflower/mo4-coding-standard.git MO4
 
-4. Select the Symfony ruleset as your default coding standard:
+4. Select the MO4 ruleset as your default coding standard:
 
         phpcs --config-set default_standard MO4
 
@@ -53,16 +53,16 @@ The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://
 
 If you contribute code to these sniffs, please make sure it conforms to the PHPCS coding standard and that the unit tests still pass.
 
-To check the coding standard, run from the Symfony-coding-standard source root:
+To check the coding standard, run in the repository root:
 
         phpcs --ignore=Tests --standard=PHPCS . -n
 
 The unit-tests are run from within the PHP_CodeSniffer directory
 
-* get the [CodeSniffer repository](https://github.com/squizlabs/PHP_CodeSniffer)
-* get the [Symfony Coding Standard](https://github.com/xalopp/symfony-coding-standard) and symlink, copy or clone it at CodeSniffer/Standards/Symfony
-* symlink, copy or clone this repository at CodeSniffer/Standards/MO4
-* from the CodeSniffer repository root run `phpunit --filter Symfony_ tests/AllTests.php`
+* clone the [CodeSniffer repository](https://github.com/squizlabs/PHP_CodeSniffer)
+* symlink, copy or clone the [Symfony Coding Standard](https://github.com/xalopp/symfony-coding-standard) and symlink, copy or move it to `CodeSniffer/Standards/Symfony`
+* symlink, copy or clone this repository to `CodeSniffer/Standards/MO4```
+* from the CodeSniffer repository root run `phpunit --filter MO4`
 
 ## Credit
 
