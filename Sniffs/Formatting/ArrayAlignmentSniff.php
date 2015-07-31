@@ -87,7 +87,8 @@ class MO4_Sniffs_Formatting_ArrayAlignmentSniff implements PHP_CodeSniffer_Sniff
                     'closing %s of array must in own line',
                     $arrayBrackets
                 ),
-                $end
+                $end,
+                'ClosingMustBeInOwnLine'
             );
         }
 
@@ -123,7 +124,7 @@ class MO4_Sniffs_Formatting_ArrayAlignmentSniff implements PHP_CodeSniffer_Sniff
 
                 if ($lastLine === $line) {
                     $msg = 'only one "=>" assignments per line is allowed in a multi line array';
-                    $phpcsFile->addError($msg, $i);
+                    $phpcsFile->addError($msg, $i, 'OneAssignmentPerLine');
                 }
 
                 $hasKeyInLine = false;
@@ -140,7 +141,8 @@ class MO4_Sniffs_Formatting_ArrayAlignmentSniff implements PHP_CodeSniffer_Sniff
                 if ($hasKeyInLine === false) {
                     $phpcsFile->addError(
                         'in arrays, keys and "=>" must be on the same line',
-                        $i
+                        $i,
+                        'KeyAndValueNotOnSameLine'
                     );
                 }
 
@@ -159,7 +161,7 @@ class MO4_Sniffs_Formatting_ArrayAlignmentSniff implements PHP_CodeSniffer_Sniff
             $column  = $current['column'];
 
             if ($column !== ($keyEndColumn + 1)) {
-                $phpcsFile->addError('each "=>" assignments must be aligned', $ptr);
+                $phpcsFile->addError('each "=>" assignments must be aligned', $ptr, 'AssignmentsNotAligned');
             }
         }
 

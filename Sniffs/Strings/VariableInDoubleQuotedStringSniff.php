@@ -102,7 +102,8 @@ class MO4_Sniffs_Strings_VariableInDoubleQuotedStringSniff
                             'must surround variable %s with { }',
                             $var
                         ),
-                        $stackPtr
+                        $stackPtr,
+                        'NotSurroundedWithBraces'
                     );
 
                     if ($fix === true) {
