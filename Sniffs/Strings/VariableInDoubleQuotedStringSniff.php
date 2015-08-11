@@ -95,6 +95,19 @@ class MO4_Sniffs_Strings_VariableInDoubleQuotedStringSniff
                         continue;
                     }
 
+                    $lastOpeningBrace = strrpos(substr($content, 0, $pos), '{');
+                    if ($lastOpeningBrace !== false
+                        && $content[($lastOpeningBrace + 1)] === '$'
+                    ) {
+                        $lastClosingBrace = strrpos(substr($content, 0, $pos), '}');
+
+                        if ($lastClosingBrace !== false
+                            && $lastClosingBrace < $lastOpeningBrace
+                        ) {
+                            continue;
+                        }
+                    }
+
                     $this->_searchForBackslashes($content, $pos);
 
                     $fix = $this->_phpCsFile->addFixableError(
