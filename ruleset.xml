@@ -18,5 +18,10 @@
             <property name="error" value="true"/>
         </properties>
     </rule>
+    <rule ref="Generic.Strings.UnnecessaryStringConcat">
+        <properties>
+            <property name="allowMultiline" value="true"/>
+        </properties>
+    </rule>
 </ruleset>
 
