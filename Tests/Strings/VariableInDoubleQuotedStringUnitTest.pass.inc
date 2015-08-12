@@ -20,3 +20,4 @@ $n = "{$a[$b[0]][$b[0]]}";
 $o = "{$a['foo'][$b[0]]}";
 $p = "{$a[$b->foo($c['foo'][$d[0]])]}";
 $p = "{$good[$fail]}";
+$q = "{$prefix}/{$this->resolveName($id)}";
