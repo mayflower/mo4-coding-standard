@@ -138,6 +138,12 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff implements PHP_CodeSn
                         $length = strlen($className);
 
                         if ($pos !== false) {
+                            if (1 === preg_match('/\s/', $docLine[($pos - 1)])
+                                && true === in_array($className, $useStatements)
+                            ) {
+                                continue;
+                            }
+
                             if (1 === preg_match("/$classRe/", $docLine[($pos - 1)])) {
                                 continue;
                             }
