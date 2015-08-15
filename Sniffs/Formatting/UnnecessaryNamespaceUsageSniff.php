@@ -108,7 +108,9 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
                     $useStatements,
                     $className,
                     $nameSpace,
-                    $nsSep
+                    $nsSep,
+                    ($classNameEnd - 1),
+                    false
                 );
             } else {
                 // Doc comment block.
@@ -167,7 +169,9 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
                                 $useStatements,
                                 $typeToken,
                                 $nameSpace,
-                                $docCommentStringPtr
+                                $docCommentStringPtr,
+                                $docCommentStringPtr,
+                                true
                             );
                         }//end foreach
                     }//end foreach
@@ -311,7 +315,9 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
      * @param array                $useStatements array with class use statements
      * @param string               $className     class name
      * @param string               $nameSpace     name space
-     * @param int                  $ptr           token pointer
+     * @param int                  $startPtr      start token pointer
+     * @param int                  $endPtr        end token pointer
+     * @param bool                 $isDocBlock    true if fixing doc block
      *
      * @return void
      */
@@ -320,27 +326,66 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
         $useStatements,
         $className,
         $nameSpace,
-        $ptr
+        $startPtr,
+        $endPtr,
+        $isDocBlock = false
     ) {
-        $msg = 'Shorthand possible. Replace "%s" with "%s"';
+        $msg     = 'Shorthand possible. Replace "%s" with "%s"';
+        $fixable = false;
+        $replaceClassName = false;
+        $replacement      = null;
 
         $fullClassName = $this->_getFullyQualifiedClassName($className);
 
         if ((array_key_exists($fullClassName, $useStatements)) === true) {
-            $data = array(
-                     $className,
-                     $useStatements[$fullClassName],
-                    );
-            $phpcsFile->addWarning($msg, $ptr, 'UnnecessaryNameSpaceUsage', $data);
-        }
+            $replacement = $useStatements[$fullClassName];
 
-        if (strpos($fullClassName, $nameSpace) === 0) {
-            $data = array(
-                     $className,
-                     substr($fullClassName, strlen($nameSpace)),
-                    );
-            $phpcsFile->addWarning($msg, $ptr, 'UnnecessaryNameSpaceUsage', $data);
-        }
+            $data    = array(
+                        $className,
+                        $replacement,
+                       );
+            $fixable = $phpcsFile->addFixableWarning(
+                $msg,
+                $startPtr,
+                'UnnecessaryNameSpaceUsage',
+                $data
+            );
+
+            $replaceClassName = true;
+        } else if (strpos($fullClassName, $nameSpace) === 0) {
+            $replacement = substr($fullClassName, strlen($nameSpace));
+
+            $data    = array(
+                        $className,
+                        $replacement,
+                       );
+            $fixable = $phpcsFile->addFixableWarning(
+                $msg,
+                $startPtr,
+                'UnnecessaryNameSpaceUsage',
+                $data
+            );
+        }//end if
+
+        if (true === $fixable) {
+            $phpcsFile->fixer->beginChangeset();
+            if (true === $isDocBlock) {
+                $tokens     = $phpcsFile->getTokens();
+                $oldContent = $tokens[$startPtr]['content'];
+                $newContent = str_replace($className, $replacement, $oldContent);
+                $phpcsFile->fixer->replaceToken($startPtr, $newContent);
+            } else {
+                for ($i = $startPtr; $i < $endPtr; $i++) {
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                if (true === $replaceClassName) {
+                    $phpcsFile->fixer->replaceToken($endPtr, $replacement);
+                }
+            }
+
+            $phpcsFile->fixer->endChangeset();
+        }//end if
 
     }//end _checkShorthandPossible()
 
