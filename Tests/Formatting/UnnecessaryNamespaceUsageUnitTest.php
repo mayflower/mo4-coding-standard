@@ -61,6 +61,7 @@ class MO4_Tests_Formatting_UnnecessaryNamespaceUsageUnitTest extends AbstractSni
         case 'UnnecessaryNamespaceUsageUnitTest.pass.inc':
         case 'UnnecessaryNamespaceUsageUnitTest.pass.2.inc':
         case 'UnnecessaryNamespaceUsageUnitTest.pass.3.inc':
+        case 'UnnecessaryNamespaceUsageUnitTest.pass.4.inc':
             return array();
         case 'UnnecessaryNamespaceUsageUnitTest.fail.inc':
             return array(
@@ -85,9 +86,18 @@ class MO4_Tests_Formatting_UnnecessaryNamespaceUsageUnitTest extends AbstractSni
                 10 => 1,
                 11 => 1,
             );
+        case 'UnnecessaryNamespaceUsageUnitTest.fail.3.inc':
+            return array(
+                15 => 1,
+                16 => 1,
+                17 => 1,
+                18 => 1,
+                22 => 1,
+                23 => 1,
+                25 => 3,
+            );
         }
 
         return null;
     }
 }
- 
