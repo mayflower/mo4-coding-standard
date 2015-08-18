@@ -1,0 +1,28 @@
+<?php
+
+use Doctrine\ORM\EntityManager,
+    Doctrine\DBAL\Connection;
+
+use MyApp\OmgException;
+use MyApp\FatalException;
+use \MyApp\DamnItException;
+
+class MyFixtures
+{
+    /**
+     * Inserts data into database.
+     *
+     * @param EntityManager|\Something\ObjectManager $manager Entity Manager
+     * @throws OmgException
+     * @throws FatalException
+     * @throws DamnItException
+     */
+    private function insertData($manager)
+    {
+        /** @var EntityManager $manager */
+        /** @var Connection $con */
+        /**
+         * @var OmgException|FatalException|DamnItException|OmgException $e
+         */
+    }
+}

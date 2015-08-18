@@ -58,12 +58,12 @@ class MO4_Tests_Formatting_UnnecessaryNamespaceUsageUnitTest extends AbstractSni
     protected function getWarningList($testFile = '')
     {
         switch ($testFile) {
-        case 'UnnecessaryNamespaceUsageUnitTest.pass.inc':
+        case 'UnnecessaryNamespaceUsageUnitTest.pass.1.inc':
         case 'UnnecessaryNamespaceUsageUnitTest.pass.2.inc':
         case 'UnnecessaryNamespaceUsageUnitTest.pass.3.inc':
         case 'UnnecessaryNamespaceUsageUnitTest.pass.4.inc':
             return array();
-        case 'UnnecessaryNamespaceUsageUnitTest.fail.inc':
+        case 'UnnecessaryNamespaceUsageUnitTest.fail.1.inc':
             return array(
                 17 => 1,
                 19 => 1,

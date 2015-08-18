@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * test case
+ */
+namespace BarFail;
+
+use A\B;
+use A\Be;
+use \DOMDocument as D;
+use Exception;
+use \DOMComment;
+use Closure as MyClosure;
+/**
+ * Class Foo
+ */
+class Foo extends DOMComment
+{
+    private $a = D::TEST;
+
+    /**
+     * method foo
+     *
+     * @param B          $b b
+     * @param D $d d
+     * @param D|int|B $f f
+     *
+     * @throws Exception
+     */
+    public function foo(B $b, D $d, $f)
+    {
+        /** @var Exception $e */
+        $e = new Exception('ups!');
+        throw $e;
+    }
+
+    /**
+     * returns some awesome \DOMDocument
+     *
+     * @throws FooException
+     */
+    public function bar()
+    {
+        /** @var Be $g */
+        $g = new Be();
+        throw new FooException();
+    }
+
+    /**
+     * foo
+     *
+     * @param MyClosure $c
+     *
+     * @return void
+     */
+    public function myClosureFoo(MyClosure $c)
+    {
+    }
+}
