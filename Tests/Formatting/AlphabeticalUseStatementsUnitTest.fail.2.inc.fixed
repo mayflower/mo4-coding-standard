@@ -1,0 +1,20 @@
+<?php
+// take care, more than one fix will be applied
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\PersistentCollection;
+use MyApp\Bar\Dull;
+use MyApp\Bar\DullAdvancedHelper;
+use MyApp\Bar\DullHelper;
+use MyApp\Bar\Foo;
+use MyApp\Bar\FooRepository;
+use MyApp\Entity\Dull;
+use MyApp\Entity\DullRepository;
+use MyApp\Tests\AdvancedTestCase;
+use MyApp\Tests\TestCase;
+use MyApp\Validator\GetParameterContainer;
+use MyApp\Validator\ParameterContainer;
+
+class Foo
+{
+
+}
