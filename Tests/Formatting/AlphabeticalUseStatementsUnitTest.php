@@ -29,6 +29,8 @@
 class MO4_Tests_Formatting_AlphabeticalUseStatementsUnitTest
     extends AbstractSniffUnitTest
 {
+
+
     /**
      * Returns the lines where errors should occur.
      *
@@ -44,19 +46,33 @@ class MO4_Tests_Formatting_AlphabeticalUseStatementsUnitTest
         switch ($testFile) {
         case 'AlphabeticalUseStatementsUnitTest.pass.inc':
             return array();
-        case 'AlphabeticalUseStatementsUnitTest.fail.inc':
+        case 'AlphabeticalUseStatementsUnitTest.fail.1.inc':
             return array(
-                4  => 1,
-                5  => 1,
-                8  => 1,
-                9  => 1,
-                12 => 1,
-            );
-        }
+                    4  => 1,
+                    5  => 1,
+                    8  => 1,
+                    9  => 1,
+                    12 => 1,
+                   );
+        // Take care, more than one fix will be applied.
+        case 'AlphabeticalUseStatementsUnitTest.fail.2.inc':
+            return array(
+                    6 => 1,
+                    8 => 1,
+                   );
+        case 'AlphabeticalUseStatementsUnitTest.fail.3.inc':
+            return array(
+                    7  => 1,
+                    8  => 1,
+                    10 => 1,
+                    15 => 1,
+                   );
+        }//end switch
 
         return null;
 
-    }
+    }//end getErrorList()
+
 
     /**
      * Returns the lines where warnings should occur.
@@ -69,6 +85,8 @@ class MO4_Tests_Formatting_AlphabeticalUseStatementsUnitTest
     protected function getWarningList()
     {
         return array();
-    }
-}
- 
+
+    }//end getWarningList()
+
+
+}//end class
