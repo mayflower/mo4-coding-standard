@@ -4,14 +4,16 @@ php:
   - 5.4
   - 5.5
   - 5.6
+  - 7.0
   - hhvm
-  - nightly
 
 before_script:
   - composer install --dev
   - mkdir -p vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/MO4
-  - cp -R Sniffs vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/MO4
-  - cp -R Tests vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/MO4
+  - cp ruleset.xml vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/MO4/
+  - cp -R Sniffs vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/MO4/
+  - cp -R Tests vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/MO4/
+  - (cd vendor/squizlabs/php_codesniffer/CodeSniffer/Standards ; git clone https://github.com/xalopp/symfony-coding-standard.git Symfony)
 
 script:
   - (cd vendor/squizlabs/php_codesniffer ; phpunit --filter MO4)

@@ -61,7 +61,7 @@ The unit-tests are run from within the PHP_CodeSniffer directory
 
 * clone the [CodeSniffer repository](https://github.com/squizlabs/PHP_CodeSniffer)
 * symlink, copy or clone the [Symfony Coding Standard](https://github.com/xalopp/symfony-coding-standard) and symlink, copy or move it to `CodeSniffer/Standards/Symfony`
-* symlink, copy or clone this repository to `CodeSniffer/Standards/MO4```
+* symlink, copy or clone this repository to `CodeSniffer/Standards/MO4`
 * from the CodeSniffer repository root run `phpunit --filter MO4`
 
 ## Credit
