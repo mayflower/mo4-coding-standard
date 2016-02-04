@@ -33,6 +33,7 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
 
     /**
      * Tokens used in full class name.
+     *
      * @var array
      */
     private $_classNameTokens = array(

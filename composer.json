@@ -13,16 +13,17 @@
             }
         }
     ],
-    "name": "playbloom/php_codesniffer_symfony",
-    "description": "PHP_CodeSniffer ruleset for Symfony PSR coding standards.",
+    "name": "mayflower/mo4-coding-standard",
+    "description": "PHP CodeSniffer ruleset implementing the MO4 coding standards extending the Symfony coding standards.",
     "type": "library",
     "keywords": [
         "phpcs",
         "Symfony",
+        "mo4",
         "standards",
         "PSR"
     ],
-    "homepage": "https://github.com/Mayflower/mo4-coding-standard",
+    "homepage": "https://github.com/mayflower/mo4-coding-standard",
     "license": "MIT",
     "authors": [
         {
@@ -31,8 +32,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/Mayflower/mo4-coding-standard/issues",
-        "source": "https://github.com/Mayflower/mo4-coding-standard"
+        "issues": "https://github.com/mayflower/mo4-coding-standard/issues",
+        "source": "https://github.com/mayflower/mo4-coding-standard"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "*"
