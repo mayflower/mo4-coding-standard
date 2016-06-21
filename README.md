@@ -13,15 +13,15 @@ Requires
 
 The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://symfony.com/doc/current/contributing/code/standards.html) and adds following rules:
 
-* short tags "[...]" must be used instead of  "array(...)"
-* in associates arrays, the "=>" operators must be aligned
-* in arrays, the key and '=>' operator must be on the same line
-* each consecutive variable assignments must align on the assignment operator
-* use statements must be sorted
-* you should use the imported class name, whenever it was imported with a use statement
-* variables in double quoted strings must be surrounded by { }, e.g. "{$VAR}" instead of "$VAR"
-* sprintf or "{$VAR1} {$VAR2}" must be used instead of the concat operator, concat operators are only allowed to concat constants and multi line strings,
-* a white space is required after each cast operator, e.g. "(int) $value" instead of "(int)$value",
+* short array syntax `[...]` must be used instead of  `array(...)`
+* in associative arrays, the `=>` operators must be aligned
+* in arrays, the key and `=>` operator must be on the same line
+* each consecutive variable assignment must align at the assignment operator
+* use statements must be sorted lexicographically
+* you should use the imported class name when it was imported with a use statement
+* interpolated variables in double quoted strings must be surrounded by `{ }`, e.g. `{$VAR}` instead of `$VAR`
+* `sprintf` or `"{$VAR1} {$VAR2}"` must be used instead of the dot operator; concat operators are only allowed to concatenate constants and multi line strings,
+* a whitespace is required after each typecast, e.g. `(int) $value` instead of `(int)$value`
 
 
 ## Installation
