@@ -26,8 +26,11 @@
  * @license   http://spdx.org/licenses/MIT MIT License
  * @link      https://github.com/Mayflower/mo4-coding-standard
  */
-class MO4_Tests_Strings_VariableInDoubleQuotedStringUnitTest extends
-    AbstractSniffUnitTest
+namespace MO4\Tests\Strings;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
+class VariableInDoubleQuotedStringUnitTest extends AbstractSniffUnitTest
 {
     /**
      * Returns the lines where errors should occur.

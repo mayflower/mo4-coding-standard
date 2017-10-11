@@ -36,8 +36,8 @@
         "source": "https://github.com/mayflower/mo4-coding-standard"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "2.9.x-dev",
-        "phpunit/phpunit": "^4.0 || ^5.0"
+        "squizlabs/php_codesniffer": "3.x-dev",
+        "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0"
     },
     "require": {
         "php": ">=5.4.0"
