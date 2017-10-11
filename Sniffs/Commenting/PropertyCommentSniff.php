@@ -13,6 +13,11 @@
  * @link     https://github.com/Mayflower/mo4-coding-standard
  */
 
+namespace MO4\Sniffs\Commenting;
+
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
+
 /**
  * Alphabetical Use Statements sniff.
  *
@@ -25,8 +30,7 @@
  * @license   http://spdx.org/licenses/MIT MIT License
  * @link      https://github.com/Mayflower/mo4-coding-standard
  */
-class MO4_Sniffs_Commenting_PropertyCommentSniff
-    extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+class PropertyCommentSniff extends AbstractScopeSniff
 {
     /**
      * A list of tokenizers this sniff supports.
@@ -40,20 +44,20 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
      *
      * @var array
      */
-    private $_tokenTypes = array(
-                            T_VARIABLE,
-                            T_CONST,
-                           );
+    private $myTokenTypes = array(
+                             T_VARIABLE,
+                             T_CONST,
+                            );
 
 
     /**
      * Construct PropertyCommentSniff
      */
-    function __construct()
+    public function __construct()
     {
         $scopes = array(T_CLASS);
 
-        parent::__construct($scopes, $this->_tokenTypes, true);
+        parent::__construct($scopes, $this->myTokenTypes, true);
 
     }//end __construct()
 
@@ -62,17 +66,17 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
      * Processes a token that is found within the scope that this test is
      * listening to.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param int                  $stackPtr  The position in the stack where this
-     *                                        token was found.
-     * @param int                  $currScope The position in the tokens array that
-     *                                        opened the scope that this test is
-     *                                        listening for.
+     * @param File $phpcsFile The file where this token was found.
+     * @param int  $stackPtr  The position in the stack where this
+     *                        token was found.
+     * @param int  $currScope The position in the tokens array that
+     *                        opened the scope that this test is
+     *                        listening for.
      *
      * @return void
      */
     protected function processTokenWithinScope(
-        PHP_CodeSniffer_File $phpcsFile,
+        File $phpcsFile,
         $stackPtr,
         $currScope
     ) {
@@ -143,7 +147,7 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
             // and has a variable preceding it in the same line.
             // If yes, it doesn't count.
             $firstTokenOnLine = $phpcsFile->findFirstOnLine(
-                $this->_tokenTypes,
+                $this->myTokenTypes,
                 $commentEnd
             );
             if ($tokens[$commentStart]['line'] === $tokens[$commentEnd]['line']
@@ -212,7 +216,7 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
             // a variable definition on the same line.
             // If yes, it doesn't count.
             $firstOnLine = $phpcsFile->findFirstOnLine(
-                $this->_tokenTypes,
+                $this->myTokenTypes,
                 $commentEnd
             );
 
@@ -232,6 +236,21 @@ class MO4_Sniffs_Commenting_PropertyCommentSniff
         }//end if
 
     }//end processTokenWithinScope()
+
+
+    /**
+     * Process tokens outside scope.
+     *
+     * @param File $phpcsFile The file where this token was found.
+     * @param int  $stackPtr  The position in the stack where this
+     *                        token was found.
+     *
+     * @return void
+     */
+    protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
+    {
+
+    }//end processTokenOutsideScope()
 
 
 }//end class

@@ -27,73 +27,79 @@
  * @license   http://spdx.org/licenses/MIT MIT License
  * @link      https://github.com/Mayflower/mo4-coding-standard
  */
-class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
-    extends PSR2_Sniffs_Namespaces_UseDeclarationSniff
+
+namespace MO4\Sniffs\Formatting;
+
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Standards\PSR2\Sniffs\Namespaces\UseDeclarationSniff;
+use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
+
+class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 {
     /**
      * Last import seen in group
      *
      * @var string
      */
-    private $_lastImport = '';
+    private $lastImport = '';
 
     /**
      * Line number of the last seen use statement
      *
-     * @var int
+     * @var integer
      */
-    private $_lastLine = -1;
+    private $lastLine = -1;
 
     /**
      * Current file
      *
      * @var string
      */
-    private $_currentFile = null;
+    private $currentFile = null;
 
 
     /**
      * Processes this test, when one of its tokens is encountered.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in
-     *                                        the stack passed in $tokens.
+     * @param File $phpcsFile The file being scanned.
+     * @param int  $stackPtr  The position of the current token in
+     *                        the stack passed in $tokens.
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         parent::process($phpcsFile, $stackPtr);
 
-        if ($this->_currentFile !== $phpcsFile->getFilename()) {
-            $this->_lastLine    = -1;
-            $this->_lastImport  = '';
-            $this->_currentFile = $phpcsFile->getFilename();
+        if ($this->currentFile !== $phpcsFile->getFilename()) {
+            $this->lastLine    = -1;
+            $this->lastImport  = '';
+            $this->currentFile = $phpcsFile->getFilename();
         }
 
         $tokens = $phpcsFile->getTokens();
         $line   = $tokens[$stackPtr]['line'];
 
         // Ignore function () use () {...}.
-        $isNonImportUse = $this->_checkIsNonImportUse($phpcsFile, $stackPtr);
+        $isNonImportUse = $this->checkIsNonImportUse($phpcsFile, $stackPtr);
         if (true === $isNonImportUse) {
             return;
         }
 
-        $currentImportArr = $this->_getUseImport($phpcsFile, $stackPtr);
+        $currentImportArr = $this->getUseImport($phpcsFile, $stackPtr);
         $currentPtr       = $currentImportArr['startPtr'];
         $currentImport    = $currentImportArr['content'];
 
-        if (($this->_lastLine + 1) < $line) {
-            $this->_lastLine   = $line;
-            $this->_lastImport = $currentImport;
+        if (($this->lastLine + 1) < $line) {
+            $this->lastLine   = $line;
+            $this->lastImport = $currentImport;
 
             return;
         }
 
         $fixable = false;
-        if ($this->_lastImport !== ''
-            && strcmp($this->_lastImport, $currentImport) > 0
+        if ($this->lastImport !== ''
+            && strcmp($this->lastImport, $currentImport) > 0
         ) {
             $msg     = 'USE statements must be sorted alphabetically';
             $code    = 'MustBeSortedAlphabetically';
@@ -103,18 +109,18 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
         if (true === $fixable) {
             // Find the correct position in current use block.
             $newDestinationPtr
-                = $this->_findNewDestination($phpcsFile, $stackPtr, $currentImport);
+                = $this->findNewDestination($phpcsFile, $stackPtr, $currentImport);
 
-            $currentUseStr = $this->_getUseStatementAsString($phpcsFile, $stackPtr);
+            $currentUseStr = $this->getUseStatementAsString($phpcsFile, $stackPtr);
 
             $phpcsFile->fixer->beginChangeset();
             $phpcsFile->fixer->addContentBefore($newDestinationPtr, $currentUseStr);
-            $this->_fixerClearLine($phpcsFile, $stackPtr);
+            $this->fixerClearLine($phpcsFile, $stackPtr);
             $phpcsFile->fixer->endChangeset();
         }//end if
 
-        $this->_lastImport = $currentImport;
-        $this->_lastLine   = $line;
+        $this->lastImport = $currentImport;
+        $this->lastLine   = $line;
 
     }//end process()
 
@@ -122,12 +128,12 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
     /**
      * Get the import class name for use statement pointed by $stackPtr.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile PHP CS File
-     * @param int                  $stackPtr  pointer
+     * @param File $phpcsFile PHP CS File
+     * @param int  $stackPtr  pointer
      *
      * @return array
      */
-    private function _getUseImport(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    private function getUseImport(File $phpcsFile, $stackPtr)
     {
         $importTokens = array(
                          T_NS_SEPARATOR,
@@ -148,19 +154,19 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
                 'content'  => $import,
                );
 
-    }//end _getUseImport()
+    }//end getUseImport()
 
 
     /**
      * Get the full use statement as string, including trailing white space.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile PHP CS File
-     * @param int                  $stackPtr  pointer
+     * @param File $phpcsFile PHP CS File
+     * @param int  $stackPtr  pointer
      *
      * @return string
      */
-    private function _getUseStatementAsString(
-        PHP_CodeSniffer_File $phpcsFile,
+    private function getUseStatementAsString(
+        File $phpcsFile,
         $stackPtr
     ) {
         $tokens = $phpcsFile->getTokens();
@@ -175,19 +181,19 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
 
         return $useStr;
 
-    }//end _getUseStatementAsString()
+    }//end getUseStatementAsString()
 
 
     /**
      * Check if "use" token is not used for import.
      * E.g. function () use () {...}.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile PHP CS File
-     * @param int                  $stackPtr  pointer
+     * @param File $phpcsFile PHP CS File
+     * @param int  $stackPtr  pointer
      *
      * @return bool
      */
-    private function _checkIsNonImportUse(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    private function checkIsNonImportUse(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -210,7 +216,7 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
 
         return false;
 
-    }//end _checkIsNonImportUse()
+    }//end checkIsNonImportUse()
 
 
     /**
@@ -218,12 +224,12 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
      * the by the empty string.
      * This will delete the line.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile PHP CS file
-     * @param int                  $stackPtr  pointer
+     * @param File $phpcsFile PHP CS file
+     * @param int  $stackPtr  pointer
      *
      * @return void
      */
-    private function _fixerClearLine(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    private function fixerClearLine(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         $line   = $tokens[$stackPtr]['line'];
@@ -236,21 +242,21 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
             $phpcsFile->fixer->replaceToken($i, '');
         }
 
-    }//end _fixerClearLine()
+    }//end fixerClearLine()
 
 
     /**
      * Find a new destination pointer for the given import string in current
      * use block.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile PHP CS File
-     * @param int                  $stackPtr  pointer
-     * @param string               $import    import string requiring new position
+     * @param File   $phpcsFile PHP CS File
+     * @param int    $stackPtr  pointer
+     * @param string $import    import string requiring new position
      *
      * @return int
      */
-    private function _findNewDestination(
-        PHP_CodeSniffer_File $phpcsFile,
+    private function findNewDestination(
+        File $phpcsFile,
         $stackPtr,
         $import
     ) {
@@ -272,14 +278,14 @@ class MO4_Sniffs_Formatting_AlphabeticalUseStatementsSniff
             }
 
             $prevLine      = $tokens[$prevPtr]['line'];
-            $prevImportArr = $this->_getUseImport($phpcsFile, $prevPtr);
+            $prevImportArr = $this->getUseImport($phpcsFile, $prevPtr);
         } while ($prevLine === ($line - 1)
             && (strcmp($prevImportArr['content'], $import) > 0)
         );
 
         return $ptr;
 
-    }//end _findNewDestination()
+    }//end findNewDestination()
 
 
 }//end class

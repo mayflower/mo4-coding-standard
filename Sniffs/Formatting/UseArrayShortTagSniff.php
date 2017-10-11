@@ -13,6 +13,11 @@
  * @link     https://github.com/Mayflower/mo4-coding-standard
  */
 
+namespace MO4\Sniffs\Formatting;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+
 /**
  * Use Array Short Tag sniff.
  *
@@ -25,7 +30,7 @@
  * @license   http://spdx.org/licenses/MIT MIT License
  * @link      https://github.com/Mayflower/mo4-coding-standard
  */
-class MO4_Sniffs_Formatting_UseArrayShortTagSniff implements PHP_CodeSniffer_Sniff
+class UseArrayShortTagSniff implements Sniff
 {
 
 
@@ -46,15 +51,15 @@ class MO4_Sniffs_Formatting_UseArrayShortTagSniff implements PHP_CodeSniffer_Sni
      * Called when one of the token types that this sniff is listening for
      * is found.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where the
-     *                                        token was found.
-     * @param int                  $stackPtr  The position in the PHP_CodeSniffer
-     *                                        file's token stack where the token
-     *                                        was found.
+     * @param File $phpcsFile The PHP_CodeSniffer file where the
+     *                        token was found.
+     * @param int  $stackPtr  The position in the PHP_CodeSniffer
+     *                        file's token stack where the token
+     *                        was found.
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $fix = $phpcsFile->addFixableError('Array short tag [ ... ] must be used', $stackPtr, 'NoShortTagUsed');
 

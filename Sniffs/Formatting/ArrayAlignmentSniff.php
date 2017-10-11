@@ -12,6 +12,11 @@
  * @version  GIT: master
  * @link     https://github.com/Mayflower/mo4-coding-standard
  */
+namespace MO4\Sniffs\Formatting;
+
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
 
 /**
  * Array Alignment sniff.
@@ -25,7 +30,7 @@
  * @license   http://spdx.org/licenses/MIT MIT License
  * @link      https://github.com/Mayflower/mo4-coding-standard
  */
-class MO4_Sniffs_Formatting_ArrayAlignmentSniff implements PHP_CodeSniffer_Sniff
+class ArrayAlignmentSniff implements Sniff
 {
     /**
      * Define all types of arrays.
@@ -54,13 +59,13 @@ class MO4_Sniffs_Formatting_ArrayAlignmentSniff implements PHP_CodeSniffer_Sniff
     /**
      * Processes this test, when one of its tokens is encountered.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in
-     *                                        the stack passed in $tokens.
+     * @param File $phpcsFile The file being scanned.
+     * @param int  $stackPtr  The position of the current token in
+     *                        the stack passed in $tokens.
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens  = $phpcsFile->getTokens();
         $current = $tokens[$stackPtr];

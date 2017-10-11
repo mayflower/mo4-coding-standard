@@ -26,7 +26,11 @@
  * @license   http://spdx.org/licenses/MIT MIT License
  * @link      https://github.com/Mayflower/mo4-coding-standard
  */
-class MO4_Tests_Formatting_ArrayAlignmentUnitTest extends AbstractSniffUnitTest
+namespace MO4\Tests\Formatting;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
+class ArrayAlignmentUnitTest extends AbstractSniffUnitTest
 {
 
     /**

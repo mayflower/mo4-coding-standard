@@ -13,6 +13,12 @@
  * @link     https://github.com/Mayflower/mo4-coding-standard
  */
 
+namespace MO4\Sniffs\Formatting;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
+
 /**
  * Unnecessary Namespace Usage sniff.
  *
@@ -27,8 +33,7 @@
  * @license   http://spdx.org/licenses/MIT MIT License
  * @link      https://github.com/Mayflower/mo4-coding-standard
  */
-class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
-    implements PHP_CodeSniffer_Sniff
+class UnnecessaryNamespaceUsageSniff implements Sniff
 {
 
     /**
@@ -36,10 +41,10 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
      *
      * @var array
      */
-    private $_classNameTokens = array(
-                                 T_NS_SEPARATOR,
-                                 T_STRING,
-                                );
+    private $classNameTokens = array(
+                                T_NS_SEPARATOR,
+                                T_STRING,
+                               );
 
 
     /**
@@ -59,15 +64,15 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
      * Called when one of the token types that this sniff is listening for
      * is found.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where the
-     *                                        token was found.
-     * @param int                  $stackPtr  The position in the PHP_CodeSniffer
-     *                                        file's token stack where the token
-     *                                        was found.
+     * @param File $phpcsFile The PHP_CodeSniffer file where the
+     *                        token was found.
+     * @param int  $stackPtr  The position in the PHP_CodeSniffer
+     *                        file's token stack where the token
+     *                        was found.
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $docCommentTags = array(
                            '@param'  => 1,
@@ -88,7 +93,7 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
 
         while ($nsSep !== false) {
             $classNameEnd = $phpcsFile->findNext(
-                $this->_classNameTokens,
+                $this->classNameTokens,
                 $nsSep,
                 null,
                 true
@@ -104,7 +109,7 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
                     ($classNameEnd - $nsSep)
                 );
 
-                $this->_checkShorthandPossible(
+                $this->checkShorthandPossible(
                     $phpcsFile,
                     $useStatements,
                     $className,
@@ -165,7 +170,7 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
                                 continue;
                             }
 
-                            $this->_checkShorthandPossible(
+                            $this->checkShorthandPossible(
                                 $phpcsFile,
                                 $useStatements,
                                 $typeToken,
@@ -188,14 +193,14 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
     /**
      * Get all use statements in range
      *
-     * @param PHP_CodeSniffer_File $phpcsFile PHP CS File
-     * @param int                  $start     start pointer
-     * @param int                  $end       end pointer
+     * @param File $phpcsFile PHP CS File
+     * @param int  $start     start pointer
+     * @param int  $end       end pointer
      *
      * @return array
      */
     protected function getUseStatements(
-        PHP_CodeSniffer_File $phpcsFile,
+        File $phpcsFile,
         $start,
         $end
     ) {
@@ -212,7 +217,7 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
                 true
             );
             $classNameEnd   = $phpcsFile->findNext(
-                $this->_classNameTokens,
+                $this->classNameTokens,
                 ($classNameStart + 1),
                 $end,
                 true
@@ -235,7 +240,7 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
             $length    = ($classNameEnd - $classNameStart);
             $className = $phpcsFile->getTokensAsString($classNameStart, $length);
 
-            $className = $this->_getFullyQualifiedClassName($className);
+            $className = $this->getFullyQualifiedClassName($className);
             $useStatements[$className] = $tokens[$aliasNamePtr]['content'];
             $i = ($useEnd + 1);
 
@@ -254,13 +259,13 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
     /**
      * Get the namespace of the current class file
      *
-     * @param PHP_CodeSniffer_File $phpcsFile PHP CS File
-     * @param int                  $start     start pointer
-     * @param int                  $end       end pointer
+     * @param File $phpcsFile PHP CS File
+     * @param int  $start     start pointer
+     * @param int  $end       end pointer
      *
      * @return array
      */
-    protected  function getNamespace(PHP_CodeSniffer_File $phpcsFile, $start, $end)
+    protected function getNamespace(File $phpcsFile, $start, $end)
     {
         $namespace      = $phpcsFile->findNext(T_NAMESPACE, $start, $end);
         $namespaceStart = $phpcsFile->findNext(
@@ -275,7 +280,7 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
         }
 
         $namespaceEnd = $phpcsFile->findNext(
-            $this->_classNameTokens,
+            $this->classNameTokens,
             ($namespaceStart + 1),
             $end,
             true
@@ -296,7 +301,7 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
      *
      * @return string
      */
-    private function _getFullyQualifiedClassName($className)
+    private function getFullyQualifiedClassName($className)
     {
         if ($className[0] !== '\\') {
             $className = "\\{$className}";
@@ -306,39 +311,39 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
 
         return $className;
 
-    }//end _getFullyQualifiedClassName()
+    }//end getFullyQualifiedClassName()
 
 
     /**
      * Check if short hand is possible.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile     PHP CS File
-     * @param array                $useStatements array with class use statements
-     * @param string               $className     class name
-     * @param string               $nameSpace     name space
-     * @param int                  $startPtr      start token pointer
-     * @param int                  $endPtr        end token pointer
-     * @param bool                 $isDocBlock    true if fixing doc block
+     * @param File   $phpcsFile     PHP CS File
+     * @param array  $useStatements array with class use statements
+     * @param string $className     class name
+     * @param string $nameSpace     name space
+     * @param int    $startPtr      start token pointer
+     * @param int    $endPtr        end token pointer
+     * @param bool   $isDocBlock    true if fixing doc block
      *
      * @return void
      */
-    private function _checkShorthandPossible(
-        PHP_CodeSniffer_File $phpcsFile,
+    private function checkShorthandPossible(
+        File $phpcsFile,
         $useStatements,
         $className,
         $nameSpace,
         $startPtr,
         $endPtr,
-        $isDocBlock = false
+        $isDocBlock=false
     ) {
         $msg     = 'Shorthand possible. Replace "%s" with "%s"';
         $fixable = false;
         $replaceClassName = false;
         $replacement      = null;
 
-        $fullClassName = $this->_getFullyQualifiedClassName($className);
+        $fullClassName = $this->getFullyQualifiedClassName($className);
 
-        if ((array_key_exists($fullClassName, $useStatements)) === true) {
+        if (array_key_exists($fullClassName, $useStatements) === true) {
             $replacement = $useStatements[$fullClassName];
 
             $data    = array(
@@ -388,7 +393,7 @@ class MO4_Sniffs_Formatting_UnnecessaryNamespaceUsageSniff
             $phpcsFile->fixer->endChangeset();
         }//end if
 
-    }//end _checkShorthandPossible()
+    }//end checkShorthandPossible()
 
 
 }//end class
