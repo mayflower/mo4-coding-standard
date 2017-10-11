@@ -6,11 +6,11 @@ php:
   - 5.6
   - 7.0
   - 7.1
-  - hhvm
+  - 7.2
 
 before_script:
-  - phpenv config-rm xdebug.ini ; exit 0
-  - composer install --dev
+  - phpenv config-rm xdebug.ini
+  - composer install
   - mkdir -p vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/MO4
   - cp ruleset.xml vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/MO4/
   - cp -R Sniffs vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/MO4/
@@ -18,5 +18,5 @@ before_script:
   - (cd vendor/squizlabs/php_codesniffer/CodeSniffer/Standards ; git clone https://github.com/xalopp/symfony-coding-standard.git Symfony)
 
 script:
-  - (cd vendor/squizlabs/php_codesniffer ; phpunit --filter MO4)
+  - (cd vendor/squizlabs/php_codesniffer ; ../../bin/phpunit --filter MO4)
   - ./vendor/squizlabs/php_codesniffer/scripts/phpcs ./vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/MO4/Sniffs --standard=PHPCS --report=summary -np
