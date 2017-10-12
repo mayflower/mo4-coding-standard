@@ -15,6 +15,7 @@ before_script:
   - cp ruleset.xml vendor/squizlabs/php_codesniffer/src/Standards/MO4/
   - cp -R Sniffs vendor/squizlabs/php_codesniffer/src/Standards/MO4/
   - cp -R Tests vendor/squizlabs/php_codesniffer/src/Standards/MO4/
+  - (cd vendor/squizlabs/php_codesniffer/CodeSniffer/Standards ; git clone https://github.com/djoos/Symfony-coding-standard.git Symfony ; mv Symfony/Symfony/* Symfony/)
 
 script:
   - (cd vendor/squizlabs/php_codesniffer ; ../../bin/phpunit --filter MO4)
