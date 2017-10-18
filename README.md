@@ -37,7 +37,7 @@ The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://
 3. Copy, symlink or check out the Symfony coding standard and this repository to their respecting folders inside the
    phpcs `Standards` directory:
 
-        cd /path/to/pear/PHP/CodeSniffer/Standards
+        cd /path/to/pear/PHP/CodeSniffer/src/Standards
         git clone https://github.com/djoos/Symfony-coding-standard.git Symfony
         mv Symfony/Symfony/* Symfony/
         git clone https://github.com/mayflower/mo4-coding-standard.git MO4
