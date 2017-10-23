@@ -56,13 +56,13 @@ If you contribute code to these sniffs, please make sure it conforms to the PHPC
 
 To check the coding standard, run in the repository root:
 
-        phpcs --ignore=Tests --standard=PHPCS . -n
+        bin/phpcs --ignore='*/vendor/*'
 
 The unit-tests are run from within the PHP_CodeSniffer directory
 
 * clone the [CodeSniffer repository](https://github.com/squizlabs/PHP_CodeSniffer)
-* symlink, copy or clone the [Symfony Coding Standard](https://github.com/djoos/Symfony-coding-standard) and symlink, copy or move its `Symfony` subdirectory to `CodeSniffer/Standards/Symfony`
-* symlink, copy or clone this repository to `CodeSniffer/Standards/MO4`
+* symlink, copy or clone the [Symfony Coding Standard](https://github.com/djoos/Symfony-coding-standard) and symlink, copy or move its `Symfony` subdirectory to `src/Standards/Symfony`
+* symlink, copy or clone this repository to `src/Standards/MO4`
 * from the CodeSniffer repository root run `phpunit --filter MO4`
 
 ## Credit
