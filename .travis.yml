@@ -7,17 +7,20 @@ php:
   - 7.0
   - 7.1
   - 7.2
+env:
+  global:
+    - PHPCS_DIR=vendor/squizlabs/php_codesniffer
+    - MO4CS_DIR=vendor/squizlabs/php_codesniffer/src/Standards/MO4
 
 before_script:
   - phpenv config-rm xdebug.ini
   - composer install
-  - mkdir -p vendor/squizlabs/php_codesniffer/src/Standards/MO4
-  - cp ruleset.xml vendor/squizlabs/php_codesniffer/src/Standards/MO4/
-  - cp -R Sniffs vendor/squizlabs/php_codesniffer/src/Standards/MO4/
-  - cp -R Tests vendor/squizlabs/php_codesniffer/src/Standards/MO4/
-  - (cd vendor/squizlabs/php_codesniffer/CodeSniffer/Standards ; git clone https://github.com/djoos/Symfony-coding-standard.git Symfony ; mv Symfony/Symfony/* Symfony/)
+  - mkdir -p $MO4CS_DIR
+  - cp ruleset.xml $MO4CS_DIR/
+  - cp -R Sniffs $MO4CS_DIR/
+  - cp -R Tests $MO4CS_DIR/
+  - (cd $PHPCS_DIR/src/Standards ; git clone https://github.com/djoos/Symfony-coding-standard.git Symfony ; mv Symfony/Symfony/* Symfony/)
 
 script:
-  - (cd vendor/squizlabs/php_codesniffer ; ../../bin/phpunit --filter MO4)
-  - (mkdir -p vendor/squizlabs/php_codesniffer/src/Standards/PHPCS ; cp vendor/squizlabs/php_codesniffer/phpcs.xml.dist vendor/squizlabs/php_codesniffer/src/Standards/PHPCS/ruleset.xml)
-  - ./vendor/squizlabs/php_codesniffer/bin/phpcs ./vendor/squizlabs/php_codesniffer/src/Standards/MO4/Sniffs --standard=PHPCS --report=summary -np
+  - (cd $PHPCS_DIR ; ../../bin/phpunit --filter MO4)
+  - $PHPCS_DIR/bin/phpcs $MO4CS_DIR/Sniffs --standard=$PHPCS_DIR/phpcs.xml.dist --report=summary -np
