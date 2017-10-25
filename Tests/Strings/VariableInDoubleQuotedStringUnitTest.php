@@ -32,6 +32,8 @@ use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 class VariableInDoubleQuotedStringUnitTest extends AbstractSniffUnitTest
 {
+
+
     /**
      * Returns the lines where errors should occur.
      *
@@ -42,27 +44,29 @@ class VariableInDoubleQuotedStringUnitTest extends AbstractSniffUnitTest
      *
      * @return array(int => int)
      */
-    protected function getErrorList($testFile = '')
+    protected function getErrorList($testFile='')
     {
         switch ($testFile) {
         case 'VariableInDoubleQuotedStringUnitTest.pass.inc':
             return array();
         case 'VariableInDoubleQuotedStringUnitTest.fail.inc':
             return array(
-                3 => 1,
-                4 => 1,
-                5 => 2,
-                6 => 2,
-                7 => 1,
-                8 => 1,
-                9 => 1,
-                10 => 1,
-                11 => 1,
-            );
+                    3  => 1,
+                    4  => 1,
+                    5  => 2,
+                    6  => 2,
+                    7  => 1,
+                    8  => 1,
+                    9  => 1,
+                    10 => 1,
+                    11 => 1,
+                   );
         }
 
         return null;
-    }
+
+    }//end getErrorList()
+
 
     /**
      * Returns the lines where warnings should occur.
@@ -75,5 +79,8 @@ class VariableInDoubleQuotedStringUnitTest extends AbstractSniffUnitTest
     protected function getWarningList()
     {
         return array();
-    }
-}
+
+    }//end getWarningList()
+
+
+}//end class

@@ -45,7 +45,7 @@ class AlphabeticalUseStatementsUnitTest extends AbstractSniffUnitTest
      *
      * @return array(int => int)
      */
-    protected function getErrorList($testFile = '')
+    protected function getErrorList($testFile='')
     {
         switch ($testFile) {
         case 'AlphabeticalUseStatementsUnitTest.pass.inc':

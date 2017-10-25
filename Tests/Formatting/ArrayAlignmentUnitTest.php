@@ -33,6 +33,7 @@ use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 class ArrayAlignmentUnitTest extends AbstractSniffUnitTest
 {
 
+
     /**
      * Returns the lines where errors should occur.
      *
@@ -43,50 +44,51 @@ class ArrayAlignmentUnitTest extends AbstractSniffUnitTest
      *
      * @return array(int => int)
      */
-    protected function getErrorList($testFile = '')
+    protected function getErrorList($testFile='')
     {
         switch ($testFile) {
         case 'ArrayAlignmentUnitTest.pass.inc':
             return array();
         case 'ArrayAlignmentUnitTest.fail.inc':
             return array(
-                5 => 1,
-                10 => 1,
-                17 => 2,
-                18 => 2,
-                22 => 1,
-                28 => 1,
-                38 => 1,
-                43 => 1,
-                45 => 1,
-                49 => 1,
-                51 => 1,
-                58 => 1,
-                59 => 1,
-                61 => 1,
-                67 => 1,
-                70 => 1,
-                71 => 1,
-                73 => 1,
-                82 => 1,
-                83 => 1,
-                85 => 1,
-                93 => 1,
-                94 => 1,
-                97 => 1,
-                105 => 1,
-                130 => 1,
-                132 => 1,
-                134 => 1,
-                136 => 2,
-                145 => 1,
-                151 => 2,
-            );
-        }
+                    5   => 1,
+                    10  => 1,
+                    17  => 2,
+                    18  => 2,
+                    22  => 1,
+                    28  => 1,
+                    38  => 1,
+                    43  => 1,
+                    45  => 1,
+                    49  => 1,
+                    51  => 1,
+                    58  => 1,
+                    59  => 1,
+                    61  => 1,
+                    67  => 1,
+                    70  => 1,
+                    71  => 1,
+                    73  => 1,
+                    82  => 1,
+                    83  => 1,
+                    85  => 1,
+                    93  => 1,
+                    94  => 1,
+                    97  => 1,
+                    105 => 1,
+                    130 => 1,
+                    132 => 1,
+                    134 => 1,
+                    136 => 2,
+                    145 => 1,
+                    151 => 2,
+                   );
+        }//end switch
 
         return null;
 
-    }
+    }//end getErrorList()
+
 
     /**
      * Returns the lines where warnings should occur.
@@ -99,5 +101,8 @@ class ArrayAlignmentUnitTest extends AbstractSniffUnitTest
     protected function getWarningList()
     {
         return array();
-    }
-}
+
+    }//end getWarningList()
+
+
+}//end class
