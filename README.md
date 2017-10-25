@@ -52,18 +52,7 @@ The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://
 
 ## Contributing
 
-If you contribute code to these sniffs, please make sure it conforms to the PHPCS coding standard and that the unit tests still pass.
-
-To check the coding standard, run in the repository root:
-
-        bin/phpcs --ignore='*/vendor/*'
-
-The unit-tests are run from within the PHP_CodeSniffer directory
-
-* clone the [CodeSniffer repository](https://github.com/squizlabs/PHP_CodeSniffer)
-* symlink, copy or clone the [Symfony Coding Standard](https://github.com/djoos/Symfony-coding-standard) and symlink, copy or move its `Symfony` subdirectory to `src/Standards/Symfony`
-* symlink, copy or clone this repository to `src/Standards/MO4`
-* from the CodeSniffer repository root run `phpunit --filter MO4`
+See [CONTRIBUTING.md](CONTRIBUTING.md) for information.
 
 ## Credit
 
