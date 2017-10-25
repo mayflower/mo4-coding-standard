@@ -33,6 +33,8 @@ use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 class UseArrayShortTagUnitTest extends AbstractSniffUnitTest
 {
+
+
     /**
      * Returns the lines where errors should occur.
      *
@@ -43,25 +45,27 @@ class UseArrayShortTagUnitTest extends AbstractSniffUnitTest
      *
      * @return array(int => int)
      */
-    protected function getErrorList($testFile = '')
+    protected function getErrorList($testFile='')
     {
         switch ($testFile) {
         case 'UseArrayShortTagUnitTest.pass.inc':
             return array();
         case 'UseArrayShortTagUnitTest.fail.inc':
             return array(
-                3  => 1,
-                4  => 1,
-                8  => 1,
-                10 => 1,
-                13 => 1,
-                15 => 1,
-                16 => 2,
-            );
+                    3  => 1,
+                    4  => 1,
+                    8  => 1,
+                    10 => 1,
+                    13 => 1,
+                    15 => 1,
+                    16 => 2,
+                   );
         }
 
         return null;
-    }
+
+    }//end getErrorList()
+
 
     /**
      * Returns the lines where warnings should occur.
@@ -74,5 +78,8 @@ class UseArrayShortTagUnitTest extends AbstractSniffUnitTest
     protected function getWarningList()
     {
         return array();
-    }
-}
+
+    }//end getWarningList()
+
+
+}//end class

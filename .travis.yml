@@ -23,4 +23,4 @@ before_script:
 
 script:
   - (cd $PHPCS_DIR ; ../../bin/phpunit --filter MO4)
-  - $PHPCS_DIR/bin/phpcs $MO4CS_DIR/Sniffs --standard=$PHPCS_DIR/phpcs.xml.dist --report=summary -np
+  - $PHPCS_DIR/bin/phpcs $MO4CS_DIR --standard=$PHPCS_DIR/phpcs.xml.dist --report=full -np

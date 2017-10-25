@@ -32,6 +32,8 @@ use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 class PropertyCommentUnitTest extends AbstractSniffUnitTest
 {
+
+
     /**
      * Returns the lines where errors should occur.
      *
@@ -42,27 +44,28 @@ class PropertyCommentUnitTest extends AbstractSniffUnitTest
      *
      * @return array(int => int)
      */
-    protected function getErrorList($testFile = '')
+    protected function getErrorList($testFile='')
     {
         switch ($testFile) {
         case 'PropertyCommentUnitTest.pass.inc':
             return array();
         case 'PropertyCommentUnitTest.fail.inc':
             return array(
-                7  => 1,
-                10 => 1,
-                17 => 1,
-                26 => 2,
-                29 => 1,
-                34 => 1,
-                37 => 1,
-                41 => 1,
-            );
+                    7  => 1,
+                    10 => 1,
+                    17 => 1,
+                    26 => 2,
+                    29 => 1,
+                    34 => 1,
+                    37 => 1,
+                    41 => 1,
+                   );
         }
 
         return null;
 
-    }
+    }//end getErrorList()
+
 
     /**
      * Returns the lines where warnings should occur.
@@ -75,5 +78,8 @@ class PropertyCommentUnitTest extends AbstractSniffUnitTest
     protected function getWarningList()
     {
         return array();
-    }
-}
+
+    }//end getWarningList()
+
+
+}//end class

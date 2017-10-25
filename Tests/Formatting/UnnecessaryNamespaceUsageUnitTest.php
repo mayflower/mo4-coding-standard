@@ -34,6 +34,8 @@ use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
 {
+
+
     /**
      * Returns the lines where errors should occur.
      *
@@ -44,10 +46,12 @@ class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
      *
      * @return array(int => int)
      */
-    protected function getErrorList($testFile = '')
+    protected function getErrorList($testFile='')
     {
         return array();
-    }
+
+    }//end getErrorList()
+
 
     /**
      * Returns the lines where warnings should occur.
@@ -59,7 +63,7 @@ class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
      *
      * @return array(int => int)
      */
-    protected function getWarningList($testFile = '')
+    protected function getWarningList($testFile='')
     {
         switch ($testFile) {
         case 'UnnecessaryNamespaceUsageUnitTest.pass.1.inc':
@@ -69,39 +73,42 @@ class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
             return array();
         case 'UnnecessaryNamespaceUsageUnitTest.fail.1.inc':
             return array(
-                17 => 1,
-                19 => 1,
-                24 => 1,
-                25 => 1,
-                26 => 2,
-                28 => 1,
-                30 => 2,
-                32 => 1,
-                33 => 1,
-                40 => 1,
-                44 => 1,
-                45 => 1,
-                46 => 1,
-                52 => 1,
-                56 => 1,
-            );
+                    17 => 1,
+                    19 => 1,
+                    24 => 1,
+                    25 => 1,
+                    26 => 2,
+                    28 => 1,
+                    30 => 2,
+                    32 => 1,
+                    33 => 1,
+                    40 => 1,
+                    44 => 1,
+                    45 => 1,
+                    46 => 1,
+                    52 => 1,
+                    56 => 1,
+                   );
         case 'UnnecessaryNamespaceUsageUnitTest.fail.2.inc':
             return array(
-                10 => 1,
-                11 => 1,
-            );
+                    10 => 1,
+                    11 => 1,
+                   );
         case 'UnnecessaryNamespaceUsageUnitTest.fail.3.inc':
             return array(
-                15 => 1,
-                16 => 1,
-                17 => 1,
-                18 => 1,
-                22 => 1,
-                23 => 1,
-                25 => 3,
-            );
-        }
+                    15 => 1,
+                    16 => 1,
+                    17 => 1,
+                    18 => 1,
+                    22 => 1,
+                    23 => 1,
+                    25 => 3,
+                   );
+        }//end switch
 
         return null;
-    }
-}
+
+    }//end getWarningList()
+
+
+}//end class
