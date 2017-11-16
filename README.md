@@ -26,36 +26,82 @@ The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://
 
 ## Installation
 
-1. Install phpcs:
+### Composer
+
+Using [Composer](https://getcomposer.org/) is the preferred way.
+
+1. Add the MO4 repository
+
+        composer config repositories.mo4 vcs https://github.com/mayflower/mo4-coding-standard.git
+
+   If composer complains about a missing composer.json, just create an empty one
+
+        echo '{}' > composer.json
+
+2. Add the MO4 coding standard to `composer.json`
+
+        composer require --dev mayflower/mo4-coding-standard:dev-master
+
+3. Profit
+
+        ./vendor/bin/phpcs --standard=MO4 path/to/my/file.php
+
+4. Optionally, you might set MO4 as default coding standard
+
+        ./vendor/bin/phpcs --config-set default_standard MO4
+
+### Source
+
+1. Checkout this repository
+
+        git clone https://github.com/mayflower/mo4-coding-standard.git
+
+2. Install dependencies
+
+        composer install
+
+3. Check, that Symfony and MO4 are listed as coding standards
+
+        ./vendor/bin/phpcs -i
+
+4. Profit
+
+        ./vendor/bin/phpcs --standard=MO4 path/to/my/file.php
+
+5. Optionally, you might set MO4 as default coding standard
+
+        ./vendor/bin/phpcs --config-set default_standard MO4
+
+
+### Pear
+
+1. Install phpcs
 
         pear install PHP_CodeSniffer
 
-2. Find your PEAR directory:
+2. Check out the Symfony coding standard and this repository
 
-        pear config-show | grep php_dir
+        git clone https://github.com/djoos/symfony-coding-standard.git
+        git clone https://github.com/mayflower/mo4-coding-standard.git
 
-3. Copy, symlink or check out the Symfony coding standard and this repository to their respecting folders inside the
-   phpcs `Standards` directory:
+3. Select the MO4 ruleset as your default coding standard
 
-        cd /path/to/pear/PHP/CodeSniffer/src/Standards
-        git clone https://github.com/djoos/Symfony-coding-standard.git Symfony
-        mv Symfony/Symfony/* Symfony/
-        git clone https://github.com/mayflower/mo4-coding-standard.git MO4
-
-4. Select the MO4 ruleset as your default coding standard:
-
+        phpcs --config-set installed_paths PATH/TO/symfony2-coding-standard,PATH/TO/mo4-coding-standard
         phpcs --config-set default_standard MO4
 
-5. Profit
+4. Profit
 
-        phpcs path/to/my/file.php
+        phpcs --standard=MO4 path/to/my/file.php
+
+5. Optionally, you might set MO4 as default coding standard
+
+        phpcs --config-set default_standard MO4
 
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for information.
 
 ## Credit
-
 
 ## License
 
