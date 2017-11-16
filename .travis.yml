@@ -7,20 +7,11 @@ php:
   - 7.0
   - 7.1
   - 7.2
-env:
-  global:
-    - PHPCS_DIR=vendor/squizlabs/php_codesniffer
-    - MO4CS_DIR=vendor/squizlabs/php_codesniffer/src/Standards/MO4
 
 before_script:
   - phpenv config-rm xdebug.ini
   - composer install
-  - mkdir -p $MO4CS_DIR
-  - cp ruleset.xml $MO4CS_DIR/
-  - cp -R Sniffs $MO4CS_DIR/
-  - cp -R Tests $MO4CS_DIR/
-  - (cd $PHPCS_DIR/src/Standards ; git clone https://github.com/djoos/Symfony-coding-standard.git Symfony ; mv Symfony/Symfony/* Symfony/)
 
 script:
-  - (cd $PHPCS_DIR ; ../../bin/phpunit --filter MO4)
-  - $PHPCS_DIR/bin/phpcs $MO4CS_DIR --standard=$PHPCS_DIR/phpcs.xml.dist --report=full -np
+  - vendor/bin/phpunit --filter MO4
+  - vendor/bin/phpcs MO4 --report=full -np
