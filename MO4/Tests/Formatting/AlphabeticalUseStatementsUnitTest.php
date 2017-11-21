@@ -71,6 +71,15 @@ class AlphabeticalUseStatementsUnitTest extends AbstractSniffUnitTest
                     10 => 1,
                     15 => 1,
                    );
+        case 'AlphabeticalUseStatementsUnitTest.fail.4.inc':
+            return array(
+                    4  => 1,
+                    8  => 1,
+                    13 => 1,
+                    17 => 1,
+                    20 => 1,
+                    21 => 1,
+                   );
         }//end switch
 
         return null;

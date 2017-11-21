@@ -16,26 +16,55 @@
 /**
  * Alphabetical Use Statements sniff.
  *
- * Use statements must be in alphabetical order, grouped by empty lines
+ * Use statements must be in alphabetical order, grouped by empty lines.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer-MO4
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
  * @author    Steffen Ritter <steffenritter1@gmail.com>
  * @author    Christian Albrecht <christian.albrecht@mayflower.de>
- * @copyright 2013-2014 Xaver Loppenstedt, some rights reserved.
+ * @copyright 2013-2017 Xaver Loppenstedt, some rights reserved.
  * @license   http://spdx.org/licenses/MIT MIT License
  * @link      https://github.com/Mayflower/mo4-coding-standard
  */
 
 namespace MO4\Sniffs\Formatting;
 
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Namespaces\UseDeclarationSniff;
+use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
 
 class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 {
+
+    const NAMESPACE_SEPRATOR_STRING = '\\';
+
+    /**
+     * Sorting order, can be one of:
+     *   'dictionary', 'string', 'string-locale' or 'string-case-insensitive'
+     *
+     * Unknown types will be mapped to 'string'.
+     *
+     * @var string
+     */
+    public $order = 'dictionary';
+
+
+    /**
+     * Supported ordering methods
+     *
+     * @var array
+     */
+    private $supportedOrderingMethods = [
+                                         'dictionary',
+                                         'string',
+                                         'string',
+                                         'string-locale',
+                                         'string-case-insensitive',
+                                        ];
+
     /**
      * Last import seen in group
      *
@@ -56,6 +85,30 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      * @var string
      */
     private $currentFile = null;
+
+
+    /**
+     * Returns an array of tokens this test wants to listen for.
+     *
+     * @return array
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException
+     */
+    public function register()
+    {
+        if (in_array($this->order, $this->supportedOrderingMethods) === false) {
+            $error = sprintf(
+                "'%s' is not a valid order function for %s! Pick one of: %s",
+                $this->order,
+                Common::getSniffCode(__CLASS__),
+                implode(', ', $this->supportedOrderingMethods)
+            );
+
+            throw new RuntimeException($error);
+        }
+
+        return parent::register();
+
+    }//end register()
 
 
     /**
@@ -99,11 +152,11 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 
         $fixable = false;
         if ($this->lastImport !== ''
-            && strcmp($this->lastImport, $currentImport) > 0
+            && $this->compareString($this->lastImport, $currentImport) > 0
         ) {
-            $msg     = 'USE statements must be sorted alphabetically';
+            $msg     = 'USE statements must be sorted alphabetically, order %s';
             $code    = 'MustBeSortedAlphabetically';
-            $fixable = $phpcsFile->addFixableError($msg, $currentPtr, $code);
+            $fixable = $phpcsFile->addFixableError($msg, $currentPtr, $code, [$this->order]);
         }
 
         if (true === $fixable) {
@@ -280,12 +333,82 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
             $prevLine      = $tokens[$prevPtr]['line'];
             $prevImportArr = $this->getUseImport($phpcsFile, $prevPtr);
         } while ($prevLine === ($line - 1)
-            && (strcmp($prevImportArr['content'], $import) > 0)
+            && ($this->compareString($prevImportArr['content'], $import) > 0)
         );
 
         return $ptr;
 
     }//end findNewDestination()
+
+
+    /**
+     * Compare namespace strings according defined order function.
+     *
+     * @param string $a first namespace string
+     * @param string $b second namespace string
+     *
+     * @return int
+     */
+    private function compareString($a, $b)
+    {
+        if ('dictionary' === $this->order) {
+            return $this->dictionaryCompare($a, $b);
+        } else if ('string' === $this->order) {
+            return strcmp($a, $b);
+        } else if ('string-locale' === $this->order) {
+            return strcoll($a, $b);
+        } else if ('string-case-insensitive' === $this->order) {
+            return strcasecmp($a, $b);
+        } else {
+            return $this->dictionaryCompare($a, $b);
+        }
+
+    }//end compareString()
+
+
+    /**
+     * Lexicographical namespace string compare.
+     *
+     * Example:
+     *
+     *   use Doctrine\ORM\Query;
+     *   use Doctrine\ORM\Query\Expr;
+     *   use Doctrine\ORM\QueryBuilder;
+     *
+     * @param string $a first namespace string
+     * @param string $b second namespace string
+     *
+     * @return int
+     */
+    private function dictionaryCompare($a, $b)
+    {
+        $min = min(strlen($a), strlen($b));
+
+        for ($i = 0; $i < $min; $i++) {
+            if ($a[$i] === $b[$i]) {
+                continue;
+            }
+
+            if ($a[$i] === self::NAMESPACE_SEPRATOR_STRING) {
+                return -1;
+            }
+
+            if ($b[$i] === self::NAMESPACE_SEPRATOR_STRING) {
+                return 1;
+            }
+
+            if ($a[$i] < $b[$i]) {
+                return -1;
+            }
+
+            if ($a[$i] > $b[$i]) {
+                return 1;
+            }
+        }//end for
+
+        return strcmp(substr($a, $min), substr($b, $min));
+
+    }//end dictionaryCompare()
 
 
 }//end class

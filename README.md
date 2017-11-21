@@ -17,12 +17,51 @@ The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://
 * in associative arrays, the `=>` operators must be aligned
 * in arrays, the key and `=>` operator must be on the same line
 * each consecutive variable assignment must align at the assignment operator
-* use statements must be sorted lexicographically
+* use statements must be sorted lexicographically, grouped by empty lines. The order function can be configured.
 * you should use the imported class name when it was imported with a use statement
 * interpolated variables in double quoted strings must be surrounded by `{ }`, e.g. `{$VAR}` instead of `$VAR`
-* `sprintf` or `"{$VAR1} {$VAR2}"` must be used instead of the dot operator; concat operators are only allowed to concatenate constants and multi line strings,
+* `sprintf` or `"{$VAR1} {$VAR2}"` must be used instead of the dot operator; concat operators are only allowed to concatenate constants and multi line strings
 * a whitespace is required after each typecast, e.g. `(int) $value` instead of `(int)$value`
 * doc blocks of class properties must be multiline and have exactly one `@var` annotation
+
+## Configuration
+
+### MO4.Formatting.AlphabeticalUseStatements
+
+The `order` property of the `MO4.Formatting.AlphabeticalUseStatements` sniff defines
+which function is used for ordering.
+
+Possible values for order:
+* `dictionary` (default): based on [strcmp](http://php.net/strcmp), the namespace separator
+  precedes any other character
+  ```php
+  use Doctrine\ORM\Query;
+  use Doctrine\ORM\Query\Expr;
+  use Doctrine\ORM\QueryBuilder;
+  ```
+* `string`: binary safe string comparison using [strcmp](http://php.net/strcmp)
+  ```php
+  use Doctrine\ORM\Query;
+  use Doctrine\ORM\QueryBuilder;
+  use Doctrine\ORM\Query\Expr;
+
+  use ExampleSub;
+  use Examples;
+  ```
+* `string-locale`: locale based string comparison using [strcoll](http://php.net/strcoll)
+* `string-case-insenstive`: binary safe case-insensitive string comparison [strcasecmp](http://php.net/strcasecmp)
+   ```php
+   use Examples;
+   use ExampleSub;
+   ```
+
+```
+<rule ref="MO4.Formatting.AlphabeticalUseStatements">
+    <properties>
+        <property name="order" value="string-locale"/>
+    </properties>
+</rule>
+```
 
 ## Installation
 
