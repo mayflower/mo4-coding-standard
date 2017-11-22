@@ -22,7 +22,7 @@ The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://
 * interpolated variables in double quoted strings must be surrounded by `{ }`, e.g. `{$VAR}` instead of `$VAR`
 * `sprintf` or `"{$VAR1} {$VAR2}"` must be used instead of the dot operator; concat operators are only allowed to concatenate constants and multi line strings,
 * a whitespace is required after each typecast, e.g. `(int) $value` instead of `(int)$value`
-
+* doc blocks of class properties must be multiline and have exactly one `@var` annotation
 
 ## Installation
 
