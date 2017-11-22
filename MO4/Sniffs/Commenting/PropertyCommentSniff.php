@@ -19,9 +19,10 @@ use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 
 /**
- * Alphabetical Use Statements sniff.
+ * Property Comment Sniff sniff.
  *
- * Use statements must be in alphabetical order, grouped by empty lines
+ * Doc blocks of class properties must be multiline and have exactly one '@var'
+ * annotation.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer-MO4
@@ -167,17 +168,11 @@ class PropertyCommentSniff extends AbstractScopeSniff
             );
 
             $varCount = (count(preg_split('/\s+@var\s+/', $tokensAsString)) - 1);
-            if ($varCount === 0) {
+            if (($varCount === 0) || ($varCount > 1)) {
                 $phpcsFile->addError(
-                    'property doc comment must have one @var annotation',
+                    'property doc comment must have exactly one @var annotation',
                     $commentStart,
-                    'NoVarDefined'
-                );
-            } else if ($varCount > 1) {
-                $phpcsFile->addError(
-                    'property doc comment must no multiple @var annotations',
-                    $commentStart,
-                    'MultipleVarDefined'
+                    'MustHaveOneVarAnnotationDefined'
                 );
             }
 
