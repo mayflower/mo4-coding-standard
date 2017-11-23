@@ -150,3 +150,6 @@ $values  = [
         'object_name'       => 'TestObject',
         'id'                => 'Test:2', ], ];
 
+
+$fail = array(
+    1);
