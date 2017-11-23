@@ -14,4 +14,4 @@ before_script:
 
 script:
   - vendor/bin/phpunit --filter MO4
-  - vendor/bin/phpcs MO4 --report=full -np
+  - vendor/bin/phpcs
