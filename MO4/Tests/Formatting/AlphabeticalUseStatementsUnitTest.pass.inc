@@ -12,6 +12,10 @@ use Z;
 
 use X;
 
+use A\B;
+use A\B\C;
+use A\BD;
+
 class Foo {
     $bar = 'foo';
 
