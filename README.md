@@ -1,10 +1,17 @@
-# MO4 CodeSniffer ruleset <a href="https://travis-ci.org/mayflower/mo4-coding-standard/"><img src="https://secure.travis-ci.org/mayflower/mo4-coding-standard.png?branch=master"></a>
+# MO4 CodeSniffer ruleset
+ 
+Provides a PHP CodeSniffer ruleset for the MO4 coding standard
 
-Provides a CodeSniffer ruleset
+[![Build Status](https://travis-ci.org/mayflower/mo4-coding-standard.svg?branch=master)](https://travis-ci.org/mayflower/mo4-coding-standard)
 
-* MO4 standard
+[![Latest Stable Version](https://poser.pugx.org/mayflower/mo4-coding-standard/v/stable)](https://packagist.org/packages/mayflower/mo4-coding-standard)
+[![Total Downloads](https://poser.pugx.org/mayflower/mo4-coding-standard/downloads)](https://packagist.org/packages/mayflower/mo4-coding-standard)
+[![Latest Unstable Version](https://poser.pugx.org/mayflower/mo4-coding-standard/v/unstable)](https://packagist.org/packages/mayflower/mo4-coding-standard)
+[![License](https://poser.pugx.org/mayflower/mo4-coding-standard/license)](https://packagist.org/packages/mayflower/mo4-coding-standard)
+[![composer.lock](https://poser.pugx.org/mayflower/mo4-coding-standard/composerlock)](https://packagist.org/packages/mayflower/mo4-coding-standard)
 
-Requires
+
+## Requires
 
 * [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
 * [Symfony Coding Standard](https://github.com/djoos/Symfony-coding-standard)
@@ -69,23 +76,15 @@ Possible values for order:
 
 Using [Composer](https://getcomposer.org/) is the preferred way.
 
-1. Add the MO4 repository
-
-        composer config repositories.mo4 vcs https://github.com/mayflower/mo4-coding-standard.git
-
-   If composer complains about a missing composer.json, just create an empty one
-
-        echo '{}' > composer.json
-
-2. Add the MO4 coding standard to `composer.json`
+1. Add the MO4 coding standard to `composer.json`
 
         composer require --dev mayflower/mo4-coding-standard:dev-master
 
-3. Profit
+2. Profit
 
         ./vendor/bin/phpcs --standard=MO4 path/to/my/file.php
 
-4. Optionally, you might set MO4 as default coding standard
+3. Optionally, you might set MO4 as default coding standard
 
         ./vendor/bin/phpcs --config-set default_standard MO4
 
