@@ -20,7 +20,7 @@ If you contribute code, please make sure it conforms to the PHPCS coding standar
 
 1. To check the coding standard, execute in the repository root:
 
-        ./vendor/bin/phpcs MO4
+        ./vendor/bin/phpcs
 
 2. To run the unit tests, execute in the repository root:
 
