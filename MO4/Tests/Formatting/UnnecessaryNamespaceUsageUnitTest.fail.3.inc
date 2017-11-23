@@ -11,7 +11,7 @@ class MyFixtures
 {
     /**
      * Inserts data into database.
-     *
+     * @throws
      * @param Doctrine\ORM\EntityManager|\Something\ObjectManager $manager Entity Manager
      * @throws MyApp\OmgException
      * @throws \MyApp\FatalException

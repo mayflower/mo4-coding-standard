@@ -4,6 +4,7 @@
 
     <!-- Sensible default configuration settings for coding standard checking of MO4. -->
     <file>MO4</file>
+    <file>tests</file>
 
     <exclude-pattern>*/Tests/*\.(inc|css|js)</exclude-pattern>
     <exclude-pattern>vendor/*</exclude-pattern>

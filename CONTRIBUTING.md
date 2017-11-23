@@ -1,5 +1,9 @@
 # Contributing
 
+If you contribute code, please make sure it conforms to the
+[PHPCS coding standard](https://github.com/squizlabs/PHP_CodeSniffer/blob/master/phpcs.xml.dist)
+and that the unit tests still pass.
+
 ## Setup
 
 We do recommend the following setup:
@@ -12,17 +16,42 @@ We do recommend the following setup:
 * install all required dependencies
 
         composer install
+        
+* be sure that [Xdebug](https://xdebug.org/) is installed, if you like to check code coverage.
 
 
-## Coding Standard and Tests
+## Coding Standard
 
-If you contribute code, please make sure it conforms to the PHPCS coding standard and that the unit tests still pass.
+To check the coding standard, execute in the repository root:
 
-1. To check the coding standard, execute in the repository root:
+    ./vendor/bin/phpcs
 
-        ./vendor/bin/phpcs
+`phpcs` might report that some coding standard issues can be fixed automatically.
+So give `phpcbf` a try and let it fix the issues for you:
 
-2. To run the unit tests, execute in the repository root:
+    ./vendor/bin/phpcbf
 
-        ./vendor/bin/phpunit --filter MO4
+## Tests
+
+To run the unit tests, execute in the repository root:
+
+    ./vendor/bin/phpunit
+
+## Code Coverage
+
+Make sure, that you write tests for your code.
+
+Testing code coverage with [PHPUnit](https://phpunit.de/) requires [Xdebug](https://xdebug.org/) to be enabled.
+
+You can generate a simple code coverage report by running in the repository root:
+
+    ./vendor/bin/phpunit --coverage-text
+
+In the case that Xdebug is disabled by default
+
+     php -d zend_extension=xdebug.so vendor/bin/phpunit --coverage-text
+
+will do the trick.
+
+Please refer to the [PHPUnit Manual](https://phpunit.de/documentation.html) for further information about code coverage.
 

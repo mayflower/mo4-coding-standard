@@ -82,6 +82,7 @@ class ArrayAlignmentUnitTest extends AbstractSniffUnitTest
                     136 => 2,
                     145 => 1,
                     151 => 2,
+                    155 => 1,
                    );
         }//end switch
 

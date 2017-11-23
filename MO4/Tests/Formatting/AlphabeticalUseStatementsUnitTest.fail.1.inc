@@ -6,7 +6,7 @@ use A;
 
 use A\B\C as CC;
 use A\B\B as BB;
-use A\B\A as AA;
+   use A\B\A as AA;
 
 use Z;
 use X;

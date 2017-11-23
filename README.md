@@ -78,7 +78,7 @@ Using [Composer](https://getcomposer.org/) is the preferred way.
 
 1. Add the MO4 coding standard to `composer.json`
 
-        composer require --dev mayflower/mo4-coding-standard:dev-master
+        composer require --dev mayflower/mo4-coding-standard
 
 2. Profit
 
