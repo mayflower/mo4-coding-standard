@@ -3,6 +3,7 @@
 Provides a PHP CodeSniffer ruleset for the MO4 coding standard
 
 [![Build Status](https://travis-ci.org/mayflower/mo4-coding-standard.svg?branch=master)](https://travis-ci.org/mayflower/mo4-coding-standard)
+[![Build Status](https://codecov.io/gh/mayflower/mo4-coding-standard/branch/master/graph/badge.svg)](https://codecov.io/gh/mayflower/mo4-coding-standard/branch/master/)
 
 [![Latest Stable Version](https://poser.pugx.org/mayflower/mo4-coding-standard/v/stable)](https://packagist.org/packages/mayflower/mo4-coding-standard)
 [![Total Downloads](https://poser.pugx.org/mayflower/mo4-coding-standard/downloads)](https://packagist.org/packages/mayflower/mo4-coding-standard)
