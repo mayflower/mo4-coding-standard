@@ -76,15 +76,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
 
         $matches = array();
 
-        if (preg_match_all(
-            $varRegExp,
-            $content,
-            $matches,
-            PREG_OFFSET_CAPTURE
-        ) === 0
-        ) {
-            return;
-        }
+        preg_match_all($varRegExp, $content, $matches, PREG_OFFSET_CAPTURE);
 
         foreach ($matches as $match) {
             foreach ($match as $info) {
@@ -109,8 +101,6 @@ class VariableInDoubleQuotedStringSniff implements Sniff
                             continue;
                         }
                     }
-
-                    $this->searchForBackslashes($content, $pos);
 
                     $fix = $this->phpCsFile->addFixableError(
                         sprintf(
@@ -172,31 +162,6 @@ class VariableInDoubleQuotedStringSniff implements Sniff
         $phpCsFile->fixer->endChangeset();
 
     }//end fixPhpCsFile()
-
-
-    /**
-     * Searches for backslashes
-     *
-     * @param string $content content
-     * @param int    $pos     pos
-     *
-     * @return void
-     */
-    private function searchForBackslashes($content, $pos)
-    {
-        if ($content[($pos - 1)] === "\\") {
-            $backslashPos = ($pos - 1);
-
-            while ($content[$backslashPos] === "\\") {
-                $backslashPos--;
-            }
-
-            if ((($pos - 1 - $backslashPos) % 2) === 1) {
-                return;
-            }
-        }
-
-    }//end searchForBackslashes()
 
 
 }//end class

@@ -1,5 +1,6 @@
 <?php
 
+$z = "yes";
 $a = "\$a";
 $a = "\\\$a";
 $a = "blafasel \\\\\$a";
