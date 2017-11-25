@@ -13,8 +13,13 @@
  * @link     https://github.com/Mayflower/mo4-coding-standard
  */
 
+namespace MO4\Tests\Arrays;
+
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
- * Unit test class for the ArrayValueAlignment sniff.
+ * Unit test class for @see ArrayDoubleArrowAlignmentSniff
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.
@@ -22,16 +27,11 @@
  * @category  PHP
  * @package   PHP_CodeSniffer-MO4
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
- * @copyright 2013 Xaver Loppenstedt, some rights reserved.
+ * @copyright 2013-2017 Xaver Loppenstedt, some rights reserved.
  * @license   http://spdx.org/licenses/MIT MIT License
  * @link      https://github.com/Mayflower/mo4-coding-standard
  */
-namespace MO4\Tests\Formatting;
-
-use PHP_CodeSniffer\Exceptions\RuntimeException;
-use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
-
-class ArrayAlignmentUnitTest extends AbstractSniffUnitTest
+class ArrayDoubleArrowAlignmentUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -49,9 +49,9 @@ class ArrayAlignmentUnitTest extends AbstractSniffUnitTest
     protected function getErrorList($testFile='')
     {
         switch ($testFile) {
-        case 'ArrayAlignmentUnitTest.pass.inc':
+        case 'ArrayDoubleArrowAlignmentUnitTest.pass.inc':
             return array();
-        case 'ArrayAlignmentUnitTest.fail.inc':
+        case 'ArrayDoubleArrowAlignmentUnitTest.fail.inc':
             return array(
                     5   => 1,
                     10  => 1,
@@ -82,9 +82,6 @@ class ArrayAlignmentUnitTest extends AbstractSniffUnitTest
                     132 => 1,
                     134 => 1,
                     136 => 2,
-                    145 => 1,
-                    151 => 2,
-                    155 => 1,
                    );
         }//end switch
 

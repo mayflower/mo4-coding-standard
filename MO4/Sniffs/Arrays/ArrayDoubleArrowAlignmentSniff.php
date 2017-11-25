@@ -12,14 +12,14 @@
  * @version  GIT: master
  * @link     https://github.com/Mayflower/mo4-coding-standard
  */
-namespace MO4\Sniffs\Formatting;
+namespace MO4\Sniffs\Arrays;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
 
 /**
- * Array Alignment sniff.
+ * Array Double Arrow Alignment sniff.
  *
  * '=>' must be aligned in arrays, and the key and the '=>' must be in the same line
  *
@@ -30,7 +30,7 @@ use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
  * @license   http://spdx.org/licenses/MIT MIT License
  * @link      https://github.com/Mayflower/mo4-coding-standard
  */
-class ArrayAlignmentSniff implements Sniff
+class ArrayDoubleArrowAlignmentSniff implements Sniff
 {
     /**
      * Define all types of arrays.
@@ -80,21 +80,6 @@ class ArrayAlignmentSniff implements Sniff
 
         if ($tokens[$start]['line'] === $tokens[$end]['line']) {
             return;
-        } if ($tokens[($end - 2)]['line'] === $tokens[$end]['line']) {
-            if ($current['code'] === T_ARRAY) {
-                $arrayBrackets = 'parenthesis';
-            } else {
-                $arrayBrackets = 'bracket';
-            }
-
-            $phpcsFile->addError(
-                sprintf(
-                    'closing %s of array must in own line',
-                    $arrayBrackets
-                ),
-                $end,
-                'ClosingMustBeInOwnLine'
-            );
         }
 
         $assignments  = array();
