@@ -23,6 +23,9 @@ Provides a PHP CodeSniffer ruleset for the MO4 coding standard
 The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://symfony.com/doc/current/contributing/code/standards.html) and adds following rules:
 
 * short array syntax `[...]` must be used instead of  `array(...)`
+* in multi line arrays, the opening bracket must be followed by newline
+* in multi line arrays, the closing bracket must be in own line
+* in multi line arrays, the elements must be indented
 * in associative arrays, the `=>` operators must be aligned
 * in arrays, the key and `=>` operator must be on the same line
 * each consecutive variable assignment must align at the assignment operator
