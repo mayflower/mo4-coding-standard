@@ -28,9 +28,14 @@ The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://
 * use statements must be sorted lexicographically, grouped by empty lines. The order function can be configured.
 * you should use the imported class name when it was imported with a use statement
 * interpolated variables in double quoted strings must be surrounded by `{ }`, e.g. `{$VAR}` instead of `$VAR`
-* `sprintf` or `"{$VAR1} {$VAR2}"` must be used instead of the dot operator; concat operators are only allowed to concatenate constants and multi line strings
+* `sprintf` or `"{$VAR1} {$VAR2}"` must be used instead of the dot operator; concat operators are only allowed to
+  concatenate constants and multi line strings
 * a whitespace is required after each typecast, e.g. `(int) $value` instead of `(int)$value`
 * doc blocks of class properties must be multiline and have exactly one `@var` annotation
+* Multiline conditions must follow the [respective PEAR standard](https://pear.php.net/manual/en/standards.control.php#standards.control.splitlongstatements)
+* There must be at least one space around operators, and (except for aligning multiline statements) at most one, see the
+  [respective Squizlabs Sniff](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties#squizwhitespaceoperatorspacing)
+  we imported with `ignoreNewlines = false`
 
 ## Configuration
 
@@ -63,7 +68,7 @@ Possible values for order:
    use ExampleSub;
    ```
 
-```
+```xml
 <rule ref="MO4.Formatting.AlphabeticalUseStatements">
     <properties>
         <property name="order" value="string-locale"/>

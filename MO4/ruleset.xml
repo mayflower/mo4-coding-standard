@@ -14,6 +14,12 @@
         <!-- <exclude name="Generic.Formatting.MultipleStatementAlignment"/> -->
     </rule>
 
+    <rule ref="Squiz.WhiteSpace.OperatorSpacing">
+        <properties>
+            <property name="ignoreNewlines" value="true"/>
+        </properties>
+    </rule>
+
     <rule ref="PEAR.ControlStructures.MultiLineCondition"/>
 
     <rule ref="Generic.Formatting.SpaceAfterCast"/>
