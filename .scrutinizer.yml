@@ -3,3 +3,4 @@ filter:
     - "MO4/Tests/*/*.inc"
   dependency_paths:
     - "vendor/squizlabs/php_codesniffer/src/"
+    - "vendor/squizlabs/php_codesniffer/tests/Standards"
