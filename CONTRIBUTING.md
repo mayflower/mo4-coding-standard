@@ -36,6 +36,14 @@ So give `phpcbf` a try and let it fix the issues for you:
 To run the unit tests, execute in the repository root:
 
     ./vendor/bin/phpunit
+    
+## Static analysis
+
+We do recommend to use [PHPStan](https://github.com/phpstan/phpstan) for static analysis, with level 5.
+Please refer to the [PHPStan](https://github.com/phpstan/phpstan#installation) documentation for
+installation instructions.
+
+    phpstan analyse --level=5 -c .phpstan.neon MO4/
 
 ## Code Coverage
 

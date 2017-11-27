@@ -28,6 +28,7 @@
  */
 namespace MO4\Tests\Formatting;
 
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 class ArrayAlignmentUnitTest extends AbstractSniffUnitTest
@@ -42,7 +43,8 @@ class ArrayAlignmentUnitTest extends AbstractSniffUnitTest
      *
      * @param string $testFile test file
      *
-     * @return array(int => int)
+     * @return array<int, int>
+     * @throws RuntimeException
      */
     protected function getErrorList($testFile='')
     {
@@ -86,7 +88,7 @@ class ArrayAlignmentUnitTest extends AbstractSniffUnitTest
                    );
         }//end switch
 
-        return null;
+        throw new RuntimeException("Testfile {$testFile} in ".__DIR__." is not handled by ".__CLASS__);
 
     }//end getErrorList()
 
@@ -97,7 +99,7 @@ class ArrayAlignmentUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of warnings that should occur on that line.
      *
-     * @return array(int => int)
+     * @return array<int, int>
      */
     protected function getWarningList()
     {

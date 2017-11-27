@@ -223,7 +223,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
     ) {
         $tokens = $phpcsFile->getTokens();
 
-        $useEndPtr = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 2));
+        $useEndPtr = $phpcsFile->findNext(array(T_SEMICOLON), ($stackPtr + 2));
         $useLength = ($useEndPtr - $stackPtr + 1);
         if ($tokens[($useEndPtr + 1)]['code'] === T_WHITESPACE) {
             $useLength++;
