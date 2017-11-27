@@ -263,7 +263,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      * @param int  $start     start pointer
      * @param int  $end       end pointer
      *
-     * @return array
+     * @return string
      */
     protected function getNamespace(File $phpcsFile, $start, $end)
     {
