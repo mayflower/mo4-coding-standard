@@ -30,6 +30,7 @@
  */
 namespace MO4\Tests\Formatting;
 
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
@@ -44,7 +45,7 @@ class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
      *
      * @param string $testFile test file
      *
-     * @return array(int => int)
+     * @return array<int, int>
      */
     protected function getErrorList($testFile='')
     {
@@ -61,7 +62,8 @@ class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
      *
      * @param string $testFile test file
      *
-     * @return array(int => int)
+     * @return array<int, int>
+     * @throws RuntimeException
      */
     protected function getWarningList($testFile='')
     {
@@ -106,7 +108,7 @@ class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
                    );
         }//end switch
 
-        return null;
+        throw new RuntimeException("Testfile {$testFile} in ".__DIR__." is not handled by ".__CLASS__);
 
     }//end getWarningList()
 

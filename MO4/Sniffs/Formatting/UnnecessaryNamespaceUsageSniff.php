@@ -136,7 +136,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                     );
 
                     $docCommentStringPtr = $phpcsFile->findNext(
-                        T_DOC_COMMENT_STRING,
+                        array(T_DOC_COMMENT_STRING),
                         $next,
                         $lineEnd
                     );
