@@ -13,6 +13,14 @@
  * @link     https://github.com/Mayflower/mo4-coding-standard
  */
 
+namespace MO4\Sniffs\Formatting;
+
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Standards\PSR2\Sniffs\Namespaces\UseDeclarationSniff;
+use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
+
 /**
  * Alphabetical Use Statements sniff.
  *
@@ -27,15 +35,6 @@
  * @license   http://spdx.org/licenses/MIT MIT License
  * @link      https://github.com/Mayflower/mo4-coding-standard
  */
-
-namespace MO4\Sniffs\Formatting;
-
-use PHP_CodeSniffer\Exceptions\RuntimeException;
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Standards\PSR2\Sniffs\Namespaces\UseDeclarationSniff;
-use PHP_CodeSniffer\Util\Common;
-use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
-
 class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 {
 

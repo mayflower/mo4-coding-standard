@@ -153,8 +153,6 @@ class ArrayAlignmentSniff implements Sniff
 
                 if ($column > $keyEndColumn) {
                     $keyEndColumn = $column;
-                } else {
-                    $keyEndColumn = $keyEndColumn;
                 }
 
                 $lastLine = $line;

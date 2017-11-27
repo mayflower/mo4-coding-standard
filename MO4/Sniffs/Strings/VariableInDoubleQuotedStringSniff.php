@@ -35,7 +35,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
     /**
      * The PHP_CodeSniffer object controlling this run.
      *
-     * @var PHP_CodeSniffer
+     * @var File
      */
     private $phpCsFile = null;
 

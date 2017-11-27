@@ -87,7 +87,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
 
         $tokens        = $phpcsFile->getTokens();
         $useStatements = $this->getUseStatements($phpcsFile, 0, ($stackPtr - 1));
-        $nameSpace     = $this->getNameSpace($phpcsFile, 0, ($stackPtr - 1));
+        $namespace     = $this->getNamespace($phpcsFile, 0, ($stackPtr - 1));
 
         $nsSep = $phpcsFile->findNext($scanTokens, ($stackPtr + 1));
 
@@ -113,7 +113,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                     $phpcsFile,
                     $useStatements,
                     $className,
-                    $nameSpace,
+                    $namespace,
                     $nsSep,
                     ($classNameEnd - 1),
                     false
@@ -174,7 +174,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                                 $phpcsFile,
                                 $useStatements,
                                 $typeToken,
-                                $nameSpace,
+                                $namespace,
                                 $docCommentStringPtr,
                                 $docCommentStringPtr,
                                 true
@@ -320,7 +320,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      * @param File   $phpcsFile     PHP CS File
      * @param array  $useStatements array with class use statements
      * @param string $className     class name
-     * @param string $nameSpace     name space
+     * @param string $namespace     name space
      * @param int    $startPtr      start token pointer
      * @param int    $endPtr        end token pointer
      * @param bool   $isDocBlock    true if fixing doc block
@@ -331,12 +331,13 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         File $phpcsFile,
         $useStatements,
         $className,
-        $nameSpace,
+        $namespace,
         $startPtr,
         $endPtr,
         $isDocBlock=false
     ) {
         $msg     = 'Shorthand possible. Replace "%s" with "%s"';
+        $code    = 'UnnecessaryNamespaceUsage';
         $fixable = false;
         $replaceClassName = false;
         $replacement      = null;
@@ -346,20 +347,21 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         if (array_key_exists($fullClassName, $useStatements) === true) {
             $replacement = $useStatements[$fullClassName];
 
-            $data    = array(
-                        $className,
-                        $replacement,
-                       );
+            $data = array(
+                     $className,
+                     $replacement,
+                    );
+
             $fixable = $phpcsFile->addFixableWarning(
                 $msg,
                 $startPtr,
-                'UnnecessaryNameSpaceUsage',
+                $code,
                 $data
             );
 
             $replaceClassName = true;
-        } else if (strpos($fullClassName, $nameSpace) === 0) {
-            $replacement = substr($fullClassName, strlen($nameSpace));
+        } else if (strpos($fullClassName, $namespace) === 0) {
+            $replacement = substr($fullClassName, strlen($namespace));
 
             $data    = array(
                         $className,
@@ -368,7 +370,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
             $fixable = $phpcsFile->addFixableWarning(
                 $msg,
                 $startPtr,
-                'UnnecessaryNameSpaceUsage',
+                $code,
                 $data
             );
         }//end if
