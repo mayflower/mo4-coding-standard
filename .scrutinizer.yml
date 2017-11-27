@@ -1,0 +1,5 @@
+filter:
+  excluded_paths:
+    - "MO4/Tests/*/*.inc"
+  dependency_paths:
+    - "vendor/squizlabs/php_codesniffer/src/"
