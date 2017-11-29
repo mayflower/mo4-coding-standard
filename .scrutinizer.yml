@@ -1,3 +1,7 @@
+build:
+  tests:
+    override:
+      - phpcs-run
 filter:
   excluded_paths:
     - "MO4/Tests/*/*.inc"
