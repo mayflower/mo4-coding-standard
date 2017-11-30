@@ -13,6 +13,11 @@
  * @link     https://github.com/Mayflower/mo4-coding-standard
  */
 
+namespace MO4\Tests\Formatting;
+
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the AlphabeticalUseStatements sniff.
  *
@@ -22,16 +27,10 @@
  * @category  PHP
  * @package   PHP_CodeSniffer-MO4
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
- * @copyright 2013 Xaver Loppenstedt, some rights reserved.
+ * @copyright 2013-2017 Xaver Loppenstedt, some rights reserved.
  * @license   http://spdx.org/licenses/MIT MIT License
  * @link      https://github.com/Mayflower/mo4-coding-standard
  */
-
-namespace MO4\Tests\Formatting;
-
-use PHP_CodeSniffer\Exceptions\RuntimeException;
-use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
-
 class AlphabeticalUseStatementsUnitTest extends AbstractSniffUnitTest
 {
 
@@ -82,6 +81,8 @@ class AlphabeticalUseStatementsUnitTest extends AbstractSniffUnitTest
                     20 => 1,
                     21 => 1,
                    );
+        case 'AlphabeticalUseStatementsUnitTest.fail.5.inc':
+            return array(12 => 1);
         }//end switch
 
         throw new RuntimeException("Testfile {$testFile} in ".__DIR__." is not handled by ".__CLASS__);

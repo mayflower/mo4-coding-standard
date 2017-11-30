@@ -139,8 +139,12 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
         }
 
         $currentImportArr = $this->getUseImport($phpcsFile, $stackPtr);
-        $currentPtr       = $currentImportArr['startPtr'];
-        $currentImport    = $currentImportArr['content'];
+        if ($currentImportArr === false) {
+            return;
+        }
+
+        $currentPtr    = $currentImportArr['startPtr'];
+        $currentImport = $currentImportArr['content'];
 
         if (($this->lastLine + 1) < $line) {
             $this->lastLine   = $line;
@@ -183,7 +187,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      * @param File $phpcsFile PHP CS File
      * @param int  $stackPtr  pointer
      *
-     * @return array
+     * @return array|false
      */
     private function getUseImport(File $phpcsFile, $stackPtr)
     {
@@ -192,12 +196,18 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
                          T_STRING,
                         );
 
-        $start  = $phpcsFile->findNext(
+        $start = $phpcsFile->findNext(
             PHP_CodeSniffer_Tokens::$emptyTokens,
             ($stackPtr + 1),
             null,
             true
         );
+        // $start is false when "use" is the last token in file...
+        if ($start === false) {
+            return false;
+        }
+
+        $start  = (int) $start;
         $end    = $phpcsFile->findNext($importTokens, $start, null, true);
         $import = $phpcsFile->getTokensAsString($start, ($end - $start));
 
@@ -330,7 +340,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
             }
 
             $prevLine      = $tokens[$prevPtr]['line'];
-            $prevImportArr = $this->getUseImport($phpcsFile, $prevPtr);
+            $prevImportArr = $this->getUseImport($phpcsFile, (int) $prevPtr);
         } while ($prevLine === ($line - 1)
             && ($this->compareString($prevImportArr['content'], $import) > 0)
         );

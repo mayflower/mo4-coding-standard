@@ -13,6 +13,11 @@
  * @link     https://github.com/Mayflower/mo4-coding-standard
  */
 
+namespace MO4\Tests\Formatting;
+
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+
 /**
  * Unit test class for the UnnecessaryNamespaceUsageUnitTest sniff.
  *
@@ -28,11 +33,6 @@
  * @license   http://spdx.org/licenses/MIT MIT License
  * @link      https://github.com/Mayflower/mo4-coding-standard
  */
-namespace MO4\Tests\Formatting;
-
-use PHP_CodeSniffer\Exceptions\RuntimeException;
-use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
-
 class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
 {
 
@@ -106,6 +106,8 @@ class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
                     23 => 1,
                     25 => 3,
                    );
+        case 'UnnecessaryNamespaceUsageUnitTest.fail.4.inc':
+            return array();
         }//end switch
 
         throw new RuntimeException("Testfile {$testFile} in ".__DIR__." is not handled by ".__CLASS__);

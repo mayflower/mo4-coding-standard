@@ -132,6 +132,8 @@ class PropertyCommentSniff extends AbstractScopeSniff
             return;
         }
 
+        $commentEnd = (int) $commentEnd;
+
         $conditions    = $tokens[$commentEnd]['conditions'];
         $lastCondition = array_pop($conditions);
         if ($lastCondition !== T_CLASS) {
