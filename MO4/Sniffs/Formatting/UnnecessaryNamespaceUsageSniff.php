@@ -92,6 +92,8 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         $nsSep = $phpcsFile->findNext($scanTokens, ($stackPtr + 1));
 
         while ($nsSep !== false) {
+            $nsSep = (int) $nsSep;
+
             $classNameEnd = $phpcsFile->findNext(
                 $this->classNameTokens,
                 $nsSep,
@@ -126,7 +128,8 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                         continue;
                     }
 
-                    $next    = ($tag + 1);
+                    $next = ($tag + 1);
+                    // PHP Code Sniffer will magically add  T_DOC_COMMENT_CLOSE_TAG with empty string content.
                     $lineEnd = $phpcsFile->findNext(
                         array(
                          T_DOC_COMMENT_CLOSE_TAG,
@@ -138,12 +141,14 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                     $docCommentStringPtr = $phpcsFile->findNext(
                         array(T_DOC_COMMENT_STRING),
                         $next,
-                        $lineEnd
+                        (int) $lineEnd
                     );
 
                     if ($docCommentStringPtr === false) {
                         continue;
                     }
+
+                    $docCommentStringPtr = (int) $docCommentStringPtr;
 
                     $docLine = $tokens[$docCommentStringPtr]['content'];
 
@@ -210,13 +215,13 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         $useTokenPtr = $phpcsFile->findNext(T_USE, $i, $end);
 
         while ($useTokenPtr !== false) {
-            $classNameStart = $phpcsFile->findNext(
+            $classNameStart = (int) $phpcsFile->findNext(
                 PHP_CodeSniffer_Tokens::$emptyTokens,
                 ($useTokenPtr + 1),
                 $end,
                 true
             );
-            $classNameEnd   = $phpcsFile->findNext(
+            $classNameEnd   = (int) $phpcsFile->findNext(
                 $this->classNameTokens,
                 ($classNameStart + 1),
                 $end,
@@ -230,7 +235,12 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                 $classNameEnd,
                 $end
             );
-            $aliasNamePtr   = $phpcsFile->findPrevious(
+            // Prevent endless loop when 'use ;' is the last use statement.
+            if ($useEnd === false) {
+                break;
+            }
+
+            $aliasNamePtr = $phpcsFile->findPrevious(
                 PHP_CodeSniffer_Tokens::$emptyTokens,
                 ($useEnd - 1),
                 null,
@@ -278,6 +288,8 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         if (false === $namespaceStart) {
             return '';
         }
+
+        $namespaceStart = (int) $namespaceStart;
 
         $namespaceEnd = $phpcsFile->findNext(
             $this->classNameTokens,
