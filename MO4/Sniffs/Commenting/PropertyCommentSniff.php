@@ -53,6 +53,8 @@ class PropertyCommentSniff extends AbstractScopeSniff
 
     /**
      * Construct PropertyCommentSniff
+     *
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException
      */
     public function __construct()
     {
@@ -153,9 +155,9 @@ class PropertyCommentSniff extends AbstractScopeSniff
                 $this->myTokenTypes,
                 $commentEnd
             );
-            if ($tokens[$commentStart]['line'] === $tokens[$commentEnd]['line']
+            if ($firstTokenOnLine !== false
+                && $tokens[$commentStart]['line'] === $tokens[$commentEnd]['line']
                 && $tokens[$stackPtr]['line'] > $tokens[$commentEnd]['line']
-                && $firstTokenOnLine !== false
             ) {
                 return;
             }

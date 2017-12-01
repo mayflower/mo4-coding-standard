@@ -94,7 +94,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      */
     public function register()
     {
-        if (in_array($this->order, $this->supportedOrderingMethods) === false) {
+        if (in_array($this->order, $this->supportedOrderingMethods, true) === false) {
             $error = sprintf(
                 "'%s' is not a valid order function for %s! Pick one of: %s",
                 $this->order,
@@ -360,15 +360,15 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      */
     private function compareString($a, $b)
     {
-        if ('dictionary' === $this->order) {
-            return $this->dictionaryCompare($a, $b);
-        } else if ('string' === $this->order) {
+        switch ($this->order) {
+        case 'string':
             return strcmp($a, $b);
-        } else if ('string-locale' === $this->order) {
+        case 'string-locale':
             return strcoll($a, $b);
-        } else if ('string-case-insensitive' === $this->order) {
+        case 'string-case-insensitive':
             return strcasecmp($a, $b);
-        } else {
+        default:
+            // Default is 'dictionary'.
             return $this->dictionaryCompare($a, $b);
         }
 
