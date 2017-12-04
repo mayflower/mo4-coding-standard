@@ -37,14 +37,15 @@ class VariableInDoubleQuotedStringSniff implements Sniff
      *
      * @var File
      */
-    private $phpCsFile = null;
+    private $phpCsFile;
 
 
     /**
      * Registers the tokens that this sniff wants to listen for.
      *
      * @return array(int)
-     * @see    Tokens.php
+     *
+     * @see Tokens.php
      */
     public function register()
     {

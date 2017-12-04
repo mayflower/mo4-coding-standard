@@ -117,8 +117,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                     $className,
                     $namespace,
                     $nsSep,
-                    ($classNameEnd - 1),
-                    false
+                    ($classNameEnd - 1)
                 );
             } else {
                 // Doc comment block.
@@ -171,7 +170,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                             PREG_SPLIT_NO_EMPTY
                         );
                         foreach ($typeTokens as $typeToken) {
-                            if (true === in_array($typeToken, $useStatements)) {
+                            if (true === in_array($typeToken, $useStatements, true)) {
                                 continue;
                             }
 
