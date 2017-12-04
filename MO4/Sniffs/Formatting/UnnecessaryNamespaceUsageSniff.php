@@ -103,7 +103,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
 
             if ($tokens[$nsSep]['code'] === T_NS_SEPARATOR) {
                 if ($tokens[($nsSep - 1)]['code'] === T_STRING) {
-                    $nsSep -= 1;
+                    --$nsSep;
                 }
 
                 $className = $phpcsFile->getTokensAsString(
@@ -124,7 +124,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                 // Doc comment block.
                 foreach ($tokens[$nsSep]['comment_tags'] as $tag) {
                     $content = $tokens[$tag]['content'];
-                    if ((array_key_exists($content, $docCommentTags)) === false) {
+                    if (array_key_exists($content, $docCommentTags) === false) {
                         continue;
                     }
 
