@@ -11,7 +11,6 @@
         <exclude name="PSR2.Namespaces.UseDeclaration"/>
         <exclude name="Symfony.Commenting.ClassComment.Missing"/>
         <exclude name="Symfony.Commenting.License"/>
-        <!-- <exclude name="Generic.Formatting.MultipleStatementAlignment"/> -->
     </rule>
 
     <rule ref="Squiz.WhiteSpace.OperatorSpacing">
