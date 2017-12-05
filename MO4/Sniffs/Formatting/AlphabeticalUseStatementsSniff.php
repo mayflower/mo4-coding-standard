@@ -38,7 +38,7 @@ use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
 class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 {
 
-    const NAMESPACE_SEPRATOR_STRING = '\\';
+    const NAMESPACE_SEPARATOR_STRING = '\\';
 
     /**
      * Sorting order, can be one of:
@@ -49,7 +49,6 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      * @var string
      */
     public $order = 'dictionary';
-
 
     /**
      * Supported ordering methods
@@ -83,7 +82,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      *
      * @var string
      */
-    private $currentFile = null;
+    private $currentFile;
 
 
     /**
@@ -239,9 +238,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
             $useLength++;
         }
 
-        $useStr = $phpcsFile->getTokensAsString($stackPtr, $useLength);
-
-        return $useStr;
+        return $phpcsFile->getTokensAsString($stackPtr, $useLength);
 
     }//end getUseStatementAsString()
 
@@ -398,11 +395,11 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
                 continue;
             }
 
-            if ($a[$i] === self::NAMESPACE_SEPRATOR_STRING) {
+            if ($a[$i] === self::NAMESPACE_SEPARATOR_STRING) {
                 return -1;
             }
 
-            if ($b[$i] === self::NAMESPACE_SEPRATOR_STRING) {
+            if ($b[$i] === self::NAMESPACE_SEPARATOR_STRING) {
                 return 1;
             }
 
