@@ -12,12 +12,6 @@ Provides a PHP CodeSniffer ruleset for the MO4 coding standard
 [![License](https://poser.pugx.org/mayflower/mo4-coding-standard/license)](https://packagist.org/packages/mayflower/mo4-coding-standard)
 [![composer.lock](https://poser.pugx.org/mayflower/mo4-coding-standard/composerlock)](https://packagist.org/packages/mayflower/mo4-coding-standard)
 
-
-## Requires
-
-* [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
-* [Symfony Coding Standard](https://github.com/djoos/Symfony-coding-standard)
-
 ## MO4 Coding Standard
 
 The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://symfony.com/doc/current/contributing/code/standards.html) and adds following rules:
@@ -40,45 +34,17 @@ The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://
 * There must be at least one space around operators, and (except for aligning multiline statements) at most one, see the
   [respective Squizlabs Sniff](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties#squizwhitespaceoperatorspacing)
   we imported with `ignoreNewlines = false`
+  
+With this ruleset enabled, following [Symfony Coding Standard](http://symfony.com/doc/current/contributing/code/standards.html) rules are not enforced:
+* "`add doc blocks for all classes`": the doc block for classes can be omitted, if they add no value
+* "`the license block has to be present at the top of every PHP file, before the namespace`": the license block can be omitted
 
-## Configuration
+Most of the issues can be auto-fixed with `phpcbf`.
 
-### MO4.Formatting.AlphabeticalUseStatements
+## Requires
 
-The `order` property of the `MO4.Formatting.AlphabeticalUseStatements` sniff defines
-which function is used for ordering.
-
-Possible values for order:
-* `dictionary` (default): based on [strcmp](http://php.net/strcmp), the namespace separator
-  precedes any other character
-  ```php
-  use Doctrine\ORM\Query;
-  use Doctrine\ORM\Query\Expr;
-  use Doctrine\ORM\QueryBuilder;
-  ```
-* `string`: binary safe string comparison using [strcmp](http://php.net/strcmp)
-  ```php
-  use Doctrine\ORM\Query;
-  use Doctrine\ORM\QueryBuilder;
-  use Doctrine\ORM\Query\Expr;
-
-  use ExampleSub;
-  use Examples;
-  ```
-* `string-locale`: locale based string comparison using [strcoll](http://php.net/strcoll)
-* `string-case-insenstive`: binary safe case-insensitive string comparison [strcasecmp](http://php.net/strcasecmp)
-   ```php
-   use Examples;
-   use ExampleSub;
-   ```
-
-```xml
-<rule ref="MO4.Formatting.AlphabeticalUseStatements">
-    <properties>
-        <property name="order" value="string-locale"/>
-    </properties>
-</rule>
-```
+* [PHP](http://php.net) version 5.4 or later 
+* [Composer](https://getcomposer.org/) is optional, but strongly recommended
 
 ## Installation
 
@@ -145,12 +111,63 @@ Using [Composer](https://getcomposer.org/) is the preferred way.
 
         phpcs --config-set default_standard MO4
 
+## Configuration
+
+### MO4.Formatting.AlphabeticalUseStatements
+
+The `order` property of the `MO4.Formatting.AlphabeticalUseStatements` sniff defines
+which function is used for ordering.
+
+Possible values for order:
+* `dictionary` (default): based on [strcmp](http://php.net/strcmp), the namespace separator
+  precedes any other character
+  ```php
+  use Doctrine\ORM\Query;
+  use Doctrine\ORM\Query\Expr;
+  use Doctrine\ORM\QueryBuilder;
+  ```
+* `string`: binary safe string comparison using [strcmp](http://php.net/strcmp)
+  ```php
+  use Doctrine\ORM\Query;
+  use Doctrine\ORM\QueryBuilder;
+  use Doctrine\ORM\Query\Expr;
+
+  use ExampleSub;
+  use Examples;
+  ```
+* `string-locale`: locale based string comparison using [strcoll](http://php.net/strcoll)
+* `string-case-insenstive`: binary safe case-insensitive string comparison [strcasecmp](http://php.net/strcasecmp)
+   ```php
+   use Examples;
+   use ExampleSub;
+   ```
+
+To change the sorting order for your project, add this snippet to your custom `ruleset.xml`:
+
+```xml
+<rule ref="MO4.Formatting.AlphabeticalUseStatements">
+    <properties>
+        <property name="order" value="string-locale"/>
+    </properties>
+</rule>
+```
+
+## Troubleshooting
+
+If `phpcs` complains that MO4 is not installed, please check the installed coding standards with
+`phpcs -i` and that `installed_paths` is set correctly with `phpcs --config-show`
+
+## Dependencies
+
+* [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+* [David Joos's Symfony Coding Standard](https://github.com/djoos/Symfony-coding-standard) ruleset for PHP CodeSniffer
+* [Composer installer for PHP_CodeSniffer coding standards](https://github.com/DealerDirect/phpcodesniffer-composer-installer)
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for information.
 
-## Credit
-
 ## License
 
 This project is licensed under the MIT license.
+See the [LICENSE](LICENSE) file for details.

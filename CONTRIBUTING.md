@@ -3,6 +3,7 @@
 If you contribute code, please make sure it conforms to the
 [PHPCS coding standard](https://github.com/squizlabs/PHP_CodeSniffer/blob/master/phpcs.xml.dist)
 and that the unit tests still pass.
+Whenever possible, add an auto fixer for coding standard violations. 
 
 ## Setup
 
