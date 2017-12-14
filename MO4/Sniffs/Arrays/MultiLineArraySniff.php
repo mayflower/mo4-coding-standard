@@ -34,10 +34,10 @@ class MultiLineArraySniff implements Sniff
      *
      * @var array
      */
-    protected  $arrayTokens = array(
-                               T_ARRAY,
-                               T_OPEN_SHORT_ARRAY,
-                              );
+    protected  $arrayTokens = [
+        T_ARRAY,
+        T_OPEN_SHORT_ARRAY,
+    ];
 
 
     /**

@@ -50,39 +50,39 @@ class ArrayDoubleArrowAlignmentUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'ArrayDoubleArrowAlignmentUnitTest.pass.inc':
-            return array();
+            return [];
         case 'ArrayDoubleArrowAlignmentUnitTest.fail.inc':
-            return array(
-                    5   => 1,
-                    10  => 1,
-                    17  => 2,
-                    18  => 2,
-                    22  => 1,
-                    28  => 1,
-                    38  => 1,
-                    43  => 1,
-                    45  => 1,
-                    49  => 1,
-                    51  => 1,
-                    58  => 1,
-                    59  => 1,
-                    61  => 1,
-                    67  => 1,
-                    70  => 1,
-                    71  => 1,
-                    73  => 1,
-                    82  => 1,
-                    83  => 1,
-                    85  => 1,
-                    93  => 1,
-                    94  => 1,
-                    97  => 1,
-                    105 => 1,
-                    130 => 1,
-                    132 => 1,
-                    134 => 1,
-                    136 => 2,
-                   );
+            return [
+                5   => 1,
+                10  => 1,
+                17  => 2,
+                18  => 2,
+                22  => 1,
+                28  => 1,
+                38  => 1,
+                43  => 1,
+                45  => 1,
+                49  => 1,
+                51  => 1,
+                58  => 1,
+                59  => 1,
+                61  => 1,
+                67  => 1,
+                70  => 1,
+                71  => 1,
+                73  => 1,
+                82  => 1,
+                83  => 1,
+                85  => 1,
+                93  => 1,
+                94  => 1,
+                97  => 1,
+                105 => 1,
+                130 => 1,
+                132 => 1,
+                134 => 1,
+                136 => 2,
+            ];
         }//end switch
 
         throw new RuntimeException("Testfile {$testFile} in ".__DIR__." is not handled by ".__CLASS__);
@@ -100,7 +100,7 @@ class ArrayDoubleArrowAlignmentUnitTest extends AbstractSniffUnitTest
      */
     protected function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

@@ -41,10 +41,10 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      *
      * @var array
      */
-    private $classNameTokens = array(
-                                T_NS_SEPARATOR,
-                                T_STRING,
-                               );
+    private $classNameTokens = [
+        T_NS_SEPARATOR,
+        T_STRING,
+    ];
 
 
     /**
@@ -55,7 +55,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      */
     public function register()
     {
-        return array(T_CLASS);
+        return [T_CLASS];
 
     }//end register()
 
@@ -74,16 +74,16 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $docCommentTags = array(
-                           '@param'  => 1,
-                           '@return' => 1,
-                           '@throws' => 1,
-                           '@var'    => 2,
-                          );
-        $scanTokens     = array(
-                           T_NS_SEPARATOR,
-                           T_DOC_COMMENT_OPEN_TAG,
-                          );
+        $docCommentTags = [
+            '@param'  => 1,
+            '@return' => 1,
+            '@throws' => 1,
+            '@var'    => 2,
+        ];
+        $scanTokens     = [
+            T_NS_SEPARATOR,
+            T_DOC_COMMENT_OPEN_TAG,
+        ];
 
         $tokens        = $phpcsFile->getTokens();
         $useStatements = $this->getUseStatements($phpcsFile, 0, ($stackPtr - 1));
@@ -130,15 +130,15 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                     $next = ($tag + 1);
                     // PHP Code Sniffer will magically add  T_DOC_COMMENT_CLOSE_TAG with empty string content.
                     $lineEnd = $phpcsFile->findNext(
-                        array(
-                         T_DOC_COMMENT_CLOSE_TAG,
-                         T_DOC_COMMENT_STAR,
-                        ),
+                        [
+                            T_DOC_COMMENT_CLOSE_TAG,
+                            T_DOC_COMMENT_STAR,
+                        ],
                         $next
                     );
 
                     $docCommentStringPtr = $phpcsFile->findNext(
-                        array(T_DOC_COMMENT_STRING),
+                        [T_DOC_COMMENT_STRING],
                         $next,
                         (int) $lineEnd
                     );
@@ -208,7 +208,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         $start,
         $end
     ) {
-        $useStatements = array();
+        $useStatements = [];
         $i           = $start;
         $tokens      = $phpcsFile->getTokens();
         $useTokenPtr = $phpcsFile->findNext(T_USE, $i, $end);
@@ -227,10 +227,10 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                 true
             );
             $useEnd         = $phpcsFile->findNext(
-                array(
-                 T_SEMICOLON,
-                 T_COMMA,
-                ),
+                [
+                    T_SEMICOLON,
+                    T_COMMA,
+                ],
                 $classNameEnd,
                 $end
             );
@@ -358,10 +358,10 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         if (array_key_exists($fullClassName, $useStatements) === true) {
             $replacement = $useStatements[$fullClassName];
 
-            $data = array(
-                     $className,
-                     $replacement,
-                    );
+            $data = [
+                $className,
+                $replacement,
+            ];
 
             $fixable = $phpcsFile->addFixableWarning(
                 $msg,
@@ -374,10 +374,10 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         } else if (strpos($fullClassName, $namespace) === 0) {
             $replacement = substr($fullClassName, strlen($namespace));
 
-            $data    = array(
-                        $className,
-                        $replacement,
-                       );
+            $data    = [
+                $className,
+                $replacement,
+            ];
             $fixable = $phpcsFile->addFixableWarning(
                 $msg,
                 $startPtr,

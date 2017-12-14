@@ -50,39 +50,39 @@ class AlphabeticalUseStatementsUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'AlphabeticalUseStatementsUnitTest.pass.inc':
-            return array();
+            return [];
         case 'AlphabeticalUseStatementsUnitTest.fail.1.inc':
-            return array(
-                    4  => 1,
-                    5  => 1,
-                    8  => 1,
-                    9  => 1,
-                    12 => 1,
-                   );
+            return [
+                4  => 1,
+                5  => 1,
+                8  => 1,
+                9  => 1,
+                12 => 1,
+            ];
         // Take care, more than one fix will be applied.
         case 'AlphabeticalUseStatementsUnitTest.fail.2.inc':
-            return array(
-                    6 => 1,
-                    8 => 1,
-                   );
+            return [
+                6 => 1,
+                8 => 1,
+            ];
         case 'AlphabeticalUseStatementsUnitTest.fail.3.inc':
-            return array(
-                    7  => 1,
-                    8  => 1,
-                    10 => 1,
-                    15 => 1,
-                   );
+            return [
+                7  => 1,
+                8  => 1,
+                10 => 1,
+                15 => 1,
+            ];
         case 'AlphabeticalUseStatementsUnitTest.fail.4.inc':
-            return array(
-                    4  => 1,
-                    8  => 1,
-                    13 => 1,
-                    17 => 1,
-                    20 => 1,
-                    21 => 1,
-                   );
+            return [
+                4  => 1,
+                8  => 1,
+                13 => 1,
+                17 => 1,
+                20 => 1,
+                21 => 1,
+            ];
         case 'AlphabeticalUseStatementsUnitTest.fail.5.inc':
-            return array(12 => 1);
+            return [12 => 1];
         }//end switch
 
         throw new RuntimeException("Testfile {$testFile} in ".__DIR__." is not handled by ".__CLASS__);
@@ -100,7 +100,7 @@ class AlphabeticalUseStatementsUnitTest extends AbstractSniffUnitTest
      */
     protected function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

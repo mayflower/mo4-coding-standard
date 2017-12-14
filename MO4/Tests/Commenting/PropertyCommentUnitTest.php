@@ -50,18 +50,18 @@ class PropertyCommentUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'PropertyCommentUnitTest.pass.inc':
-            return array();
+            return [];
         case 'PropertyCommentUnitTest.fail.inc':
-            return array(
-                    7  => 1,
-                    10 => 1,
-                    17 => 1,
-                    26 => 2,
-                    29 => 1,
-                    34 => 1,
-                    37 => 1,
-                    41 => 1,
-                   );
+            return [
+                7  => 1,
+                10 => 1,
+                17 => 1,
+                26 => 2,
+                29 => 1,
+                34 => 1,
+                37 => 1,
+                41 => 1,
+            ];
         }
 
         throw new RuntimeException("Testfile {$testFile} in ".__DIR__." is not handled by ".__CLASS__);
@@ -79,7 +79,7 @@ class PropertyCommentUnitTest extends AbstractSniffUnitTest
      */
     protected function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

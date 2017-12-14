@@ -38,17 +38,17 @@ class PropertyCommentSniff extends AbstractScopeSniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('PHP');
+    public $supportedTokenizers = ['PHP'];
 
     /**
      * List of token types this sniff analyzes
      *
      * @var array
      */
-    private $myTokenTypes = array(
-                             T_VARIABLE,
-                             T_CONST,
-                            );
+    private $myTokenTypes = [
+        T_VARIABLE,
+        T_CONST,
+    ];
 
 
     /**
@@ -58,7 +58,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
-        $scopes = array(T_CLASS);
+        $scopes = [T_CLASS];
 
         parent::__construct($scopes, $this->myTokenTypes, true);
 
@@ -83,22 +83,22 @@ class PropertyCommentSniff extends AbstractScopeSniff
         $stackPtr,
         $currScope
     ) {
-        $find   = array(
-                   T_COMMENT,
-                   T_DOC_COMMENT_CLOSE_TAG,
-                   T_CLASS,
-                   T_CONST,
-                   T_FUNCTION,
-                   T_VARIABLE,
-                   T_OPEN_TAG,
-                  );
+        $find   = [
+            T_COMMENT,
+            T_DOC_COMMENT_CLOSE_TAG,
+            T_CLASS,
+            T_CONST,
+            T_FUNCTION,
+            T_VARIABLE,
+            T_OPEN_TAG,
+        ];
         $tokens = $phpcsFile->getTokens();
 
         // Before even checking the docblocks above the current var/const,
         // check if we have a single line comment after it on the same line,
         // and if that one is OK.
         $postComment = $phpcsFile->findNext(
-            array(T_DOC_COMMENT_OPEN_TAG),
+            [T_DOC_COMMENT_OPEN_TAG],
             $stackPtr
         );
         if ($postComment !== false
