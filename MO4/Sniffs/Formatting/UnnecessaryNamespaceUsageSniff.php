@@ -3,14 +3,9 @@
 /**
  * This file is part of the mo4-coding-standard (phpcs standard)
  *
- * PHP version 5
- *
- * @category PHP
- * @package  PHP_CodeSniffer-MO4
- * @author   Xaver Loppenstedt <xaver@loppenstedt.de>
- * @license  http://spdx.org/licenses/MIT MIT License
- * @version  GIT: master
- * @link     https://github.com/Mayflower/mo4-coding-standard
+ * @author  Xaver Loppenstedt <xaver@loppenstedt.de>
+ * @license http://spdx.org/licenses/MIT MIT License
+ * @link    https://github.com/mayflower/mo4-coding-standard
  */
 
 namespace MO4\Sniffs\Formatting;
@@ -24,14 +19,12 @@ use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
  *
  * Full namespace declaration should be skipped in favour of the short declaration.
  *
- * @category  PHP
- * @package   PHP_CodeSniffer-MO4
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
  * @author    Marco Jantke <marco.jantke@gmail.com>
  * @author    Steffen Ritter <steffenritter1@gmail.com>
  * @copyright 2013 Xaver Loppenstedt, some rights reserved.
  * @license   http://spdx.org/licenses/MIT MIT License
- * @link      https://github.com/Mayflower/mo4-coding-standard
+ * @link      https://github.com/mayflower/mo4-coding-standard
  */
 class UnnecessaryNamespaceUsageSniff implements Sniff
 {

@@ -3,14 +3,9 @@
 /**
  * This file is part of the mo4-coding-standard (phpcs standard)
  *
- * PHP version 5
- *
- * @category PHP
- * @package  PHP_CodeSniffer-MO4
- * @author   Xaver Loppenstedt <xaver@loppenstedt.de>
- * @license  http://spdx.org/licenses/MIT MIT License
- * @version  GIT: master
- * @link     https://github.com/Mayflower/mo4-coding-standard
+ * @author  Xaver Loppenstedt <xaver@loppenstedt.de>
+ * @license http://spdx.org/licenses/MIT MIT License
+ * @link    https://github.com/mayflower/mo4-coding-standard
  */
 
 namespace MO4\Sniffs\Commenting;
@@ -24,12 +19,10 @@ use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
  * Doc blocks of class properties must be multiline and have exactly one '@var'
  * annotation.
  *
- * @category  PHP
- * @package   PHP_CodeSniffer-MO4
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
  * @copyright 2013-2014 Xaver Loppenstedt, some rights reserved.
  * @license   http://spdx.org/licenses/MIT MIT License
- * @link      https://github.com/Mayflower/mo4-coding-standard
+ * @link      https://github.com/mayflower/mo4-coding-standard
  */
 class PropertyCommentSniff extends AbstractScopeSniff
 {
@@ -94,7 +87,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
         ];
         $tokens = $phpcsFile->getTokens();
 
-        // Before even checking the docblocks above the current var/const,
+        // Before even checking the doc blocks above the current var/const,
         // check if we have a single line comment after it on the same line,
         // and if that one is OK.
         $postComment = $phpcsFile->findNext(
