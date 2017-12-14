@@ -21,6 +21,7 @@
 
     <rule ref="PEAR.ControlStructures.MultiLineCondition"/>
 
+    <rule ref="Generic.Arrays.ArrayIndent"/>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
     <rule ref="Generic.Formatting.SpaceAfterCast"/>
     <rule ref="Generic.Formatting.MultipleStatementAlignment">
