@@ -86,30 +86,6 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 
 
     /**
-     * Returns an array of tokens this test wants to listen for.
-     *
-     * @return array
-     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException
-     */
-    public function register()
-    {
-        if (in_array($this->order, $this->supportedOrderingMethods, true) === false) {
-            $error = sprintf(
-                "'%s' is not a valid order function for %s! Pick one of: %s",
-                $this->order,
-                Common::getSniffCode(__CLASS__),
-                implode(', ', $this->supportedOrderingMethods)
-            );
-
-            throw new RuntimeException($error);
-        }
-
-        return parent::register();
-
-    }//end register()
-
-
-    /**
      * Processes this test, when one of its tokens is encountered.
      *
      * @param File $phpcsFile The file being scanned.
@@ -120,6 +96,19 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
+        if (in_array($this->order, $this->supportedOrderingMethods, true) === false) {
+            $error = sprintf(
+                "'%s' is not a valid order function for %s! Pick one of: %s",
+                $this->order,
+                Common::getSniffCode(__CLASS__),
+                implode(', ', $this->supportedOrderingMethods)
+            );
+
+            $phpcsFile->addError($error, $stackPtr, 'InvalidOrder');
+
+            return;
+        }
+
         parent::process($phpcsFile, $stackPtr);
 
         if ($this->currentFile !== $phpcsFile->getFilename()) {

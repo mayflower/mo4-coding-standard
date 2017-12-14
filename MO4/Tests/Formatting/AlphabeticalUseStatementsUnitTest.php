@@ -83,6 +83,8 @@ class AlphabeticalUseStatementsUnitTest extends AbstractSniffUnitTest
             ];
         case 'AlphabeticalUseStatementsUnitTest.fail.5.inc':
             return [12 => 1];
+        case 'AlphabeticalUseStatementsUnitTest.fail.6.inc':
+            return [5 => 1];
         }//end switch
 
         throw new RuntimeException("Testfile {$testFile} in ".__DIR__." is not handled by ".__CLASS__);
