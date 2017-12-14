@@ -3,19 +3,13 @@
 /**
  * This file is part of the mo4-coding-standard (phpcs standard)
  *
- * PHP version 5
- *
- * @category PHP
- * @package  PHP_CodeSniffer-MO4
- * @author   Xaver Loppenstedt <xaver@loppenstedt.de>
- * @license  http://spdx.org/licenses/MIT MIT License
- * @version  GIT: master
- * @link     https://github.com/Mayflower/mo4-coding-standard
+ * @author  Xaver Loppenstedt <xaver@loppenstedt.de>
+ * @license http://spdx.org/licenses/MIT MIT License
+ * @link    https://github.com/mayflower/mo4-coding-standard
  */
 
 namespace MO4\Sniffs\Formatting;
 
-use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Namespaces\UseDeclarationSniff;
 use PHP_CodeSniffer\Util\Common;
@@ -26,14 +20,12 @@ use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
  *
  * Use statements must be in alphabetical order, grouped by empty lines.
  *
- * @category  PHP
- * @package   PHP_CodeSniffer-MO4
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
  * @author    Steffen Ritter <steffenritter1@gmail.com>
  * @author    Christian Albrecht <christian.albrecht@mayflower.de>
  * @copyright 2013-2017 Xaver Loppenstedt, some rights reserved.
  * @license   http://spdx.org/licenses/MIT MIT License
- * @link      https://github.com/Mayflower/mo4-coding-standard
+ * @link      https://github.com/mayflower/mo4-coding-standard
  */
 class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 {

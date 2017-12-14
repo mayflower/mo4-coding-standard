@@ -3,14 +3,9 @@
 /**
  * This file is part of the mo4-coding-standard (phpcs standard)
  *
- * PHP version 5
- *
- * @category PHP
- * @package  PHP_CodeSniffer-MO4
- * @author   Xaver Loppenstedt <xaver@loppenstedt.de>
- * @license  http://spdx.org/licenses/MIT MIT License
- * @version  GIT: master
- * @link     https://github.com/Mayflower/mo4-coding-standard
+ * @author  Xaver Loppenstedt <xaver@loppenstedt.de>
+ * @license http://spdx.org/licenses/MIT MIT License
+ * @link    https://github.com/mayflower/mo4-coding-standard
  */
 
 namespace MO4\Tests\Commenting;
@@ -24,12 +19,10 @@ use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.
  *
- * @category  PHP
- * @package   PHP_CodeSniffer-MO4
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
  * @copyright 2014 Xaver Loppenstedt, some rights reserved.
  * @license   http://spdx.org/licenses/MIT MIT License
- * @link      https://github.com/Mayflower/mo4-coding-standard
+ * @link      https://github.com/mayflower/mo4-coding-standard
  */
 class PropertyCommentUnitTest extends AbstractSniffUnitTest
 {

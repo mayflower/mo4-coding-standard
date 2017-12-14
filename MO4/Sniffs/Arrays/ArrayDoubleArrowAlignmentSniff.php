@@ -3,14 +3,9 @@
 /**
  * This file is part of the mo4-coding-standard (phpcs standard)
  *
- * PHP version 5
- *
- * @category PHP
- * @package  PHP_CodeSniffer-MO4
- * @author   Xaver Loppenstedt <xaver@loppenstedt.de>
- * @license  http://spdx.org/licenses/MIT MIT License
- * @version  GIT: master
- * @link     https://github.com/Mayflower/mo4-coding-standard
+ * @author  Xaver Loppenstedt <xaver@loppenstedt.de>
+ * @license http://spdx.org/licenses/MIT MIT License
+ * @link    https://github.com/mayflower/mo4-coding-standard
  */
 namespace MO4\Sniffs\Arrays;
 
@@ -23,12 +18,10 @@ use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
  *
  * '=>' must be aligned in arrays, and the key and the '=>' must be in the same line
  *
- * @category  PHP
- * @package   PHP_CodeSniffer-MO4
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
  * @copyright 2013 Xaver Loppenstedt, some rights reserved.
  * @license   http://spdx.org/licenses/MIT MIT License
- * @link      https://github.com/Mayflower/mo4-coding-standard
+ * @link      https://github.com/mayflower/mo4-coding-standard
  */
 class ArrayDoubleArrowAlignmentSniff implements Sniff
 {

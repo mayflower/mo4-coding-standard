@@ -1,12 +1,12 @@
 <?php
 /**
+ * This file is part of the mo4-coding-standard (phpcs standard)
+ *
  * Bootstrap file for PHP_CodeSniffer MO4 Coding Standard unit tests.
  *
- * @category PHP
- * @package  PHP_CodeSniffer-MO4
- * @author   Xaver Loppenstedt <xaver@loppenstedt.de>
- * @license  http://spdx.org/licenses/MIT MIT License
- * @link     https://github.com/mayflower/mo4-coding-standard
+ * @author  Xaver Loppenstedt <xaver@loppenstedt.de>
+ * @license http://spdx.org/licenses/MIT MIT License
+ * @link    https://github.com/mayflower/mo4-coding-standard
  */
 
 $myStandardName = 'MO4';
