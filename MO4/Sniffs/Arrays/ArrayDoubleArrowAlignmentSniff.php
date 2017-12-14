@@ -37,10 +37,10 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
      *
      * @var array
      */
-    protected  $arrayTokens = array(
-                               T_ARRAY,
-                               T_OPEN_SHORT_ARRAY,
-                              );
+    protected  $arrayTokens = [
+        T_ARRAY,
+        T_OPEN_SHORT_ARRAY,
+    ];
 
 
     /**
@@ -82,7 +82,7 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
             return;
         }
 
-        $assignments  = array();
+        $assignments  = [];
         $keyEndColumn = -1;
         $lastLine     = -1;
 

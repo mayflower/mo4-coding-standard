@@ -56,12 +56,12 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      * @var array
      */
     private $supportedOrderingMethods = [
-                                         'dictionary',
-                                         'string',
-                                         'string',
-                                         'string-locale',
-                                         'string-case-insensitive',
-                                        ];
+        'dictionary',
+        'string',
+        'string',
+        'string-locale',
+        'string-case-insensitive',
+    ];
 
     /**
      * Last import seen in group
@@ -190,10 +190,10 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      */
     private function getUseImport(File $phpcsFile, $stackPtr)
     {
-        $importTokens = array(
-                         T_NS_SEPARATOR,
-                         T_STRING,
-                        );
+        $importTokens = [
+            T_NS_SEPARATOR,
+            T_STRING,
+        ];
 
         $start = $phpcsFile->findNext(
             PHP_CodeSniffer_Tokens::$emptyTokens,
@@ -210,10 +210,10 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
         $end    = $phpcsFile->findNext($importTokens, $start, null, true);
         $import = $phpcsFile->getTokensAsString($start, ($end - $start));
 
-        return array(
-                'startPtr' => $start,
-                'content'  => $import,
-               );
+        return [
+            'startPtr' => $start,
+            'content'  => $import,
+        ];
 
     }//end getUseImport()
 
@@ -232,7 +232,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
     ) {
         $tokens = $phpcsFile->getTokens();
 
-        $useEndPtr = $phpcsFile->findNext(array(T_SEMICOLON), ($stackPtr + 2));
+        $useEndPtr = $phpcsFile->findNext([T_SEMICOLON], ($stackPtr + 2));
         $useLength = ($useEndPtr - $stackPtr + 1);
         if ($tokens[($useEndPtr + 1)]['code'] === T_WHITESPACE) {
             $useLength++;

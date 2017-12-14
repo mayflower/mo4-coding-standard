@@ -50,17 +50,17 @@ class MultiLineArrayUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'MultiLineArrayUnitTest.pass.inc':
-            return array();
+            return [];
         case 'MultiLineArrayUnitTest.fail.inc':
-            return array(
-                    4  => 1,
-                    12 => 1,
-                    18 => 2,
-                    22 => 1,
-                    24 => 1,
-                    28 => 1,
-                    32 => 1,
-                   );
+            return [
+                4  => 1,
+                12 => 1,
+                18 => 2,
+                22 => 1,
+                24 => 1,
+                28 => 1,
+                32 => 1,
+            ];
         }//end switch
 
         throw new RuntimeException("Testfile {$testFile} in ".__DIR__." is not handled by ".__CLASS__);
@@ -78,7 +78,7 @@ class MultiLineArrayUnitTest extends AbstractSniffUnitTest
      */
     protected function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

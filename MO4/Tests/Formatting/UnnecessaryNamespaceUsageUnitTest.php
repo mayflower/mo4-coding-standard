@@ -49,7 +49,7 @@ class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
      */
     protected function getErrorList($testFile='')
     {
-        return array();
+        return [];
 
     }//end getErrorList()
 
@@ -72,42 +72,42 @@ class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
         case 'UnnecessaryNamespaceUsageUnitTest.pass.2.inc':
         case 'UnnecessaryNamespaceUsageUnitTest.pass.3.inc':
         case 'UnnecessaryNamespaceUsageUnitTest.pass.4.inc':
-            return array();
+            return [];
         case 'UnnecessaryNamespaceUsageUnitTest.fail.1.inc':
-            return array(
-                    17 => 1,
-                    19 => 1,
-                    24 => 1,
-                    25 => 1,
-                    26 => 2,
-                    28 => 1,
-                    30 => 2,
-                    32 => 1,
-                    33 => 1,
-                    40 => 1,
-                    44 => 1,
-                    45 => 1,
-                    46 => 1,
-                    52 => 1,
-                    56 => 1,
-                   );
+            return [
+                17 => 1,
+                19 => 1,
+                24 => 1,
+                25 => 1,
+                26 => 2,
+                28 => 1,
+                30 => 2,
+                32 => 1,
+                33 => 1,
+                40 => 1,
+                44 => 1,
+                45 => 1,
+                46 => 1,
+                52 => 1,
+                56 => 1,
+            ];
         case 'UnnecessaryNamespaceUsageUnitTest.fail.2.inc':
-            return array(
-                    10 => 1,
-                    11 => 1,
-                   );
+            return [
+                10 => 1,
+                11 => 1,
+            ];
         case 'UnnecessaryNamespaceUsageUnitTest.fail.3.inc':
-            return array(
-                    15 => 1,
-                    16 => 1,
-                    17 => 1,
-                    18 => 1,
-                    22 => 1,
-                    23 => 1,
-                    25 => 3,
-                   );
+            return [
+                15 => 1,
+                16 => 1,
+                17 => 1,
+                18 => 1,
+                22 => 1,
+                23 => 1,
+                25 => 3,
+            ];
         case 'UnnecessaryNamespaceUsageUnitTest.fail.4.inc':
-            return array();
+            return [];
         }//end switch
 
         throw new RuntimeException("Testfile {$testFile} in ".__DIR__." is not handled by ".__CLASS__);

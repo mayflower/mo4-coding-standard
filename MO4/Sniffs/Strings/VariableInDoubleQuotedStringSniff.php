@@ -49,7 +49,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
      */
     public function register()
     {
-        return array(T_DOUBLE_QUOTED_STRING);
+        return [T_DOUBLE_QUOTED_STRING];
 
     }//end register()
 
@@ -75,7 +75,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
         $tokens  = $phpcsFile->getTokens();
         $content = $tokens[$stackPtr]['content'];
 
-        $matches = array();
+        $matches = [];
 
         preg_match_all($varRegExp, $content, $matches, PREG_OFFSET_CAPTURE);
 

@@ -50,19 +50,19 @@ class VariableInDoubleQuotedStringUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'VariableInDoubleQuotedStringUnitTest.pass.inc':
-            return array();
+            return [];
         case 'VariableInDoubleQuotedStringUnitTest.fail.inc':
-            return array(
-                    3  => 1,
-                    4  => 1,
-                    5  => 2,
-                    6  => 2,
-                    7  => 1,
-                    8  => 1,
-                    9  => 1,
-                    10 => 1,
-                    11 => 1,
-                   );
+            return [
+                3  => 1,
+                4  => 1,
+                5  => 2,
+                6  => 2,
+                7  => 1,
+                8  => 1,
+                9  => 1,
+                10 => 1,
+                11 => 1,
+            ];
         }
 
         throw new RuntimeException("Testfile {$testFile} in ".__DIR__." is not handled by ".__CLASS__);
@@ -80,7 +80,7 @@ class VariableInDoubleQuotedStringUnitTest extends AbstractSniffUnitTest
      */
     protected function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 
