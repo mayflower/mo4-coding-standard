@@ -43,6 +43,7 @@ class AlphabeticalUseStatementsUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'AlphabeticalUseStatementsUnitTest.pass.inc':
+        case 'AlphabeticalUseStatementsUnitTest.pass.1.inc':
             return [];
         case 'AlphabeticalUseStatementsUnitTest.fail.1.inc':
             return [
@@ -74,8 +75,6 @@ class AlphabeticalUseStatementsUnitTest extends AbstractSniffUnitTest
                 20 => 1,
                 21 => 1,
             ];
-        case 'AlphabeticalUseStatementsUnitTest.fail.5.inc':
-            return [12 => 1];
         case 'AlphabeticalUseStatementsUnitTest.fail.6.inc':
             return [5 => 1];
         }//end switch
