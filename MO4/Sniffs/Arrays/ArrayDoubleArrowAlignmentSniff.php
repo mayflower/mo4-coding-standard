@@ -39,7 +39,7 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
     /**
      * Registers the tokens that this sniff wants to listen for.
      *
-     * @return array(int)
+     * @return array<int, int>
      * @see    Tokens.php
      */
     public function register()
