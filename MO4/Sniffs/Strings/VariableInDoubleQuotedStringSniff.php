@@ -73,9 +73,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
         preg_match_all($varRegExp, $content, $matches, PREG_OFFSET_CAPTURE);
 
         foreach ($matches as $match) {
-            foreach ($match as $info) {
-                list($var, $pos) = $info;
-
+            foreach ($match as list($var, $pos)) {
                 if ($pos === 1 || $content[($pos - 1)] !== '{') {
                     if (strpos(substr($content, 0, $pos), '{') > 0
                         && strpos(substr($content, 0, $pos), '}') === false
