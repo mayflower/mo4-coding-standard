@@ -16,6 +16,7 @@ script:
   - |
     if [ `php -r "echo (int) version_compare(PHP_VERSION, '7.0', '>=');"` = "1" ]; then
       composer require phpstan/phpstan --dev
+      composer require phpstan/phpstan-strict-rules --dev
       vendor/bin/phpstan analyse --level=max --no-progress -c .phpstan.neon MO4 tests
     fi
   - php -d zend_extension=xdebug.so vendor/bin/phpunit --coverage-clover=coverage.xml
