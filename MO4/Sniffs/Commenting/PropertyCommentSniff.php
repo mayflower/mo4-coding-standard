@@ -16,7 +16,7 @@ use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 /**
  * Property Comment Sniff sniff.
  *
- * Doc blocks of class properties must be multiline and have exactly one '@var'
+ * Doc blocks of class properties must be multiline and have exactly one var
  * annotation.
  *
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
