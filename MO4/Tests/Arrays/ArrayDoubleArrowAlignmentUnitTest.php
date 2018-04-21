@@ -78,7 +78,7 @@ class ArrayDoubleArrowAlignmentUnitTest extends AbstractSniffUnitTest
             ];
         }//end switch
 
-        throw new RuntimeException("Testfile {$testFile} in ".__DIR__." is not handled by ".__CLASS__);
+        throw new RuntimeException("Testfile {$testFile} in ".__DIR__.' is not handled by '.__CLASS__);
 
     }//end getErrorList()
 

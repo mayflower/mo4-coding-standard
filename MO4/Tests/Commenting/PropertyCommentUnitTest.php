@@ -57,7 +57,7 @@ class PropertyCommentUnitTest extends AbstractSniffUnitTest
             ];
         }
 
-        throw new RuntimeException("Testfile {$testFile} in ".__DIR__." is not handled by ".__CLASS__);
+        throw new RuntimeException("Testfile {$testFile} in ".__DIR__.' is not handled by '.__CLASS__);
 
     }//end getErrorList()
 
