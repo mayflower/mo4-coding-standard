@@ -18,6 +18,9 @@ script:
       composer require phpstan/phpstan --dev
       composer require phpstan/phpstan-strict-rules --dev
       vendor/bin/phpstan analyse --level=max --no-progress -c .phpstan.neon MO4 tests
+      pecl install -f ast-0.1.6
+      composer require phan/phan --dev
+      vendor/bin/phan -i
     fi
   - php -d zend_extension=xdebug.so vendor/bin/phpunit --coverage-clover=coverage.xml
 
