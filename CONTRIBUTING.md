@@ -40,11 +40,11 @@ To run the unit tests, execute in the repository root:
     
 ## Static analysis
 
-We do recommend to use [PHPStan](https://github.com/phpstan/phpstan) for static analysis, with maximum inspection level.
-Please refer to the [PHPStan](https://github.com/phpstan/phpstan#installation) documentation for
-installation instructions.
+We use [PHPStan](https://github.com/phpstan/phpstan) and [Phan](https://github.com/phan/phan), please refer to the
+respective documentation for installation instructions.
 
-    phpstan analyse --level=max -c .phpstan.neon MO4/ tests/
+    ./vendor/phpstan analyse --level=max -c .phpstan.neon MO4/ tests/
+    ./vendor/bin/phan -i
 
 ## Code Coverage
 
