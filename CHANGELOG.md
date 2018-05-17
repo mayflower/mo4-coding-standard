@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.1.1] - 2018-05-17
+### Changed
+- Check for empty needle when calling str_pos, fixes #78
+
 ## [2.1.0] - 2018-04-06
 ### Changed
 - PHPCS version 3.2.3 or later is required.
