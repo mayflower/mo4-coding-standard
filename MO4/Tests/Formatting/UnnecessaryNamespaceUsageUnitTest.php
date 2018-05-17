@@ -65,6 +65,7 @@ class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
         case 'UnnecessaryNamespaceUsageUnitTest.pass.2.inc':
         case 'UnnecessaryNamespaceUsageUnitTest.pass.3.inc':
         case 'UnnecessaryNamespaceUsageUnitTest.pass.4.inc':
+        case 'UnnecessaryNamespaceUsageUnitTest.pass.5.inc':
             return [];
         case 'UnnecessaryNamespaceUsageUnitTest.fail.1.inc':
             return [
