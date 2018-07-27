@@ -10,6 +10,10 @@ matrix:
     env: DEPENDENCIES=lowest
   - php: 7.2
     env: DEPENDENCIES=highest
+  - php: 7.3
+    env: DEPENDENCIES=lowest
+  - php: 7.3
+    env: DEPENDENCIES=highest
 
 addons:
   apt:
@@ -21,7 +25,7 @@ cache:
   - $HOME/.composer/cache
 
 before_script:
-  - phpenv config-rm xdebug.ini
+  - if [ "${TRAVIS_PHP_VERSION}" != "7.3" ]; then phpenv config-rm xdebug.ini; fi
   - if [ "${DEPENDENCIES}" = "lowest" ]; then composer update --prefer-lowest --prefer-dist --no-interaction --no-progress; fi;
   - if [ "${DEPENDENCIES}" = "highest" ]; then composer update --prefer-dist --no-interaction --no-progress; fi;
   - if [ "${DEPENDENCIES}" = "highest" ]; then pecl install -f ast-0.1.6; fi; # Install AST extension, as phan requires it
@@ -34,7 +38,7 @@ script:
   - vendor/bin/phpcs # Stylecheck against PHPCS's ruleset
   - vendor/bin/phpstan analyse --level=max --no-progress -c .phpstan.neon MO4 tests # Run PHPStan
   - if [ "${DEPENDENCIES}" = "highest" ]; then vendor/bin/phan -i; fi; # Run phan
-  - php -d zend_extension=xdebug.so vendor/bin/phpunit --coverage-clover=coverage.xml # Generate Code coverage report
+  - if [ "${TRAVIS_PHP_VERSION}" != "7.3" ]; then php -d zend_extension=xdebug.so vendor/bin/phpunit --coverage-clover=coverage.xml; fi; # Generate Code coverage report
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
