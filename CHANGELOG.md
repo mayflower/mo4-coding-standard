@@ -5,7 +5,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [2.1.1] - 2018-05-17
 ### Changed
-- Check for empty needle when calling str_pos, fixes #78
+- Check for empty needle when calling strpos, fixes #78
 
 ## [2.1.0] - 2018-04-06
 ### Changed
