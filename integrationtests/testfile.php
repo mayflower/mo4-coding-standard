@@ -28,7 +28,7 @@ class FooBar
     /**
      * @param string $dummy Some argument description
      */
-    public function __construct($dummy)
+    public function __construct(string $dummy)
     {
         $this->fooBar = $this->transformText($dummy);
     }
@@ -38,7 +38,7 @@ class FooBar
      *
      * @deprecated
      */
-    public function someDeprecatedMethod()
+    public function someDeprecatedMethod(): string
     {
         @trigger_error(sprintf('The %s() method is deprecated since version 2.8 and will be removed in 3.0. Use Acme\Baz::someMethod() instead.', __METHOD__), E_USER_DEPRECATED);
 
@@ -55,7 +55,7 @@ class FooBar
      *
      * @throws \RuntimeException When an invalid option is provided
      */
-    private function transformText($dummy, array $options = [])
+    private function transformText($dummy, array $options = []): ?string
     {
         $defaultOptions = [
             'some_default'    => 'values',

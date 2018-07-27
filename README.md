@@ -35,7 +35,10 @@ The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://
 * There must be at least one space around operators, and (except for aligning multiline statements) at most one, see the
   [respective Squizlabs Sniff](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties#squizwhitespaceoperatorspacing)
   we imported with `ignoreNewlines = false`
-* Single quotes must be used instead of double quoutes, where possible.
+* Single quotes must be used instead of double quotes, where possible.
+* All method require a return type; use `void` if the method returns nothing.
+* All method parameters that default to `null` must be marked as nullable with the `?` symbol.
+* All method parameters must have the same type hint as defined in the doc block of the method.
 
 With this ruleset enabled, following [Symfony Coding Standard](http://symfony.com/doc/current/contributing/code/standards.html) rules are not enforced:
 * "`add doc blocks for all classes`": the doc block for classes can be omitted, if they add no value
@@ -164,6 +167,7 @@ If `phpcs` complains that MO4 is not installed, please check the installed codin
 * [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) version 3.2.3 or later
 * [David Joos's Symfony Coding Standard](https://github.com/djoos/Symfony-coding-standard) ruleset for PHP CodeSniffer
 * [Composer installer for PHP_CodeSniffer coding standards](https://github.com/DealerDirect/phpcodesniffer-composer-installer)
+* [Slevomat Coding Standard](https://github.com/slevomat/coding-standard)
 
 ## Contributing
 
