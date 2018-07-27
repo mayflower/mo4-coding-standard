@@ -44,7 +44,7 @@ Most of the issues can be auto-fixed with `phpcbf`.
 
 ## Requires
 
-* [PHP](http://php.net) version 5.6 or later
+* [PHP](http://php.net) version 7.1 or later
 * [Composer](https://getcomposer.org/) is optional, but strongly recommended
 
 ## Installation
