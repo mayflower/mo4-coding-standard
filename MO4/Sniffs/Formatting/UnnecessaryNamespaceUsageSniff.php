@@ -150,7 +150,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                         -1,
                         PREG_SPLIT_NO_EMPTY
                     );
-                    $docLineTokens = array_slice(
+                    $docLineTokens = \array_slice(
                         $docLineTokens,
                         0,
                         $docCommentTags[$content]
@@ -163,7 +163,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                             PREG_SPLIT_NO_EMPTY
                         );
                         foreach ($typeTokens as $typeToken) {
-                            if (true === in_array($typeToken, $useStatements, true)) {
+                            if (true === \in_array($typeToken, $useStatements, true)) {
                                 continue;
                             }
 
@@ -365,7 +365,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
 
             $replaceClassName = true;
         } else if ($namespace !== "" && strpos($fullClassName, $namespace) === 0) {
-            $replacement = substr($fullClassName, strlen($namespace));
+            $replacement = substr($fullClassName, \strlen($namespace));
 
             $data    = [
                 $className,

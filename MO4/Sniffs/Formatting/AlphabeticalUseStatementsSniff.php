@@ -88,7 +88,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        if (in_array($this->order, $this->supportedOrderingMethods, true) === false) {
+        if (\in_array($this->order, $this->supportedOrderingMethods, true) === false) {
             $error = sprintf(
                 "'%s' is not a valid order function for %s! Pick one of: %s",
                 $this->order,
@@ -369,7 +369,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      */
     private function dictionaryCompare($a, $b)
     {
-        $min = min(strlen($a), strlen($b));
+        $min = min(\strlen($a), \strlen($b));
 
         for ($i = 0; $i < $min; $i++) {
             if ($a[$i] === $b[$i]) {
