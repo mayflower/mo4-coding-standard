@@ -130,7 +130,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
     private function surroundVariableWithBraces($content, $pos, $var)
     {
         $before = substr($content, 0, $pos);
-        $after  = substr($content, ($pos + strlen($var)));
+        $after  = substr($content, ($pos + \strlen($var)));
 
         return $before.'{'.$var.'}'.$after;
 
