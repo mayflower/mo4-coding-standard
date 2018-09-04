@@ -35,7 +35,8 @@ The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://
 * There must be at least one space around operators, and (except for aligning multiline statements) at most one, see the
   [respective Squizlabs Sniff](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties#squizwhitespaceoperatorspacing)
   we imported with `ignoreNewlines = false`
-  
+* Single quotes must be used instead of double quoutes, where possible.
+
 With this ruleset enabled, following [Symfony Coding Standard](http://symfony.com/doc/current/contributing/code/standards.html) rules are not enforced:
 * "`add doc blocks for all classes`": the doc block for classes can be omitted, if they add no value
 * "`the license block has to be present at the top of every PHP file, before the namespace`": the license block can be omitted
