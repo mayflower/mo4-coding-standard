@@ -13,6 +13,7 @@
         <exclude name="Symfony.Commenting.License"/>
     </rule>
 
+    <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired" />
     <rule ref="Squiz.WhiteSpace.OperatorSpacing">
         <properties>
             <property name="ignoreNewlines" value="true"/>
