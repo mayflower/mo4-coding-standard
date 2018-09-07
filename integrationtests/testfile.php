@@ -18,7 +18,7 @@ namespace Acme;
  */
 class FooBar
 {
-    const SOME_CONST = 42;
+    public const SOME_CONST = 42;
 
     /**
      * @var string
