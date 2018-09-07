@@ -78,21 +78,9 @@ To change the sorting order for your project, add this snippet to your custom `r
 * Interpolated variables in double quoted strings must be surrounded by `{ }`, e.g. `{$VAR}` instead of `$VAR`.
 
 ### Further rules (imported from other standards)
-* Short array syntax `[...]` must be used instead of  `array(...)`.
-* Each consecutive variable assignment must align at the assignment operator.
-* `sprintf` or `"{$VAR1} {$VAR2}"` must be used instead of the dot operator; concat operators are only allowed to
-  concatenate constants and multi line strings
-* a whitespace is required after each typecast, e.g. `(int) $value` instead of `(int)$value`
-* Multiline conditions must follow the [respective PEAR standard](https://pear.php.net/manual/en/standards.control.php#standards.control.splitlongstatements)
-* There must be at least one space around operators, and (except for aligning multiline statements) at most one, see the
-  [respective Squizlabs Sniff](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties#squizwhitespaceoperatorspacing)
-  we imported with `ignoreNewlines = false`
-* Single quotes must be used instead of double quotes, where possible.
-* All method require a return type; use `void` if the method returns nothing.
-* All method parameters that default to `null` must be marked as nullable with the `?` symbol.
-* All method parameters must have the same type hint as defined in the doc block of the method.
+* See `MO4/ruleset.xml`, which has each imported rule commented.
 
-With this ruleset enabled, following [Symfony Coding Standard](http://symfony.com/doc/current/contributing/code/standards.html) rules are not enforced:
+Note that with this ruleset, the following [Symfony Coding Standard](http://symfony.com/doc/current/contributing/code/standards.html) rules are not enforced:
 * "`add doc blocks for all classes`": the doc block for classes can be omitted, if they add no value
 * "`the license block has to be present at the top of every PHP file, before the namespace`": the license block can be omitted
 
@@ -150,10 +138,10 @@ If `phpcs` complains that MO4 is not installed, please check the installed codin
 
 ## Dependencies
 
-* [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) version 3.2.3 or later
-* [David Joos's Symfony Coding Standard](https://github.com/djoos/Symfony-coding-standard) ruleset for PHP CodeSniffer
+* [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) version 3.3.0 or later
+* [David Joos's Symfony Coding Standard](https://github.com/djoos/Symfony-coding-standard) version 3.0 or later
 * [Composer installer for PHP_CodeSniffer coding standards](https://github.com/DealerDirect/phpcodesniffer-composer-installer)
-* [Slevomat Coding Standard](https://github.com/slevomat/coding-standard)
+* [Slevomat Coding Standard](https://github.com/slevomat/coding-standard) version 4.8.5 or later
 
 ## Contributing
 
