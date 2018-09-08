@@ -39,7 +39,7 @@ class ArrayDoubleArrowAlignmentUnitTest extends AbstractSniffUnitTest
      * @return array<int, int>
      * @throws RuntimeException
      */
-    protected function getErrorList($testFile='')
+    protected function getErrorList(string $testFile=''): array
     {
         switch ($testFile) {
         case 'ArrayDoubleArrowAlignmentUnitTest.pass.inc':
@@ -78,7 +78,7 @@ class ArrayDoubleArrowAlignmentUnitTest extends AbstractSniffUnitTest
             ];
         }//end switch
 
-        throw new RuntimeException("Testfile {$testFile} in ".__DIR__.' is not handled by '.__CLASS__);
+        throw new RuntimeException("Testfile {$testFile} in ".__DIR__.' is not handled by '.self::class);
 
     }//end getErrorList()
 
@@ -91,7 +91,7 @@ class ArrayDoubleArrowAlignmentUnitTest extends AbstractSniffUnitTest
      *
      * @return array<int, int>
      */
-    protected function getWarningList()
+    protected function getWarningList(): array
     {
         return [];
 

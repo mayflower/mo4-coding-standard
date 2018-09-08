@@ -40,7 +40,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
      *
      * @see Tokens.php
      */
-    public function register()
+    public function register(): array
     {
         return [T_DOUBLE_QUOTED_STRING];
 
@@ -59,7 +59,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
      *
      * @return void
      */
-    public function process(File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr): void
     {
         $this->phpCsFile = $phpcsFile;
 
@@ -73,7 +73,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
         preg_match_all($varRegExp, $content, $matches, PREG_OFFSET_CAPTURE);
 
         foreach ($matches as $match) {
-            foreach ($match as list($var, $pos)) {
+            foreach ($match as [$var, $pos]) {
                 if ($pos === 1 || $content[($pos - 1)] !== '{') {
                     if (strpos(substr($content, 0, $pos), '{') > 0
                         && strpos(substr($content, 0, $pos), '}') === false
@@ -127,7 +127,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
      *
      * @return string
      */
-    private function surroundVariableWithBraces($content, $pos, $var)
+    private function surroundVariableWithBraces(string $content, int $pos, string $var): string
     {
         $before = substr($content, 0, $pos);
         $after  = substr($content, ($pos + \strlen($var)));
@@ -145,7 +145,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
      *
      * @return void
      */
-    private function fixPhpCsFile($stackPtr, $correctVariable)
+    private function fixPhpCsFile(int $stackPtr, string $correctVariable): void
     {
         $phpCsFile = $this->phpCsFile;
 

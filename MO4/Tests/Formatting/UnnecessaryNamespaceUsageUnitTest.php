@@ -40,7 +40,7 @@ class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
      *
      * @return array<int, int>
      */
-    protected function getErrorList($testFile='')
+    protected function getErrorList(string $testFile=''): array
     {
         return [];
 
@@ -58,7 +58,7 @@ class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
      * @return array<int, int>
      * @throws RuntimeException
      */
-    protected function getWarningList($testFile='')
+    protected function getWarningList(string $testFile=''): array
     {
         switch ($testFile) {
         case 'UnnecessaryNamespaceUsageUnitTest.pass.1.inc':
@@ -104,7 +104,7 @@ class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
             return [];
         }//end switch
 
-        throw new RuntimeException("Testfile {$testFile} in ".__DIR__.' is not handled by '.__CLASS__);
+        throw new RuntimeException("Testfile {$testFile} in ".__DIR__.' is not handled by '.self::class);
 
     }//end getWarningList()
 
