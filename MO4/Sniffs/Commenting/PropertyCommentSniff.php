@@ -192,14 +192,12 @@ class PropertyCommentSniff extends AbstractScopeSniff
                         $phpcsFile->fixer->endChangeset();
                     }
                 }
-            } else {
-                if ($isCommentOneLiner === true) {
-                    $phpcsFile->addError(
-                        'property doc comment must be multi line',
-                        $commentEnd,
-                        'NotMultiLineDocBlock'
-                    );
-                }
+            } else if ($isCommentOneLiner === true) {
+                $phpcsFile->addError(
+                    'property doc comment must be multi line',
+                    $commentEnd,
+                    'NotMultiLineDocBlock'
+                );
             }//end if
         } else if ($code === T_COMMENT) {
             // It seems that when we are in here,
@@ -239,7 +237,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
      *
      * @return void
      */
-    protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
+    protected function processTokenOutsideScope(File $phpcsFile, $stackPtr): void
     {
 
     }//end processTokenOutsideScope()

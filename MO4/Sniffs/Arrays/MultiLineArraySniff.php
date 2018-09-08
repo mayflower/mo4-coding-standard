@@ -39,7 +39,7 @@ class MultiLineArraySniff implements Sniff
      * @return array<int, int>
      * @see    Tokens.php
      */
-    public function register()
+    public function register(): array
     {
         return $this->arrayTokens;
 
@@ -55,7 +55,7 @@ class MultiLineArraySniff implements Sniff
      *
      * @return void
      */
-    public function process(File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr): void
     {
         $tokens  = $phpcsFile->getTokens();
         $current = $tokens[$stackPtr];

@@ -46,7 +46,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      * @return array<int, int>
      * @see    Tokens.php
      */
-    public function register()
+    public function register(): array
     {
         return [T_CLASS];
 
@@ -65,7 +65,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      *
      * @return void
      */
-    public function process(File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr): void
     {
         $docCommentTags = [
             '@param'  => 1,
@@ -198,9 +198,9 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      */
     protected function getUseStatements(
         File $phpcsFile,
-        $start,
-        $end
-    ) {
+        int $start,
+        int $end
+    ): array {
         $useStatements = [];
         $i           = $start;
         $tokens      = $phpcsFile->getTokens();
@@ -267,7 +267,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      *
      * @return string
      */
-    protected function getNamespace(File $phpcsFile, $start, $end)
+    protected function getNamespace(File $phpcsFile, int $start, int $end): string
     {
         $namespace      = $phpcsFile->findNext(T_NAMESPACE, $start, $end);
         $namespaceStart = $phpcsFile->findNext(
@@ -305,7 +305,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      *
      * @return string
      */
-    private function getFullyQualifiedClassName($className)
+    private function getFullyQualifiedClassName(string $className): string
     {
         if ($className[0] !== '\\') {
             $className = "\\{$className}";
@@ -333,13 +333,13 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      */
     private function checkShorthandPossible(
         File $phpcsFile,
-        $useStatements,
-        $className,
-        $namespace,
-        $startPtr,
-        $endPtr,
-        $isDocBlock=false
-    ) {
+        array $useStatements,
+        string $className,
+        string $namespace,
+        int $startPtr,
+        int $endPtr,
+        bool $isDocBlock=false
+    ): void {
         $msg     = 'Shorthand possible. Replace "%s" with "%s"';
         $code    = 'UnnecessaryNamespaceUsage';
         $fixable = false;
@@ -364,7 +364,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
             );
 
             $replaceClassName = true;
-        } else if ($namespace !== "" && strpos($fullClassName, $namespace) === 0) {
+        } else if ($namespace !== '' && strpos($fullClassName, $namespace) === 0) {
             $replacement = substr($fullClassName, \strlen($namespace));
 
             $data    = [

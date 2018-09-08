@@ -30,7 +30,7 @@ use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
 class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 {
 
-    const NAMESPACE_SEPARATOR_STRING = '\\';
+    private const NAMESPACE_SEPARATOR_STRING = '\\';
 
     /**
      * Sorting order, can be one of:
@@ -86,13 +86,13 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      *
      * @return void
      */
-    public function process(File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr): void
     {
         if (\in_array($this->order, $this->supportedOrderingMethods, true) === false) {
             $error = sprintf(
                 "'%s' is not a valid order function for %s! Pick one of: %s",
                 $this->order,
-                Common::getSniffCode(__CLASS__),
+                Common::getSniffCode(self::class),
                 implode(', ', $this->supportedOrderingMethods)
             );
 
@@ -169,7 +169,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      *
      * @return array|false
      */
-    private function getUseImport(File $phpcsFile, $stackPtr)
+    private function getUseImport(File $phpcsFile, int $stackPtr)
     {
         $importTokens = [
             T_NS_SEPARATOR,
@@ -209,8 +209,8 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      */
     private function getUseStatementAsString(
         File $phpcsFile,
-        $stackPtr
-    ) {
+        int $stackPtr
+    ): string {
         $tokens = $phpcsFile->getTokens();
 
         $useEndPtr = $phpcsFile->findNext([T_SEMICOLON], ($stackPtr + 2));
@@ -233,7 +233,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      *
      * @return bool
      */
-    private function checkIsNonImportUse(File $phpcsFile, $stackPtr)
+    private function checkIsNonImportUse(File $phpcsFile, int $stackPtr): bool
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -269,7 +269,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      *
      * @return void
      */
-    private function fixerClearLine(File $phpcsFile, $stackPtr)
+    private function fixerClearLine(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
         $line   = $tokens[$stackPtr]['line'];
@@ -297,9 +297,9 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      */
     private function findNewDestination(
         File $phpcsFile,
-        $stackPtr,
-        $import
-    ) {
+        int $stackPtr,
+        string $import
+    ): int {
         $tokens = $phpcsFile->getTokens();
 
         $line     = $tokens[$stackPtr]['line'];
@@ -336,7 +336,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      *
      * @return int
      */
-    private function compareString($a, $b)
+    private function compareString(string $a, string $b): int
     {
         switch ($this->order) {
         case 'string':
@@ -367,7 +367,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      *
      * @return int
      */
-    private function dictionaryCompare($a, $b)
+    private function dictionaryCompare(string $a, string $b): int
     {
         $min = min(\strlen($a), \strlen($b));
 
