@@ -9,6 +9,7 @@ before_script:
   - composer install
 
 script:
+  - vendor/bin/phpcs --standard=MO4 integrationtests/testfile.php
   - vendor/bin/phpunit
   - vendor/bin/phpcs
   - |
