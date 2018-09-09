@@ -32,28 +32,22 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 
     const NAMESPACE_SEPARATOR_STRING = '\\';
 
-    /**
-     * Sorting order, can be one of:
-     *   'dictionary', 'string', 'string-locale' or 'string-case-insensitive'
-     *
-     * Unknown types will be mapped to 'string'.
-     *
-     * @var string
-     */
-    public $order = 'dictionary';
-
-    /**
-     * Supported ordering methods
-     *
-     * @var array
-     */
-    private $supportedOrderingMethods = [
+    const SUPPORTED_ORDERING_METHODS = [
         'dictionary',
         'string',
         'string',
         'string-locale',
         'string-case-insensitive',
     ];
+
+    /**
+     * Sorting order, see SUPPORTED_ORDERING_METHODS for possible settings
+     *
+     * Unknown types will be mapped to 'string'.
+     *
+     * @var string
+     */
+    public $order = 'dictionary';
 
     /**
      * Last import seen in group
@@ -88,12 +82,12 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        if (\in_array($this->order, $this->supportedOrderingMethods, true) === false) {
+        if (\in_array($this->order, self::SUPPORTED_ORDERING_METHODS, true) === false) {
             $error = sprintf(
                 "'%s' is not a valid order function for %s! Pick one of: %s",
                 $this->order,
                 Common::getSniffCode(__CLASS__),
-                implode(', ', $this->supportedOrderingMethods)
+                implode(', ', self::SUPPORTED_ORDERING_METHODS)
             );
 
             $phpcsFile->addError($error, $stackPtr, 'InvalidOrder');
