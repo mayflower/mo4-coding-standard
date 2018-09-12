@@ -1,12 +1,23 @@
-sudo: false
 language: php
-php:
-  - 7.1
-  - 7.2
+matrix:
+  include:
+  - php: 7.1
+    env: DEPENDENCIES=lowest
+  - php: 7.1
+    env: DEPENDENCIES=highest
+  - php: 7.2
+    env: DEPENDENCIES=lowest
+  - php: 7.2
+    env: DEPENDENCIES=highest
+
+cache:
+  directories:
+  - $HOME/.composer/cache
 
 before_script:
   - phpenv config-rm xdebug.ini
-  - composer install
+  - if [ "${DEPENDENCIES}" = "lowest" ]; then composer update --prefer-lowest --prefer-dist --no-interaction --no-progress; fi;
+  - if [ "${DEPENDENCIES}" = "highest" ]; then composer update --prefer-dist --no-interaction --no-progress; fi;
 
 script:
   - vendor/bin/phpcs --standard=MO4 integrationtests/testfile.php
@@ -21,6 +32,7 @@ script:
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
+
 notifications:
   slack:
     secure: HcN5Gm6bfN8x5AP7BAw3QxKvyH9tEMd9ZnzlsGGitjCxvfLf86RIEoBkbLgBFm7Kzzue4V9WWlcop301vF7TFcDyCDQuQop/VQaY0iBUpauCLcu9M0G2LdbFvc1IXihFZGReFMm7rvjGPX8+V6vcEdJHG/fq+Fyf/xgKDTFO4KQ=
