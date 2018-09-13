@@ -18,20 +18,71 @@ Provides a PHP CodeSniffer ruleset for the MO4 coding standard
 
 The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://symfony.com/doc/current/contributing/code/standards.html) and adds following rules:
 
-* short array syntax `[...]` must be used instead of  `array(...)`
-* in multi line arrays, the opening bracket must be followed by newline
-* in multi line arrays, the closing bracket must be in own line
-* in multi line arrays, the elements must be indented
-* in associative arrays, the `=>` operators must be aligned
-* in arrays, the key and `=>` operator must be on the same line
-* each consecutive variable assignment must align at the assignment operator
-* use statements must be sorted lexicographically, grouped by empty lines. The order function can be configured.
-* you should use the imported class name when it was imported with a use statement
-* interpolated variables in double quoted strings must be surrounded by `{ }`, e.g. `{$VAR}` instead of `$VAR`
+### MO4.Arrays.ArrayDoubleArrowAlignment
+* In associative arrays, the `=>` operators must be aligned.
+* In arrays, the key and `=>` operator must be on the same line.
+
+### MO4.Arrays.MultiLineArray
+* In multi line arrays, the opening bracket must be followed by newline.
+* In multi line arrays, the closing bracket must be in own line.
+* In multi line arrays, the elements must be indented.
+
+### MO4.Commenting.PropertyComment
+* doc blocks of class properties must be multiline and have exactly one `@var` annotation
+
+### MO4.Formatting.AlphabeticalUseStatements
+* `use` statements must be sorted lexicographically, grouped by empty lines. The order function can be configured.
+
+#### Configuration
+The `order` property of the `MO4.Formatting.AlphabeticalUseStatements` sniff defines
+which function is used for ordering.
+
+Possible values for order:
+* `dictionary` (default): based on [strcmp](http://php.net/strcmp), the namespace separator
+  precedes any other character
+  ```php
+  use Doctrine\ORM\Query;
+  use Doctrine\ORM\Query\Expr;
+  use Doctrine\ORM\QueryBuilder;
+  ```
+* `string`: binary safe string comparison using [strcmp](http://php.net/strcmp)
+  ```php
+  use Doctrine\ORM\Query;
+  use Doctrine\ORM\QueryBuilder;
+  use Doctrine\ORM\Query\Expr;
+
+  use ExampleSub;
+  use Examples;
+  ```
+* `string-locale`: locale based string comparison using [strcoll](http://php.net/strcoll)
+* `string-case-insensitive`: binary safe case-insensitive string comparison [strcasecmp](http://php.net/strcasecmp)
+   ```php
+   use Examples;
+   use ExampleSub;
+   ```
+
+To change the sorting order for your project, add this snippet to your custom `ruleset.xml`:
+
+```xml
+<rule ref="MO4.Formatting.AlphabeticalUseStatements">
+    <properties>
+        <property name="order" value="string-locale"/>
+    </properties>
+</rule>
+```
+
+### MO4.Formatting.UnnecessaryNamespaceUsage
+* The imported class name must be used, when it was imported with a `use` statement.
+
+### MO4.Strings.VariableInDoubleQuotedString
+* Interpolated variables in double quoted strings must be surrounded by `{ }`, e.g. `{$VAR}` instead of `$VAR`.
+
+### Further rules (imported from other standards)
+* Short array syntax `[...]` must be used instead of  `array(...)`.
+* Each consecutive variable assignment must align at the assignment operator.
 * `sprintf` or `"{$VAR1} {$VAR2}"` must be used instead of the dot operator; concat operators are only allowed to
   concatenate constants and multi line strings
 * a whitespace is required after each typecast, e.g. `(int) $value` instead of `(int)$value`
-* doc blocks of class properties must be multiline and have exactly one `@var` annotation
 * Multiline conditions must follow the [respective PEAR standard](https://pear.php.net/manual/en/standards.control.php#standards.control.splitlongstatements)
 * There must be at least one space around operators, and (except for aligning multiline statements) at most one, see the
   [respective Squizlabs Sniff](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties#squizwhitespaceoperatorspacing)
@@ -91,47 +142,6 @@ Using [Composer](https://getcomposer.org/) is the preferred way.
 5. Optionally, you might set MO4 as default coding standard
 
         ./vendor/bin/phpcs --config-set default_standard MO4
-
-## Configuration
-
-### MO4.Formatting.AlphabeticalUseStatements
-
-The `order` property of the `MO4.Formatting.AlphabeticalUseStatements` sniff defines
-which function is used for ordering.
-
-Possible values for order:
-* `dictionary` (default): based on [strcmp](http://php.net/strcmp), the namespace separator
-  precedes any other character
-  ```php
-  use Doctrine\ORM\Query;
-  use Doctrine\ORM\Query\Expr;
-  use Doctrine\ORM\QueryBuilder;
-  ```
-* `string`: binary safe string comparison using [strcmp](http://php.net/strcmp)
-  ```php
-  use Doctrine\ORM\Query;
-  use Doctrine\ORM\QueryBuilder;
-  use Doctrine\ORM\Query\Expr;
-
-  use ExampleSub;
-  use Examples;
-  ```
-* `string-locale`: locale based string comparison using [strcoll](http://php.net/strcoll)
-* `string-case-insensitive`: binary safe case-insensitive string comparison [strcasecmp](http://php.net/strcasecmp)
-   ```php
-   use Examples;
-   use ExampleSub;
-   ```
-
-To change the sorting order for your project, add this snippet to your custom `ruleset.xml`:
-
-```xml
-<rule ref="MO4.Formatting.AlphabeticalUseStatements">
-    <properties>
-        <property name="order" value="string-locale"/>
-    </properties>
-</rule>
-```
 
 ## Troubleshooting
 
