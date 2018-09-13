@@ -92,31 +92,6 @@ Using [Composer](https://getcomposer.org/) is the preferred way.
 
         ./vendor/bin/phpcs --config-set default_standard MO4
 
-
-### Pear
-
-1. Install phpcs
-
-        pear install PHP_CodeSniffer
-
-2. Check out the Symfony coding standard and this repository
-
-        git clone https://github.com/djoos/symfony-coding-standard.git
-        git clone https://github.com/mayflower/mo4-coding-standard.git
-
-3. Select the MO4 ruleset as your default coding standard
-
-        phpcs --config-set installed_paths PATH/TO/symfony2-coding-standard,PATH/TO/mo4-coding-standard
-        phpcs --config-set default_standard MO4
-
-4. Profit
-
-        phpcs --standard=MO4 path/to/my/file.php
-
-5. Optionally, you might set MO4 as default coding standard
-
-        phpcs --config-set default_standard MO4
-
 ## Configuration
 
 ### MO4.Formatting.AlphabeticalUseStatements
