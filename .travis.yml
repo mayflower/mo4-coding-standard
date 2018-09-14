@@ -19,6 +19,11 @@ matrix:
   - php: 7.2
     env: DEPENDENCIES=highest
 
+addons:
+  apt:
+    packages:
+      - libxml2-utils # for xmllint
+
 cache:
   directories:
   - $HOME/.composer/cache
@@ -29,19 +34,20 @@ before_script:
   - if [ "${DEPENDENCIES}" = "highest" ]; then composer update --prefer-dist --no-interaction --no-progress; fi;
 
 script:
-  - vendor/bin/phpcs --standard=MO4 integrationtests/testfile.php
-  - vendor/bin/phpunit
-  - vendor/bin/phpcs
+  - xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd MO4/ruleset.xml # validate MO4's ruleset XML
+  - vendor/bin/phpcs --standard=MO4 integrationtests/testfile.php # Check, if all the sniffs work with the current dependencies
+  - vendor/bin/phpunit # Run tests
+  - vendor/bin/phpcs # Stylecheck against PHPCS's ruleset
   - |
     if [ `php -r "echo (int) version_compare(PHP_VERSION, '7.0', '>=');"` = "1" ]; then
       composer require phpstan/phpstan --dev
       composer require phpstan/phpstan-strict-rules --dev
-      vendor/bin/phpstan analyse --level=max --no-progress -c .phpstan.neon MO4 tests
-      pecl install -f ast-0.1.6
-      composer require phan/phan --dev
-      vendor/bin/phan -i
+      vendor/bin/phpstan analyse --level=max --no-progress -c .phpstan.neon MO4 tests # Run PHPStan
+      pecl install -f ast-0.1.6 # Install AST extension, as phan requires it
+      composer require phan/phan --dev # Install phan, now that we have the AST extension
+      vendor/bin/phan -i # Run phan
     fi
-  - php -d zend_extension=xdebug.so vendor/bin/phpunit --coverage-clover=coverage.xml
+  - php -d zend_extension=xdebug.so vendor/bin/phpunit --coverage-clover=coverage.xml # Generate Code coverage report
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
