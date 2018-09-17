@@ -1,5 +1,5 @@
 build: false
-clone_folder: c:\projects\slevomat-coding-standard
+clone_folder: c:\projects\mo4-coding-standard
 clone_depth: 1
 platform:
   - x64
@@ -14,7 +14,7 @@ environment:
     - dependencies: highest
       php_version: 7.2
 
-  project_directory: c:\projects\slevomat-coding-standard
+  project_directory: c:\projects\mo4-coding-standard
   composer_directory: c:\tools\composer
   composer_executable: c:\tools\composer\composer.phar
   composer_installer: c:\tools\composer\installer.php
