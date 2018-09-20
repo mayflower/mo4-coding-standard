@@ -12,6 +12,7 @@ build:
 filter:
   excluded_paths:
     - "MO4/Tests/*/*.inc"
+    - "integrationtests/*"
   dependency_paths:
     - "vendor/"
 checks:
