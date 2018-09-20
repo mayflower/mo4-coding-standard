@@ -42,7 +42,6 @@ To run the integration tests, execute
 
     ./vendor/bin/phpcs --standard=MO4 integrationtests/*.php
 
-
 ## Static analysis
 
 We use [PHPStan](https://github.com/phpstan/phpstan) and [Phan](https://github.com/phan/phan), please refer to the
