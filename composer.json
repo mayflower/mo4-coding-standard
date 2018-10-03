@@ -22,8 +22,8 @@
         "source": "https://github.com/mayflower/mo4-coding-standard"
     },
     "require-dev": {
-        "phpstan/phpstan": "^0.9",
-        "phpstan/phpstan-strict-rules": "^0.9",
+        "phpstan/phpstan": "^0.10.3",
+        "phpstan/phpstan-strict-rules": "^0.10",
         "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
     },
     "require": {

@@ -10,6 +10,8 @@
 
 namespace MO4\Sniffs\Commenting;
 
+use MO4\Library\PregLibrary;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 
@@ -47,7 +49,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
     /**
      * Construct PropertyCommentSniff
      *
-     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException
+     * @throws RuntimeException
      */
     public function __construct()
     {
@@ -70,6 +72,8 @@ class PropertyCommentSniff extends AbstractScopeSniff
      *                        listening for.
      *
      * @return void
+     *
+     * @throws RuntimeException
      */
     protected function processTokenWithinScope(
         File $phpcsFile,
@@ -158,13 +162,15 @@ class PropertyCommentSniff extends AbstractScopeSniff
             $isCommentOneLiner
                 = $tokens[$commentStart]['line'] === $tokens[$commentEnd]['line'];
 
-            $length         = ($commentEnd - $commentStart + 1);
+            $length         = (int) ($commentEnd - $commentStart + 1);
             $tokensAsString = $phpcsFile->getTokensAsString(
                 $commentStart,
                 $length
             );
 
-            $varCount = (count(preg_split('/\s+@var\s+/', $tokensAsString)) - 1);
+            $vars = PregLibrary::mo4_preg_split('/\s+@var\s+/', $tokensAsString);
+
+            $varCount = (count($vars) - 1);
             if (($varCount === 0) || ($varCount > 1)) {
                 $phpcsFile->addError(
                     'property doc comment must have exactly one @var annotation',
@@ -219,7 +225,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
                 );
                 $phpcsFile->addError(
                     'property doc comment must begin with /**',
-                    ($commentStart + 1),
+                    ((int) $commentStart + 1),
                     'NotADocBlock'
                 );
             }
