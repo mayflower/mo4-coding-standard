@@ -142,7 +142,7 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
             $column  = $current['column'];
 
             if ($column !== ($keyEndColumn + 1)) {
-                $phpcsFile->addError('each "=>" assignments must be aligned', $ptr, 'AssignmentsNotAligned');
+                $phpcsFile->addError('each "=>" assignments must be aligned', (int) $ptr, 'AssignmentsNotAligned');
             }
         }
 

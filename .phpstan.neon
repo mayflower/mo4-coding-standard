@@ -1,5 +1,7 @@
 parameters:
     autoload_files:
         - %rootDir%/../../../tests/bootstrap.php
+    ignoreErrors:
+        - '#^Strict comparison using === between \*NEVER\* and (.*) will always evaluate to false.$#'
 includes:
 	- vendor/phpstan/phpstan-strict-rules/rules.neon

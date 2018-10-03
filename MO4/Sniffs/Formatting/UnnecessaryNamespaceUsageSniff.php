@@ -10,6 +10,8 @@
 
 namespace MO4\Sniffs\Formatting;
 
+use MO4\Library\PregLibrary;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
@@ -64,6 +66,8 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      *                        was found.
      *
      * @return void
+     *
+     * @throws RuntimeException
      */
     public function process(File $phpcsFile, $stackPtr): void
     {
@@ -87,7 +91,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         while ($nsSep !== false) {
             $nsSep = (int) $nsSep;
 
-            $classNameEnd = $phpcsFile->findNext(
+            $classNameEnd = (int) $phpcsFile->findNext(
                 $this->classNameTokens,
                 $nsSep,
                 null,
@@ -144,24 +148,26 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
 
                     $docLine = $tokens[$docCommentStringPtr]['content'];
 
-                    $docLineTokens = preg_split(
+                    $docLineTokens = PregLibrary::mo4_preg_split(
                         '/\s+/',
                         $docLine,
                         -1,
                         PREG_SPLIT_NO_EMPTY
                     );
+
                     $docLineTokens = \array_slice(
                         $docLineTokens,
                         0,
                         $docCommentTags[$content]
                     );
                     foreach ($docLineTokens as $docLineToken) {
-                        $typeTokens = preg_split(
+                        $typeTokens = PregLibrary::mo4_preg_split(
                             '/\|/',
                             $docLineToken,
                             -1,
                             PREG_SPLIT_NO_EMPTY
                         );
+
                         foreach ($typeTokens as $typeToken) {
                             if (true === \in_array($typeToken, $useStatements, true)) {
                                 continue;
@@ -209,7 +215,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         while ($useTokenPtr !== false) {
             $classNameStart = (int) $phpcsFile->findNext(
                 PHP_CodeSniffer_Tokens::$emptyTokens,
-                ($useTokenPtr + 1),
+                ((int) $useTokenPtr + 1),
                 $end,
                 true
             );
@@ -234,7 +240,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
 
             $aliasNamePtr = $phpcsFile->findPrevious(
                 PHP_CodeSniffer_Tokens::$emptyTokens,
-                ($useEnd - 1),
+                ((int) $useEnd - 1),
                 null,
                 true
             );
@@ -244,7 +250,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
 
             $className = $this->getFullyQualifiedClassName($className);
             $useStatements[$className] = $tokens[$aliasNamePtr]['content'];
-            $i = ($useEnd + 1);
+            $i = ((int) $useEnd + 1);
 
             if ($tokens[$useEnd]['code'] === T_COMMA) {
                 $useTokenPtr = $i;
@@ -269,7 +275,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      */
     protected function getNamespace(File $phpcsFile, int $start, int $end): string
     {
-        $namespace      = $phpcsFile->findNext(T_NAMESPACE, $start, $end);
+        $namespace      = (int) $phpcsFile->findNext(T_NAMESPACE, $start, $end);
         $namespaceStart = $phpcsFile->findNext(
             PHP_CodeSniffer_Tokens::$emptyTokens,
             ($namespace + 1),
@@ -283,7 +289,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
 
         $namespaceStart = (int) $namespaceStart;
 
-        $namespaceEnd = $phpcsFile->findNext(
+        $namespaceEnd = (int) $phpcsFile->findNext(
             $this->classNameTokens,
             ($namespaceStart + 1),
             $end,

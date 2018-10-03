@@ -24,8 +24,8 @@ before_script:
   - phpenv config-rm xdebug.ini
   - if [ "${DEPENDENCIES}" = "lowest" ]; then composer update --prefer-lowest --prefer-dist --no-interaction --no-progress; fi;
   - if [ "${DEPENDENCIES}" = "highest" ]; then composer update --prefer-dist --no-interaction --no-progress; fi;
-  - pecl install -f ast-0.1.6 # Install AST extension, as phan requires it
-  - composer require phan/phan --dev # Install phan, now that we have the AST extension
+  - if [ "${DEPENDENCIES}" = "highest" ]; then pecl install -f ast-0.1.6; fi; # Install AST extension, as phan requires it
+  - if [ "${DEPENDENCIES}" = "highest" ]; then composer require phan/phan --dev; fi; # Install phan, now that we have the AST extension
 
 script:
   - xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd MO4/ruleset.xml # validate MO4's ruleset XML
@@ -33,7 +33,7 @@ script:
   - vendor/bin/phpunit # Run tests
   - vendor/bin/phpcs # Stylecheck against PHPCS's ruleset
   - vendor/bin/phpstan analyse --level=max --no-progress -c .phpstan.neon MO4 tests # Run PHPStan
-  - vendor/bin/phan -i # Run phan
+  - if [ "${DEPENDENCIES}" = "highest" ]; then vendor/bin/phan -i; fi; # Run phan
   - php -d zend_extension=xdebug.so vendor/bin/phpunit --coverage-clover=coverage.xml # Generate Code coverage report
 
 after_success:

@@ -182,7 +182,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
         }
 
         $start  = (int) $start;
-        $end    = $phpcsFile->findNext($importTokens, $start, null, true);
+        $end    = (int) $phpcsFile->findNext($importTokens, $start, null, true);
         $import = $phpcsFile->getTokensAsString($start, ($end - $start));
 
         return [
@@ -207,7 +207,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
     ): string {
         $tokens = $phpcsFile->getTokens();
 
-        $useEndPtr = $phpcsFile->findNext([T_SEMICOLON], ($stackPtr + 2));
+        $useEndPtr = (int) $phpcsFile->findNext([T_SEMICOLON], ($stackPtr + 2));
         $useLength = ($useEndPtr - $stackPtr + 1);
         if ($tokens[($useEndPtr + 1)]['code'] === T_WHITESPACE) {
             $useLength++;
@@ -306,7 +306,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
                 $line = $prevLine;
             }
 
-            $prevPtr = $phpcsFile->findPrevious(T_USE, ($ptr - 1));
+            $prevPtr = $phpcsFile->findPrevious(T_USE, ((int) $ptr - 1));
             if ($prevPtr === false) {
                 break;
             }
@@ -317,7 +317,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
             && ($this->compareString($prevImportArr['content'], $import) > 0)
         );
 
-        return $ptr;
+        return (int) $ptr;
 
     }//end findNewDestination()
 
