@@ -52,8 +52,9 @@ class PropertyCommentUnitTest extends AbstractSniffUnitTest
                 26 => 2,
                 29 => 1,
                 34 => 1,
-                37 => 1,
+                37 => 2,
                 41 => 1,
+                44 => 1,
             ];
         }
 
