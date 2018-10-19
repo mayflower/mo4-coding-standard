@@ -42,6 +42,8 @@ class X
         /** @var int $bla */
         $bla = 1;
         /** @var int $bla */
+
+        return ($bla === $foo); /* yeah! */
     }
 
     private $_endThing;

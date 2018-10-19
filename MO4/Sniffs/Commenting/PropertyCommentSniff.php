@@ -79,7 +79,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
         File $phpcsFile,
         $stackPtr,
         $currScope
-    ) {
+    ): void {
         $find   = [
             T_COMMENT,
             T_DOC_COMMENT_CLOSE_TAG,
@@ -95,7 +95,10 @@ class PropertyCommentSniff extends AbstractScopeSniff
         // check if we have a single line comment after it on the same line,
         // and if that one is OK.
         $postComment = $phpcsFile->findNext(
-            [T_DOC_COMMENT_OPEN_TAG],
+            [
+                T_DOC_COMMENT_OPEN_TAG,
+                T_COMMENT,
+            ],
             $stackPtr
         );
         if ($postComment !== false
@@ -104,34 +107,27 @@ class PropertyCommentSniff extends AbstractScopeSniff
             if ($tokens[$postComment]['content'] === '/**') {
                 // That's an error already.
                 $phpcsFile->addError(
-                    'no doc blocks are allowed after declaration',
+                    'no doc blocks are allowed directly after declaration',
                     $stackPtr,
                     'NoDocBlockAllowed'
                 );
-            } else {
-                $postCommentEnd  = $tokens[$postComment]['comment_closer'];
-                $postCommentLine = $tokens[$postCommentEnd]['line'];
-                if ($tokens[$postComment]['line'] !== $postCommentLine) {
-                    $phpcsFile->addError(
-                        'no multiline comments after declarations allowed',
-                        $stackPtr,
-                        'MustBeOneLine'
-                    );
-                }
+            } else if (0 !== \strpos($tokens[$postComment]['content'], '//')
+                && \substr($tokens[$postComment]['content'], -2) !== '*/'
+            ) {
+                $phpcsFile->addError(
+                    'no multiline comments after declarations allowed',
+                    $stackPtr,
+                    'MustBeOneLine'
+                );
             }
-        }
+        }//end if
 
         // Don't do constants for now.
         if ($tokens[$stackPtr]['code'] === T_CONST) {
             return;
         }
 
-        $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1));
-        if ($commentEnd === false) {
-            return;
-        }
-
-        $commentEnd = (int) $commentEnd;
+        $commentEnd = (int) $phpcsFile->findPrevious($find, ($stackPtr - 1));
 
         $conditions    = $tokens[$commentEnd]['conditions'];
         $lastCondition = array_pop($conditions);
@@ -170,7 +166,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
 
             $vars = PregLibrary::mo4_preg_split('/\s+@var\s+/', $tokensAsString);
 
-            $varCount = (count($vars) - 1);
+            $varCount = (\count($vars) - 1);
             if (($varCount === 0) || ($varCount > 1)) {
                 $phpcsFile->addError(
                     'property doc comment must have exactly one @var annotation',
