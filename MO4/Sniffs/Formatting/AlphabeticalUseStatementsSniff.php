@@ -312,7 +312,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
             }
 
             $prevLine      = $tokens[$prevPtr]['line'];
-            $prevImportArr = $this->getUseImport($phpcsFile, (int) $prevPtr);
+            $prevImportArr = (array) $this->getUseImport($phpcsFile, (int) $prevPtr);
         } while ($prevLine === ($line - 1)
             && ($this->compareString($prevImportArr['content'], $import) > 0)
         );
