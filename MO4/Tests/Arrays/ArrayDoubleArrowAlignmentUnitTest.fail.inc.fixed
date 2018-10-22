@@ -2,30 +2,32 @@
 
 
 $a = [
-    'one' => 1,
+    'one'  => 1,
     'four' => 4,
 ];
 
 $a = [
-    'one' => 1,
+    'one'  => 1,
     2,
     'four' => 4,
 ];
 
 // bad
 $a = [
-    'one'   => 1, 'two'  => 2,
-    'three' => 1, 'four' => 4,
+    'one'   => 1,
+ 'two'      => 2,
+    'three' => 1,
+ 'four'     => 4,
 ];
 
 $a = [
-    'one' => 1,
+    'one'                => 1,
     2,
     'four' /* comment */ => 4,
 ];
 
 $a = [
-    'one' => 1,
+    'one'  => 1,
     2,
     // comment
     'four' => 4,
@@ -35,42 +37,42 @@ $a = [
     2,
     'four' => 4,
     // comment
-    'one' => /* comment */
+    'one'  => /* comment */
         1,
 ];
 
 $a = array(
-    'short' => 1,
+    'short'         => 1,
     'verylongerkey' => 2,
-    'x' => 3,
+    'x'             => 3,
 );
 
 $a = [
-    'short' => 1,
+    'short'         => 1,
     'verylongerkey' => 2,
-    'x' => 3,
+    'x'             => 3,
 ];
 
 $a = array(
     'short'         => 1,
     'verylongerkey' => 2,
     'array'         => array(
-        'val1'      => 1,
-        'val112'    => 1,
+        'val1'        => 1,
+        'val112'      => 1,
         'val11234567' => 1,
-        'v'         => 1,
+        'v'           => 1,
     ),
     'x'             => 3,
 );
 
 $a = [
-    'short' => 1,
+    'short'         => 1,
     'verylongerkey' => 2,
     'array'         => [
-        'val1'      => 1,
-        'val112'    => 1,
+        'val1'       => 1,
+        'val112'     => 1,
         'val1123456' => 1,
-        'v'         => 1,
+        'v'          => 1,
     ],
     'x'             => 3,
 ];
@@ -79,10 +81,10 @@ $a = [
     'short'         => 1,
     'verylongerkey' => 2,
     'array'         => array(
-        'val1'   => 1,
-        'val112'  => 1,
+        'val1'        => 1,
+        'val112'      => 1,
         'val11234567' => 1,
-        'v' => 1,
+        'v'           => 1,
     ),
     'x'             => 3,
 ];
@@ -90,11 +92,11 @@ $a = [
 $a = array(
     'short'         => 1,
     'verylongerkey' => 2,
-    'array'      => [
-        'val1'   => 1,
+    'array'         => [
+        'val1'    => 1,
         'val112'  => 1,
         'val1123' => 1,
-        'v'        => 1,
+        'v'       => 1,
     ],
     'x'             => 3,
 );
@@ -102,7 +104,7 @@ $a = array(
 $a = [
     0 => [ 1 => 'O', 0 => 'O'],
     1 =>  [ 1 => 'O', 0 => 'I'],
-    2  => [ 1 => 'I', 0 => 'O'],
+    2 => [ 1 => 'I', 0 => 'O'],
     3 => [ 1 => 'I', 0 => 'I'],
 ];
 
@@ -127,11 +129,22 @@ $a = [
     },
     function () {
     },
-    'one'                     => 1,
+    'one'                  => 1,
     2,
-    'four'                    => 2,
-    123456789
-    /* bla */ => 'fail',
-    98765432
-    => 'fail',
+    'four'                 => 2,
+    123456789    /* bla */ => 'fail',
+    98765432               => 'fail',
+];
+
+$a=[
+    'v'  =>1,
+    'vv' =>2,
+];
+// deal with syntax errors
+$aa = [
+    'y' => [1, 2, 3] 'x' => 0 'z' => -1
+];
+
+$a=[
+    'v'=>1 'vv'=>2
 ];

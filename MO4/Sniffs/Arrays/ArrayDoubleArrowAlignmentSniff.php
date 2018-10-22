@@ -106,13 +106,29 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
                 $line          = $current['line'];
 
                 if ($lastLine === $line) {
+                    $previousComma = $this->getPreviousComma($phpcsFile, $i, $start);
+
                     $msg = 'only one "=>" assignments per line is allowed in a multi line array';
-                    $phpcsFile->addError($msg, $i, 'OneAssignmentPerLine');
+
+                    if ($previousComma !== false) {
+                        $fixable = $phpcsFile->addFixableError($msg, $i, 'OneAssignmentPerLine');
+
+                        if ($fixable === true) {
+                            $phpcsFile->fixer->beginChangeset();
+                            $phpcsFile->fixer->addNewline((int) $previousComma);
+                            $phpcsFile->fixer->endChangeset();
+                        }
+                    } else {
+                        // Remove current and previous '=>' from array for further processing.
+                        array_pop($assignments);
+                        array_pop($assignments);
+                        $phpcsFile->addError($msg, $i, 'OneAssignmentPerLine');
+                    }
                 }
 
                 $hasKeyInLine = false;
 
-                $j = ($i - 1);
+                $j = ((int) $i - 1);
                 while (($j >= 0) && ($tokens[$j]['line'] === $current['line'])) {
                     if (\in_array($tokens[$j]['code'], PHP_CodeSniffer_Tokens::$emptyTokens, true) === false) {
                         $hasKeyInLine = true;
@@ -122,11 +138,17 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
                 }
 
                 if ($hasKeyInLine === false) {
-                    $phpcsFile->addError(
+                    $fixable = $phpcsFile->addFixableError(
                         'in arrays, keys and "=>" must be on the same line',
                         $i,
                         'KeyAndValueNotOnSameLine'
                     );
+
+                    if ($fixable === true) {
+                        $phpcsFile->fixer->beginChangeset();
+                        $phpcsFile->fixer->replaceToken($j, '');
+                        $phpcsFile->fixer->endChangeset();
+                    }
                 }
 
                 if ($column > $keyEndColumn) {
@@ -137,16 +159,68 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
             }//end if
         }//end for
 
+        $doubleArrowStartColumn = ($keyEndColumn + 1);
+
         foreach ($assignments as $ptr) {
             $current = $tokens[$ptr];
             $column  = $current['column'];
 
-            if ($column !== ($keyEndColumn + 1)) {
-                $phpcsFile->addError('each "=>" assignments must be aligned', (int) $ptr, 'AssignmentsNotAligned');
+            $beforeArrowPtr = ((int) $ptr - 1);
+            $currentIndent  = \strlen($tokens[$beforeArrowPtr]['content']);
+            $correctIndent  = (int) ($currentIndent - $column + $doubleArrowStartColumn);
+            if ($column !== $doubleArrowStartColumn) {
+                $fixable = $phpcsFile->addFixableError("each \"=>\" assignments must be aligned; current indentation before \"=>\" are $currentIndent space(s), must be $correctIndent space(s)", (int) $ptr, 'AssignmentsNotAligned');
+
+                if ($fixable === false) {
+                    continue;
+                }
+
+                $phpcsFile->fixer->beginChangeset();
+                if ($tokens[$beforeArrowPtr]['code'] === T_WHITESPACE) {
+                    $phpcsFile->fixer->replaceToken($beforeArrowPtr, str_repeat(' ', $correctIndent));
+                } else {
+                    $phpcsFile->fixer->addContent($beforeArrowPtr, str_repeat(' ', $correctIndent));
+                }
+
+                $phpcsFile->fixer->endChangeset();
             }
-        }
+        }//end foreach
 
     }//end process()
+
+
+    /**
+     * Find previous comma in array.
+     *
+     * @param File $phpcsFile The file being scanned.
+     * @param int  $stackPtr  The position of the current token in
+     *                        the stack passed in $tokens.
+     * @param int  $start     Start of the array
+     *
+     * @return bool|int
+     */
+    private function getPreviousComma(File $phpcsFile, $stackPtr, $start)
+    {
+        $previousComma = false;
+        $tokens        = $phpcsFile->getTokens();
+
+        $ptr = $phpcsFile->findPrevious([T_COMMA, T_CLOSE_SHORT_ARRAY], $stackPtr, $start);
+        while ($ptr !== false) {
+            if ($tokens[$ptr]['code'] === T_COMMA) {
+                $previousComma = $ptr;
+                break;
+            }
+
+            if ($tokens[$ptr]['code'] === T_CLOSE_SHORT_ARRAY) {
+                $ptr = $tokens[$ptr]['bracket_opener'];
+            }
+
+            $ptr = $phpcsFile->findPrevious([T_COMMA, T_CLOSE_SHORT_ARRAY], ($ptr - 1), $start);
+        }
+
+        return $previousComma;
+
+    }//end getPreviousComma()
 
 
 }//end class
