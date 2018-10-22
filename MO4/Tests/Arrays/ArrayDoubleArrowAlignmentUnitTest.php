@@ -75,6 +75,10 @@ class ArrayDoubleArrowAlignmentUnitTest extends AbstractSniffUnitTest
                 132 => 1,
                 134 => 1,
                 136 => 2,
+                140 => 1,
+                141 => 1,
+                145 => 2,
+                149 => 1,
             ];
         }//end switch
 
