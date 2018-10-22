@@ -43,7 +43,7 @@ class X
         $bla = 1;
         /** @var int $bla */
 
-        return ($bla === $foo); /* yeah! */
+        return ($bla === $foo); /* valid single line comment */
     }
 
     private $_endThing;
