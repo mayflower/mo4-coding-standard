@@ -40,7 +40,7 @@ class X
                          multiline
                          comment */
 
-    private $y = null; /** invalid doc block y is null by default */
+    private $y = null; /** invalid doc block after declaration */
     private $q = null; /* valid single line comment */
     private $x = null;
     private $u = null; /* invalid
