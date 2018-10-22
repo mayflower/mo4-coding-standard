@@ -41,7 +41,7 @@ class X
                          comment */
 
     private $y = null; /** invalid doc block y is null by default */
-    private $q = null; /* invalid doc block y is null by default */
+    private $q = null; /* valid single line comment */
     private $x = null;
     private $u = null; /* invalid
                          multiline
