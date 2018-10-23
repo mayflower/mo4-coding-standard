@@ -3,6 +3,23 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2018-10-24
+### Added
+- PHP 7.3 support
+- Windows support
+- Integration tests
+- New sniffs from upstream rulesets, see comments in [the ruleset](https://github.com/mayflower/mo4-coding-standard/blob/master/MO4/ruleset.xml)
+- Autofixer for `MO4.Arrays.ArrayDoubleArrowAlignment`, fixes #91
+
+### Changed
+- Raised PHP requirement to 7.1
+- Detection of more comments after declarations, fixes #96
+- Documentation about upstream sniffs moved from README to comments per rule in [the ruleset](https://github.com/mayflower/mo4-coding-standard/blob/master/MO4/ruleset.xml)
+
+### Removed
+- Support for PHP 5.6 and PHP 7.0
+- PEAR as installation method
+
 ## [2.1.2] - 2018-09-06
 ### Changed
 - prefer builtin-functions for performance
