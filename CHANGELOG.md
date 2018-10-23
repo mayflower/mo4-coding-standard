@@ -3,6 +3,16 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.1.3] - 2018-10-24
+### Added
+- Various test enhancements:
+  - `--prefer-lowest` composer tests
+  - Ruleset XML linting
+- Autofixer for `MO4.Arrays.ArrayDoubleArrowAlignment`, fixes #91
+
+### Changed
+- Detection of more comments after declarations, fixes #96
+
 ## [2.1.2] - 2018-09-06
 ### Changed
 - prefer builtin-functions for performance
