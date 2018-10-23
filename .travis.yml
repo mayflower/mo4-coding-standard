@@ -40,8 +40,8 @@ script:
   - vendor/bin/phpcs # Stylecheck against PHPCS's ruleset
   - |
     if [ `php -r "echo (int) version_compare(PHP_VERSION, '7.0', '>=');"` = "1" ]; then
-      composer require phpstan/phpstan --dev
-      composer require phpstan/phpstan-strict-rules --dev
+      composer require phpstan/phpstan:^0.9 --dev
+      composer require phpstan/phpstan-strict-rules:^0.9 --dev
       vendor/bin/phpstan analyse --level=max --no-progress -c .phpstan.neon MO4 tests # Run PHPStan
       pecl install -f ast-0.1.6 # Install AST extension, as phan requires it
       composer require phan/phan --dev # Install phan, now that we have the AST extension

@@ -37,13 +37,17 @@ So give `phpcbf` a try and let it fix the issues for you:
 To run the unit tests, execute in the repository root:
 
     ./vendor/bin/phpunit
-    
+
+To run the integration tests, execute
+
+    ./vendor/bin/phpcs --standard=MO4 integrationtests/*.php
+
 ## Static analysis
 
 We use [PHPStan](https://github.com/phpstan/phpstan) and [Phan](https://github.com/phan/phan), please refer to the
 respective documentation for installation instructions.
 
-    ./vendor/phpstan analyse --level=max -c .phpstan.neon MO4/ tests/
+    ./vendor/bin/phpstan analyse --level=max -c .phpstan.neon MO4/ tests/
     ./vendor/bin/phan -i
 
 ## Code Coverage
