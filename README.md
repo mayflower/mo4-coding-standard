@@ -2,9 +2,10 @@
  
 Provides a PHP CodeSniffer ruleset for the MO4 coding standard
 
-[![Build Status](https://travis-ci.org/mayflower/mo4-coding-standard.svg?branch=master)](https://travis-ci.org/mayflower/mo4-coding-standard)
-[![Build Status](https://codecov.io/gh/mayflower/mo4-coding-standard/branch/master/graph/badge.svg)](https://codecov.io/gh/mayflower/mo4-coding-standard/branch/master/)
-[![Scrutinizer Quality Level](https://scrutinizer-ci.com/g/mayflower/mo4-coding-standard/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mayflower/mo4-coding-standard)
+[![Build Status](https://travis-ci.org/mayflower/mo4-coding-standard.svg?branch=2.x-stable)](https://travis-ci.org/mayflower/mo4-coding-standard?branch=2.x-stable)
+[![Build Status](https://ci.appveyor.com/api/projects/status/94fmki9q1qxhw0r1/branch/2.x-stable?svg=true)](https://ci.appveyor.com/project/mayflower/mo4-coding-standard)
+[![Build Status](https://codecov.io/gh/mayflower/mo4-coding-standard/branch/2.x-stable/graph/badge.svg)](https://codecov.io/gh/mayflower/mo4-coding-standard/branch/2.x-stable/)
+[![Scrutinizer Quality Level](https://scrutinizer-ci.com/g/mayflower/mo4-coding-standard/badges/quality-score.png?b=2.x-stable)](https://scrutinizer-ci.com/g/mayflower/mo4-coding-standard)
 [![Maintainability](https://api.codeclimate.com/v1/badges/16114548a0315d993868/maintainability)](https://codeclimate.com/github/mayflower/mo4-coding-standard/maintainability)
 
 [![Latest Stable Version](https://poser.pugx.org/mayflower/mo4-coding-standard/v/stable)](https://packagist.org/packages/mayflower/mo4-coding-standard)
