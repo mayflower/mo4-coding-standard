@@ -63,6 +63,3 @@ test_script:
   - vendor/bin/phpcs --standard=MO4 integrationtests/testfile.php
   - vendor/bin/phpunit
   - vendor/bin/phpcs
-  - IF %dependencies%==7.0 composer require phpstan/phpstan:^0.9 --dev
-  - IF %dependencies%==7.0 composer require phpstan/phpstan-strict-rules:^0.9 --dev
-  - IF %dependencies%==7.0 vendor/bin/phpstan analyse --level=max --no-progress -c .phpstan.neon MO4 tests
