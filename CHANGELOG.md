@@ -9,11 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Windows support
 - Integration tests
 - New sniffs from upstream rulesets, see comments in [the ruleset](https://github.com/mayflower/mo4-coding-standard/blob/master/MO4/ruleset.xml)
-- Autofixer for `MO4.Arrays.ArrayDoubleArrowAlignment`, fixes #91
+- Autofixer for `MO4.Arrays.ArrayDoubleArrowAlignment`, fixes [#91](https://github.com/mayflower/mo4-coding-standard/issues/91)
 
 ### Changed
 - Raised PHP requirement to 7.1
-- Detection of more comments after declarations, fixes #96
+- Detection of more comments after declarations, fixes [#96](https://github.com/mayflower/mo4-coding-standard/issues/96)
 - Documentation about upstream sniffs moved from README to comments per rule in [the ruleset](https://github.com/mayflower/mo4-coding-standard/blob/master/MO4/ruleset.xml)
 
 ### Removed
@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [2.1.1] - 2018-05-17
 ### Changed
-- Check for empty needle when calling strpos, fixes #78
+- Check for empty needle when calling strpos, fixes [#78](https://github.com/mayflower/mo4-coding-standard/issues/78)
 
 ## [2.1.0] - 2018-04-06
 ### Changed
