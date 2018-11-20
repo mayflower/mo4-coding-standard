@@ -145,7 +145,7 @@ If `phpcs` complains that MO4 is not installed, please check the installed codin
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for information.
+See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for information.
 
 ## License
 
