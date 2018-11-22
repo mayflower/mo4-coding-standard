@@ -37,6 +37,7 @@ class PregLibrary
     public static function mo4_preg_split($pattern, $subject, $limit=-1, $flags=0): array
     {
         $pregSplitResult = preg_split($pattern, $subject, $limit, $flags);
+        // @phan-suppress-next-line PhanTypeComparisonToArray
         if (false === $pregSplitResult) {
             throw new RuntimeException('Unexpected Error in MO4 Coding Standard.');
         }
