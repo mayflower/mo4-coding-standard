@@ -161,7 +161,7 @@ If `phpcs` complains that MO4 is not installed, please check the installed codin
 
 ## Dependencies
 
-* [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) version 3.2.3 or later
+* [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) version 3.3.1 or later
 * [David Joos's Symfony Coding Standard](https://github.com/djoos/Symfony-coding-standard) ruleset for PHP CodeSniffer
 * [Composer installer for PHP_CodeSniffer coding standards](https://github.com/DealerDirect/phpcodesniffer-composer-installer)
 
