@@ -94,7 +94,7 @@ class FooBar
      *
      * @return bool|void The resultant check if $theSwitch isn't false, void otherwise
      */
-    private function reverseBoolean($value = null, $theSwitch = false)
+    private function reverseBoolean($value = null, bool $theSwitch = false)
     {
         if (!$theSwitch) {
             return;
