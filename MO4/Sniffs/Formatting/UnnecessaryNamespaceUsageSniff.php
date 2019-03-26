@@ -155,11 +155,14 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                         PREG_SPLIT_NO_EMPTY
                     );
 
+                    // phpcs:disable
+                    /** @var array<string> $docLineTokens */
                     $docLineTokens = \array_slice(
                         $docLineTokens,
                         0,
                         $docCommentTags[$content]
                     );
+                    // phpcs:enable
                     foreach ($docLineTokens as $docLineToken) {
                         $typeTokens = PregLibrary::mo4_preg_split(
                             '/\|/',
