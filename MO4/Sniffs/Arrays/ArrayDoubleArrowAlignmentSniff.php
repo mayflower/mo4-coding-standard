@@ -75,7 +75,10 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
             return;
         }
 
+        // phpcs:disable
+        /** @var array<int> $assignments */
         $assignments  = [];
+        // phpcs:enable
         $keyEndColumn = -1;
         $lastLine     = -1;
 
@@ -165,11 +168,11 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
             $current = $tokens[$ptr];
             $column  = $current['column'];
 
-            $beforeArrowPtr = ((int) $ptr - 1);
+            $beforeArrowPtr = ($ptr - 1);
             $currentIndent  = \strlen($tokens[$beforeArrowPtr]['content']);
             $correctIndent  = (int) ($currentIndent - $column + $doubleArrowStartColumn);
             if ($column !== $doubleArrowStartColumn) {
-                $fixable = $phpcsFile->addFixableError("each \"=>\" assignments must be aligned; current indentation before \"=>\" are $currentIndent space(s), must be $correctIndent space(s)", (int) $ptr, 'AssignmentsNotAligned');
+                $fixable = $phpcsFile->addFixableError("each \"=>\" assignments must be aligned; current indentation before \"=>\" are $currentIndent space(s), must be $correctIndent space(s)", $ptr, 'AssignmentsNotAligned');
 
                 if ($fixable === false) {
                     continue;
