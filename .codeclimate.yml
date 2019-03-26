@@ -1,0 +1,12 @@
+version: "2"
+exclude_patterns:
+  - "integrationtests/"
+checks:
+  method-lines:
+    config:
+      threshold: 120
+  method-complexity:
+    config:
+      threshold: 15
+  return-statements:
+    enabled: false
