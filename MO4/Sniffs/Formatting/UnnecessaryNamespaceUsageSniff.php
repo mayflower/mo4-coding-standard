@@ -116,7 +116,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                 // Doc comment block.
                 foreach ($tokens[$nsSep]['comment_tags'] as $tag) {
                     $content = $tokens[$tag]['content'];
-                    if (array_key_exists($content, $docCommentTags) === false) {
+                    if (\array_key_exists($content, $docCommentTags) === false) {
                         continue;
                     }
 
@@ -348,7 +348,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
 
         $fullClassName = $this->getFullyQualifiedClassName($className);
 
-        if (array_key_exists($fullClassName, $useStatements) === true) {
+        if (\array_key_exists($fullClassName, $useStatements) === true) {
             $replacement = $useStatements[$fullClassName];
 
             $data = [
