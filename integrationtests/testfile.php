@@ -10,7 +10,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Acme;
 
 /**
@@ -57,6 +56,7 @@ class FooBar
      */
     private function transformText($dummy, array $options = []): ?string
     {
+        /** @var array<string, string> $defaultOptions */
         $defaultOptions = [
             'some_default'    => 'values',
             'another_default' => 'more values',
@@ -67,6 +67,8 @@ class FooBar
                 throw new \RuntimeException(sprintf('Unrecognized option "%s"', $option));
             }
         }
+
+        $destructuredStuff = array_flip(...$defaultOptions);
 
         $mergedOptions = array_merge(
             $defaultOptions,
@@ -84,6 +86,8 @@ class FooBar
 
             return ucwords($dummy);
         }
+
+        return $destructuredStuff;
     }
 
     /**
