@@ -6,6 +6,7 @@
  * @license http://spdx.org/licenses/MIT MIT License
  * @link    https://github.com/mayflower/mo4-coding-standard
  */
+declare(strict_types=1);
 
 namespace MO4\Library;
 
