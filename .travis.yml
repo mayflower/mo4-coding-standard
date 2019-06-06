@@ -28,7 +28,7 @@ before_script:
   - if [ "${TRAVIS_PHP_VERSION}" != "7.3" ]; then phpenv config-rm xdebug.ini; fi
   - if [ "${DEPENDENCIES}" = "lowest" ]; then composer update --prefer-lowest --prefer-dist --no-interaction --no-progress; fi;
   - if [ "${DEPENDENCIES}" = "highest" ]; then composer update --prefer-dist --no-interaction --no-progress; fi;
-  - if [ "${DEPENDENCIES}" = "highest" ]; then pecl install -f ast-0.1.6; fi; # Install AST extension, as phan requires it
+  - if [ "${DEPENDENCIES}" = "highest" ]; then pecl install -f ast-1.0.1; fi; # Install AST extension, as phan requires it
   - if [ "${DEPENDENCIES}" = "highest" ]; then composer require phan/phan --dev; fi; # Install phan, now that we have the AST extension
 
 script:
