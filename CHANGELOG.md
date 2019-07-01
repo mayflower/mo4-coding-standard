@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.2.1] - 2019-07-01
+### Changed
+- Raised minimum Symfony CS release
+- Use strict typing in MO4 sniff code
+
 ## [3.2.0] - 2019-04-23
 ### Changed
 -  Raised minimum Symfony CS release
