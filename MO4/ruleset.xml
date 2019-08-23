@@ -61,7 +61,12 @@
     <!-- Require usage of null coalesce operator when possible -->
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"/>
     <!-- Require usage of ternary operator when possible -->
-    <rule ref="SlevomatCodingStandard.ControlStructures.RequireTernaryOperator" />
+    <rule ref="SlevomatCodingStandard.ControlStructures.RequireTernaryOperator">
+        <!-- But multiline is useful for readability -->
+        <properties>
+            <property name="ignoreMultiline" value="true"/>
+        </properties>
+    </rule>
     <!-- Forbid multiple use statements on same line -->
     <rule ref="SlevomatCodingStandard.Namespaces.MultipleUsesPerLine"/>
     <!-- Forbid unused use statements -->
