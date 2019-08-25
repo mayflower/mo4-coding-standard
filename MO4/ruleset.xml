@@ -73,6 +73,9 @@
     <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
         <properties>
             <property name="searchAnnotations" value="true"/>
+            <property name="ignoredAnnotationNames" type="array">
+                <element value="@group"/>
+            </property>
         </properties>
     </rule>
     <!-- Forbid useless alias for classes, constants and functions -->
