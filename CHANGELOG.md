@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.2.2] - 2019-08-29
+### Changed
+- Add `@group` to default `ignoredAnnotationNames`
+- Add `ignoreMultiline` for if vs. ternary
+
 ## [3.2.1] - 2019-07-01
 ### Changed
 - Raised minimum Symfony CS release
