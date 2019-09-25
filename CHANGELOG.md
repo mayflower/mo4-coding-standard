@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.0.0] - 2019-09-25
+### Added
+- New sniffs from Slevomat, see comments in [the ruleset](https://github.com/mayflower/mo4-coding-standard/blob/master/MO4/ruleset.xml)
+### Changed
+- Raised minimum Symfony CS release
+
 ## [3.2.2] - 2019-08-29
 ### Changed
 - Add `@group` to default `ignoredAnnotationNames`
