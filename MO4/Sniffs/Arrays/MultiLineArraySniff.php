@@ -22,6 +22,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  */
 class MultiLineArraySniff implements Sniff
 {
+
     /**
      * Define all types of arrays.
      *

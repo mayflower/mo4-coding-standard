@@ -25,6 +25,7 @@ use PHP_CodeSniffer\Files\File;
  */
 class VariableInDoubleQuotedStringSniff implements Sniff
 {
+
     /**
      * The PHP_CodeSniffer object controlling this run.
      *

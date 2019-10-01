@@ -26,6 +26,7 @@ use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
  */
 class PropertyCommentSniff extends AbstractScopeSniff
 {
+
     /**
      * A list of tokenizers this sniff supports.
      *

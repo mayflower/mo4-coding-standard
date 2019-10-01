@@ -25,6 +25,7 @@ use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
  */
 class ArrayDoubleArrowAlignmentSniff implements Sniff
 {
+
     /**
      * Define all types of arrays.
      *
