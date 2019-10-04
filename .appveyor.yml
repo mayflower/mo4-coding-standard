@@ -38,7 +38,6 @@ install:
 
   # Prepare PHP
   - ps: cd $Env:php_directory
-  - ps: "$pwd"
   - ps: Copy-Item php.ini-production -Destination php.ini
   - ps: Add-Content -Path php.ini -Value 'date.timezone="UTC"'
   - ps: Add-Content -Path php.ini -Value 'extension_dir=ext'
@@ -53,8 +52,6 @@ install:
   - ps: If ((Test-Path $Env:composer_executable) -eq $False) { php $Env:composer_installer --install-dir=$Env:composer_directory }
   - ps: Set-Content -Path ($Env:composer_directory + '\composer.bat') -Value ('@php ' + $Env:composer_executable + ' %*')
   - composer self-update
-  - ps: composer -g config cache-dir
-  - ps: "$Env:composer_directory"
 
   # Install dependencies
   - ps: cd $Env:project_directory
