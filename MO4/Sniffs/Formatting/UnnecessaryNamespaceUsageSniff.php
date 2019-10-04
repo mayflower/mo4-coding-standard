@@ -374,8 +374,8 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
             );
 
             $replaceClassName = true;
-        } else if ($namespace !== '' && strpos($fullClassName, $namespace) === 0) {
-            $replacement = substr($fullClassName, \strlen($namespace));
+        } else if ($namespace !== '' && \strpos($fullClassName, $namespace) === 0) {
+            $replacement = \substr($fullClassName, \strlen($namespace));
 
             $data    = [
                 $className,
@@ -394,7 +394,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
             if (true === $isDocBlock) {
                 $tokens     = $phpcsFile->getTokens();
                 $oldContent = $tokens[$startPtr]['content'];
-                $newContent = str_replace($className, $replacement, $oldContent);
+                $newContent = \str_replace($className, $replacement, $oldContent);
                 $phpcsFile->fixer->replaceToken($startPtr, $newContent);
             } else {
                 for ($i = $startPtr; $i < $endPtr; $i++) {

@@ -72,22 +72,22 @@ class VariableInDoubleQuotedStringSniff implements Sniff
 
         $matches = [];
 
-        preg_match_all($varRegExp, $content, $matches, PREG_OFFSET_CAPTURE);
+        \preg_match_all($varRegExp, $content, $matches, PREG_OFFSET_CAPTURE);
 
         foreach ($matches as $match) {
             foreach ($match as [$var, $pos]) {
                 if ($pos === 1 || $content[($pos - 1)] !== '{') {
-                    if (strpos(substr($content, 0, $pos), '{') > 0
-                        && strpos(substr($content, 0, $pos), '}') === false
+                    if (\strpos(\substr($content, 0, $pos), '{') > 0
+                        && \strpos(\substr($content, 0, $pos), '}') === false
                     ) {
                         continue;
                     }
 
-                    $lastOpeningBrace = strrpos(substr($content, 0, $pos), '{');
+                    $lastOpeningBrace = \strrpos(\substr($content, 0, $pos), '{');
                     if ($lastOpeningBrace !== false
                         && $content[($lastOpeningBrace + 1)] === '$'
                     ) {
-                        $lastClosingBrace = strrpos(substr($content, 0, $pos), '}');
+                        $lastClosingBrace = \strrpos(\substr($content, 0, $pos), '}');
 
                         if ($lastClosingBrace !== false
                             && $lastClosingBrace < $lastOpeningBrace
@@ -97,7 +97,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
                     }
 
                     $fix = $this->phpCsFile->addFixableError(
-                        sprintf(
+                        \sprintf(
                             'must surround variable %s with { }',
                             $var
                         ),
@@ -131,8 +131,8 @@ class VariableInDoubleQuotedStringSniff implements Sniff
      */
     private function surroundVariableWithBraces(string $content, int $pos, string $var): string
     {
-        $before = substr($content, 0, $pos);
-        $after  = substr($content, ($pos + \strlen($var)));
+        $before = \substr($content, 0, $pos);
+        $after  = \substr($content, ($pos + \strlen($var)));
 
         return $before.'{'.$var.'}'.$after;
 

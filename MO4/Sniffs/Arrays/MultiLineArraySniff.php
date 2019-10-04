@@ -79,7 +79,7 @@ class MultiLineArraySniff implements Sniff
 
         if ($tokens[($start + 2)]['line'] === $tokens[$start]['line']) {
             $fixable = $phpcsFile->addFixableError(
-                sprintf(
+                \sprintf(
                     'opening %s of multi line array must be followed by newline',
                     $arrayType
                 ),
@@ -96,7 +96,7 @@ class MultiLineArraySniff implements Sniff
 
         if ($tokens[($end - 2)]['line'] === $tokens[$end]['line']) {
             $fixable = $phpcsFile->addFixableError(
-                sprintf(
+                \sprintf(
                     'closing %s of multi line array must in own line',
                     $arrayType
                 ),

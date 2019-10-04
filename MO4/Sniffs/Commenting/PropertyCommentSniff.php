@@ -132,7 +132,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
         $commentEnd = (int) $phpcsFile->findPrevious($find, ($stackPtr - 1));
 
         $conditions    = $tokens[$commentEnd]['conditions'];
-        $lastCondition = array_pop($conditions);
+        $lastCondition = \array_pop($conditions);
         if ($lastCondition !== T_CLASS) {
             return;
         }
@@ -190,7 +190,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
                         $phpcsFile->fixer->addContent($commentStart, "\n     *");
                         $phpcsFile->fixer->replaceToken(
                             ($commentEnd - 1),
-                            rtrim($tokens[($commentEnd - 1)]['content'])
+                            \rtrim($tokens[($commentEnd - 1)]['content'])
                         );
                         $phpcsFile->fixer->addContentBefore($commentEnd, "\n     ");
                         $phpcsFile->fixer->endChangeset();
