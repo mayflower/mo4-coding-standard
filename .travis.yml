@@ -1,19 +1,14 @@
 sudo: false
+os:
+  - linux
 language: php
-matrix:
-  include:
-  - php: 7.1
-    env: DEPENDENCIES=lowest
-  - php: 7.1
-    env: DEPENDENCIES=highest
-  - php: 7.2
-    env: DEPENDENCIES=lowest
-  - php: 7.2
-    env: DEPENDENCIES=highest
-  - php: 7.3
-    env: DEPENDENCIES=lowest
-  - php: 7.3
-    env: DEPENDENCIES=highest
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+env:
+  - DEPENDENCIES=lowest
+  - DEPENDENCIES=highest
 
 addons:
   apt:
@@ -25,7 +20,6 @@ cache:
   - $HOME/.composer/cache
 
 before_script:
-  - if [ "${TRAVIS_PHP_VERSION}" != "7.3" ]; then phpenv config-rm xdebug.ini; fi
   - if [ "${DEPENDENCIES}" = "lowest" ]; then composer update --prefer-lowest --prefer-dist --no-interaction --no-progress; fi;
   - if [ "${DEPENDENCIES}" = "highest" ]; then composer update --prefer-dist --no-interaction --no-progress; fi;
   - if [ "${DEPENDENCIES}" = "highest" ]; then pecl install -f ast-1.0.1; fi; # Install AST extension, as phan requires it
@@ -39,6 +33,32 @@ script:
   - vendor/bin/phpstan analyse --level=max --no-progress -c .phpstan.neon MO4 tests # Run PHPStan
   - if [ "${DEPENDENCIES}" = "highest" ]; then vendor/bin/phan -i; fi; # Run phan
   - if [ "${TRAVIS_PHP_VERSION}" != "7.3" ]; then php -d zend_extension=xdebug.so vendor/bin/phpunit --coverage-clover=coverage.xml; fi; # Generate Code coverage report
+
+jobs:
+  include:
+    - stage: Test
+      name: PHP:7.3 Windows
+      os: windows
+      cache:
+        directories:
+          - C:/Users/travis/AppData/Local/Composer
+      language: sh # No PHP currently
+      env:
+        - PHP_VERSION=7.3
+        - DEPENDENCIES=lowest
+      install:
+        - export EXACT_PHP_VERSION=$(choco search php --exact --all-versions --limit-output | grep $PHP_VERSION | cut -d \| -f 2)
+        - choco install php --version=${EXACT_PHP_VERSION} --package-parameters="/InstallDir:c:\tools\php"
+        - choco install composer --ia "/DEV=C:\tools\php"
+        - export PATH=/c/tools/php:$PATH
+      script:
+        - git config core.autocrlf false # fix CRLF issues
+        - git add --renormalize .
+        - git reset --hard
+        - vendor/bin/phpcs --standard=MO4 integrationtests/testfile.php # Check, if all the sniffs work with the current dependencies
+        - vendor/bin/phpunit # Run tests
+        - vendor/bin/phpcs # Stylecheck against PHPCS's ruleset
+        - vendor/bin/phpstan analyse --level=max --no-progress -c .phpstan.neon MO4 tests # Run PHPStan
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
