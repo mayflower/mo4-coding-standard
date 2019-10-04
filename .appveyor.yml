@@ -37,6 +37,7 @@ install:
 
   # Prepare PHP
   - ps: cd $Env:php_directory
+  - ps: "$pwd"
   - ps: Copy-Item php.ini-production -Destination php.ini
   - ps: Add-Content -Path php.ini -Value 'date.timezone="UTC"'
   - ps: Add-Content -Path php.ini -Value 'extension_dir=ext'
