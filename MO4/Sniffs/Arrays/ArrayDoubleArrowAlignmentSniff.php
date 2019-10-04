@@ -126,8 +126,8 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
                         }
                     } else {
                         // Remove current and previous '=>' from array for further processing.
-                        array_pop($assignments);
-                        array_pop($assignments);
+                        \array_pop($assignments);
+                        \array_pop($assignments);
                         $phpcsFile->addError($msg, $i, 'OneAssignmentPerLine');
                     }
                 }
@@ -183,9 +183,9 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
 
                 $phpcsFile->fixer->beginChangeset();
                 if ($tokens[$beforeArrowPtr]['code'] === T_WHITESPACE) {
-                    $phpcsFile->fixer->replaceToken($beforeArrowPtr, str_repeat(' ', $correctIndent));
+                    $phpcsFile->fixer->replaceToken($beforeArrowPtr, \str_repeat(' ', $correctIndent));
                 } else {
-                    $phpcsFile->fixer->addContent($beforeArrowPtr, str_repeat(' ', $correctIndent));
+                    $phpcsFile->fixer->addContent($beforeArrowPtr, \str_repeat(' ', $correctIndent));
                 }
 
                 $phpcsFile->fixer->endChangeset();

@@ -84,11 +84,11 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
     public function process(File $phpcsFile, $stackPtr): void
     {
         if (\in_array($this->order, self::SUPPORTED_ORDERING_METHODS, true) === false) {
-            $error = sprintf(
+            $error = \sprintf(
                 "'%s' is not a valid order function for %s! Pick one of: %s",
                 $this->order,
                 Common::getSniffCode(self::class),
-                implode(', ', self::SUPPORTED_ORDERING_METHODS)
+                \implode(', ', self::SUPPORTED_ORDERING_METHODS)
             );
 
             $phpcsFile->addError($error, $stackPtr, 'InvalidOrder');
@@ -335,11 +335,11 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
     {
         switch ($this->order) {
         case 'string':
-            return strcmp($a, $b);
+            return \strcmp($a, $b);
         case 'string-locale':
-            return strcoll($a, $b);
+            return \strcoll($a, $b);
         case 'string-case-insensitive':
-            return strcasecmp($a, $b);
+            return \strcasecmp($a, $b);
         default:
             // Default is 'dictionary'.
             return $this->dictionaryCompare($a, $b);
@@ -364,7 +364,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      */
     private function dictionaryCompare(string $a, string $b): int
     {
-        $min = min(\strlen($a), \strlen($b));
+        $min = \min(\strlen($a), \strlen($b));
 
         for ($i = 0; $i < $min; $i++) {
             if ($a[$i] === $b[$i]) {
@@ -388,7 +388,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
             }
         }//end for
 
-        return strcmp(substr($a, $min), substr($b, $min));
+        return \strcmp(\substr($a, $min), \substr($b, $min));
 
     }//end dictionaryCompare()
 
