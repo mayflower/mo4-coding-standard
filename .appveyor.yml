@@ -8,6 +8,7 @@ cache:
   - C:\Users\appveyor\AppData\Local\Composer\files
   - composer.phar
   # Cache chocolatey packages
+  - C:\Users\appveyor\AppData\Local\Temp\chocolatey
   - C:\ProgramData\chocolatey\bin
   - C:\ProgramData\chocolatey\lib
 clone_folder: c:\projects\mo4-coding-standard
