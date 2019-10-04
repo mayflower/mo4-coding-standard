@@ -1,6 +1,7 @@
 build: false
 cache:
-  - '%LOCALAPPDATA%\Composer\files -> composer.lock'
+  - '%LOCALAPPDATA%\Composer\files'
+  - C:\Users\appveyor\AppData\Local\Composer\files
   - composer.phar
   # Cache chocolatey packages
   - C:\ProgramData\chocolatey\bin -> .appveyor.yml
