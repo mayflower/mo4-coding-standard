@@ -1,4 +1,6 @@
 build: false
+cache:
+  - C:\ProgramData\chocolatey\lib -> .appveyor.yml
 clone_folder: c:\projects\mo4-coding-standard
 clone_depth: 1
 platform:
