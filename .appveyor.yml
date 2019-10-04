@@ -1,5 +1,8 @@
 build: false
 cache:
+  # Cache php install
+  - c:\tools\php
+  # Composer
   - '%LOCALAPPDATA%\Composer\files'
   - c:\tools\composer
   - C:\Users\appveyor\AppData\Local\Composer\files
@@ -7,8 +10,6 @@ cache:
   # Cache chocolatey packages
   - C:\ProgramData\chocolatey\bin
   - C:\ProgramData\chocolatey\lib
-  # Cache php install
-  - c:\tools\php
 clone_folder: c:\projects\mo4-coding-standard
 clone_depth: 1
 platform:
@@ -56,6 +57,7 @@ install:
 
   # Install dependencies
   - ps: cd $Env:project_directory
+  - ps: composer config cache-dir c:\tools\composer\cache
   - IF %dependencies%==lowest composer update --prefer-dist --prefer-lowest --prefer-stable --no-progress
   - IF %dependencies%==highest composer update --prefer-dist --no-progress
 test_script:
