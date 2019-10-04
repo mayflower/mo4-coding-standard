@@ -52,6 +52,8 @@ install:
   - ps: If ((Test-Path $Env:composer_executable) -eq $False) { php $Env:composer_installer --install-dir=$Env:composer_directory }
   - ps: Set-Content -Path ($Env:composer_directory + '\composer.bat') -Value ('@php ' + $Env:composer_executable + ' %*')
   - composer self-update
+  - ps: composer config cache-dir
+  - ps: "$Env:composer_directory"
 
   # Install dependencies
   - ps: cd $Env:project_directory
