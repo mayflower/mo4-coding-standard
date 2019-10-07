@@ -61,7 +61,7 @@ jobs:
         - vendor/bin/phpstan analyse --level=max --no-progress -c .phpstan.neon MO4 tests # Run PHPStan
 
 after_success:
-- bash <(curl -s https://codecov.io/bash)
+- curl -s https://codecov.io/bash | bash
 
 notifications:
   slack:
