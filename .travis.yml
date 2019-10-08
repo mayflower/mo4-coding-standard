@@ -47,7 +47,11 @@ script:
       composer require phpstan/phpstan:^0.9 --dev
       composer require phpstan/phpstan-strict-rules:^0.9 --dev
       vendor/bin/phpstan analyse --level=max --no-progress -c .phpstan.neon MO4 tests # Run PHPStan
-      pecl install -f ast-0.1.6 # Install AST extension, as phan requires it
+      if [ `php -r "echo (int) version_compare(PHP_VERSION, '7.1', '>=');"` = "1" ]; then
+        pecl install -f ast-1.0.1 # Install AST extension, as phan requires it
+      else
+        pecl install -f ast-0.1.6 # Install AST extension, as phan requires it
+      fi
       composer require phan/phan --dev # Install phan, now that we have the AST extension
       vendor/bin/phan -i # Run phan
     fi
