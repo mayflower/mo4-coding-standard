@@ -108,7 +108,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 
         // Ignore function () use () {...}.
         $isNonImportUse = $this->checkIsNonImportUse($phpcsFile, $stackPtr);
-        if (true === $isNonImportUse) {
+        if ($isNonImportUse === true) {
             return;
         }
 
@@ -136,7 +136,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
             $fixable = $phpcsFile->addFixableError($msg, $currentPtr, $code, [$this->order]);
         }
 
-        if (true === $fixable) {
+        if ($fixable === true) {
             // Find the correct position in current use block.
             $newDestinationPtr
                 = $this->findNewDestination($phpcsFile, $stackPtr, $currentImport);
@@ -240,7 +240,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
             true
         );
 
-        if (false !== $prev) {
+        if ($prev !== false) {
             $prevToken = $tokens[$prev];
 
             if ($prevToken['code'] === T_CLOSE_PARENTHESIS) {
