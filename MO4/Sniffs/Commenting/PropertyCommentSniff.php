@@ -113,7 +113,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
                     $stackPtr,
                     'NoDocBlockAllowed'
                 );
-            } else if (0 !== \strpos($tokens[$postComment]['content'], '//')
+            } else if (\strpos($tokens[$postComment]['content'], '//') !== 0
                 && \substr($tokens[$postComment]['content'], -2) !== '*/'
             ) {
                 $phpcsFile->addError(
