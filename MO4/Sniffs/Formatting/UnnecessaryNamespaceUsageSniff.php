@@ -173,7 +173,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                         );
 
                         foreach ($typeTokens as $typeToken) {
-                            if (true === \in_array($typeToken, $useStatements, true)) {
+                            if (\in_array($typeToken, $useStatements, true) === true) {
                                 continue;
                             }
 
@@ -287,7 +287,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
             true
         );
 
-        if (false === $namespaceStart) {
+        if ($namespaceStart === false) {
             return '';
         }
 
@@ -389,9 +389,9 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
             );
         }//end if
 
-        if (true === $fixable) {
+        if ($fixable === true) {
             $phpcsFile->fixer->beginChangeset();
-            if (true === $isDocBlock) {
+            if ($isDocBlock === true) {
                 $tokens     = $phpcsFile->getTokens();
                 $oldContent = $tokens[$startPtr]['content'];
                 $newContent = str_replace($className, $replacement, $oldContent);
@@ -401,7 +401,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                     $phpcsFile->fixer->replaceToken($i, '');
                 }
 
-                if (true === $replaceClassName) {
+                if ($replaceClassName === true) {
                     $phpcsFile->fixer->replaceToken($endPtr, $replacement);
                 }
             }
