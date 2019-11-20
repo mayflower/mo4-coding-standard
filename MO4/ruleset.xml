@@ -46,6 +46,24 @@
         </properties>
     </rule>
 
+    <!-- Require one blank line between methods -->
+    <rule ref="Squiz.WhiteSpace.FunctionSpacing">
+        <properties>
+            <property name="spacing" value="1"/>
+            <property name="spacingAfterLast" value="0" />
+            <property name="spacingBeforeFirst" value="0" />
+        </properties>
+    </rule>
+    <!-- Require one blank line between properties -->
+    <rule ref="Squiz.WhiteSpace.MemberVarSpacing">
+        <properties>
+            <property name="spacingBeforeFirst" value="0"/>
+        </properties>
+    </rule>
+
+    <!-- Require exactly one blank line after trait use -->
+    <rule ref="PSR12.Traits.UseDeclaration"/>
+
     <!-- Require presence of constant visibility -->
     <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
     <!-- Forbid empty lines after class/interface/trait opening and before closing braces -->
@@ -148,6 +166,4 @@
             <property name="ignoreUnusedValuesWhenOnlyKeysAreUsedInForeach" value="true"/>
         </properties>
     </rule>
-    <!-- Require exactly one blank line after trait use -->
-    <rule ref="PSR12.Traits.UseDeclaration"/>
 </ruleset>
