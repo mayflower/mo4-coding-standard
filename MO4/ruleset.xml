@@ -94,6 +94,8 @@
             <property name="ignoreMultiline" value="true"/>
         </properties>
     </rule>
+    <!-- Require global functions to be referenced via a fully qualified name -->
+    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions"/>
     <!-- Forbid multiple use statements on same line -->
     <rule ref="SlevomatCodingStandard.Namespaces.MultipleUsesPerLine"/>
     <!-- Require one newline around namespace declaration -->

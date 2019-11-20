@@ -27,7 +27,7 @@ before_script:
 
 script:
   - xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd MO4/ruleset.xml # validate MO4's ruleset XML
-  - vendor/bin/phpcs --standard=MO4 integrationtests/testfile.php # Check, if all the sniffs work with the current dependencies
+  - vendor/bin/phpcs -s --standard=MO4 integrationtests/testfile.php # Check, if all the sniffs work with the current dependencies
   - vendor/bin/phpunit # Run tests
   - vendor/bin/phpcs # Stylecheck against PHPCS's ruleset
   - vendor/bin/phpstan analyse --level=max --no-progress -c .phpstan.neon MO4 tests # Run PHPStan
@@ -55,7 +55,7 @@ jobs:
         - git config core.autocrlf false # fix CRLF issues
         - git add --renormalize .
         - git reset --hard
-        - vendor/bin/phpcs --standard=MO4 integrationtests/testfile.php # Check, if all the sniffs work with the current dependencies
+        - vendor/bin/phpcs -s --standard=MO4 integrationtests/testfile.php # Check, if all the sniffs work with the current dependencies
         - vendor/bin/phpunit # Run tests
         - vendor/bin/phpcs # Stylecheck against PHPCS's ruleset
         - vendor/bin/phpstan analyse --level=max --no-progress -c .phpstan.neon MO4 tests # Run PHPStan

@@ -39,7 +39,7 @@ class FooBar
      */
     public function someDeprecatedMethod(): string
     {
-        @trigger_error(sprintf('The %s() method is deprecated since version 2.8 and will be removed in 3.0. Use Acme\Baz::someMethod() instead.', __METHOD__), E_USER_DEPRECATED);
+        @\trigger_error(\sprintf('The %s() method is deprecated since version 2.8 and will be removed in 3.0. Use Acme\Baz::someMethod() instead.', __METHOD__), E_USER_DEPRECATED);
 
         return Baz::someMethod();
     }
@@ -63,14 +63,14 @@ class FooBar
         ];
 
         foreach ($options as $option) {
-            if (!in_array($option, $defaultOptions)) {
-                throw new \RuntimeException(sprintf('Unrecognized option "%s"', $option));
+            if (!\in_array($option, $defaultOptions)) {
+                throw new \RuntimeException(\sprintf('Unrecognized option "%s"', $option));
             }
         }
 
-        $destructuredStuff = array_flip(...$defaultOptions);
+        $destructuredStuff = \array_flip(...$defaultOptions);
 
-        $mergedOptions = array_merge(
+        $mergedOptions = \array_merge(
             $defaultOptions,
             $options
         );
@@ -81,10 +81,10 @@ class FooBar
 
         if ('string' === $dummy) {
             if ('values' === $mergedOptions['some_default']) {
-                return substr($dummy, 0, 5);
+                return \substr($dummy, 0, 5);
             }
 
-            return ucwords($dummy);
+            return \ucwords($dummy);
         }
 
         return $destructuredStuff;
