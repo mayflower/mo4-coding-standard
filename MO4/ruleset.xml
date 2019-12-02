@@ -148,4 +148,6 @@
             <property name="ignoreUnusedValuesWhenOnlyKeysAreUsedInForeach" value="true"/>
         </properties>
     </rule>
+    <!-- Require exactly one blank line after trait use -->
+    <rule ref="PSR12.Traits.UseDeclaration"/>
 </ruleset>
