@@ -15,7 +15,7 @@
     </rule>
 
     <!-- Forbid strings in `"` unless necessary -->
-    <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired" />
+    <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired"/>
     <!-- There must be at least one space around operators -->
     <rule ref="Squiz.WhiteSpace.OperatorSpacing">
         <properties>
@@ -50,8 +50,8 @@
     <rule ref="Squiz.WhiteSpace.FunctionSpacing">
         <properties>
             <property name="spacing" value="1"/>
-            <property name="spacingAfterLast" value="0" />
-            <property name="spacingBeforeFirst" value="0" />
+            <property name="spacingAfterLast" value="0"/>
+            <property name="spacingBeforeFirst" value="0"/>
         </properties>
     </rule>
     <!-- Require one blank line between properties -->
@@ -69,8 +69,8 @@
     <!-- Forbid empty lines after class/interface/trait opening and before closing braces -->
     <rule ref="SlevomatCodingStandard.Classes.EmptyLinesAroundClassBraces">
         <properties>
-            <property name="linesCountAfterOpeningBrace" value="0" />
-            <property name="linesCountBeforeClosingBrace" value="0" />
+            <property name="linesCountAfterOpeningBrace" value="0"/>
+            <property name="linesCountBeforeClosingBrace" value="0"/>
         </properties>
     </rule>
     <!-- Require usage of ::class instead of __CLASS__, get_class(), get_class($this), get_called_class() and get_parent_class() -->
@@ -80,9 +80,23 @@
     <!-- Forbid assignments in conditions -->
     <rule ref="SlevomatCodingStandard.ControlStructures.AssignmentInCondition"/>
     <!-- Require consistent spacing for control structures -->
-    <rule ref="SlevomatCodingStandard.ControlStructures.ControlStructureSpacing"/>
+    <rule ref="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing">
+        <properties>
+            <property name="tokensToCheck" type="array">
+                <element value="T_IF"/>
+                <element value="T_DO"/>
+                <element value="T_WHILE"/>
+                <element value="T_FOR"/>
+                <element value="T_FOREACH"/>
+                <element value="T_SWITCH"/>
+                <element value="T_TRY"/>
+            </property>
+        </properties>
+    </rule>
     <!-- Require usage of early exit -->
     <rule ref="SlevomatCodingStandard.ControlStructures.EarlyExit"/>
+    <!-- Require consistent spacing for jump statements -->
+    <rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing"/>
     <!-- Require new instances with parentheses -->
     <rule ref="SlevomatCodingStandard.ControlStructures.NewWithParentheses"/>
     <!-- Require usage of null coalesce operator when possible -->
@@ -101,8 +115,8 @@
     <!-- Require one newline around namespace declaration -->
     <rule ref="SlevomatCodingStandard.Namespaces.NamespaceSpacing">
         <properties>
-            <property name="linesCountBeforeNamespace" value="1" />
-            <property name="linesCountAfterNamespace" value="1" />
+            <property name="linesCountBeforeNamespace" value="1"/>
+            <property name="linesCountAfterNamespace" value="1"/>
         </properties>
     </rule>
     <!-- Forbid unused use statements -->
@@ -140,25 +154,31 @@
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
     <!-- Require one space after and no space before colon in return types -->
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
-    <!-- Require type hints to be declared -->
-    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration">
+    <!-- Require parameter type hints to be declared -->
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
         <properties>
-            <property name="allAnnotationsAreUseful" value="true"/>
+            <property name="enableObjectTypeHint" value="false"/>
         </properties>
     </rule>
-    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableParameterTypeHintSpecification">
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.UselessAnnotation">
         <severity>0</severity>
     </rule>
-    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversablePropertyTypeHintSpecification">
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification">
         <severity>0</severity>
     </rule>
-    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableReturnTypeHintSpecification">
+    <!-- Require return type hints to be declared -->
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
+        <properties>
+            <property name="enableNativeTypeHint" value="false"/>
+        </properties>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.UselessAnnotation">
         <severity>0</severity>
     </rule>
-    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.UselessDocComment">
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification">
         <severity>0</severity>
     </rule>
-     <!-- Forbid useless @var for constants -->
+    <!-- Forbid useless @var for constants -->
     <rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint"/>
     <!-- Forbid duplicate assignments to a variable -->
     <rule ref="SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable"/>
