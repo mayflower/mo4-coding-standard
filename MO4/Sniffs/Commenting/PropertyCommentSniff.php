@@ -33,14 +33,14 @@ class PropertyCommentSniff extends AbstractScopeSniff
     /**
      * A list of tokenizers this sniff supports.
      *
-     * @var array
+     * @var array<string>
      */
     public $supportedTokenizers = ['PHP'];
 
     /**
      * List of token types this sniff analyzes
      *
-     * @var array
+     * @var array<int, int>
      */
     private $myTokenTypes = [
         T_VARIABLE,

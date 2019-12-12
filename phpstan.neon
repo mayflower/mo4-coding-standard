@@ -1,7 +1,12 @@
 parameters:
+    level: max
     autoload_files:
         - %rootDir%/../../../tests/bootstrap.php
     ignoreErrors:
         - '#^Strict comparison using === between \*NEVER\* and (.*) will always evaluate to false.$#'
+    paths:
+       - %rootDir%/../../../MO4
+       - %rootDir%/../../../tests
+    checkMissingIterableValueType: false
 includes:
-	- vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/phpstan/phpstan-strict-rules/rules.neon

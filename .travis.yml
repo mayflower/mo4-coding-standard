@@ -30,7 +30,7 @@ script:
   - vendor/bin/phpcs -s --standard=MO4 integrationtests/testfile.php # Check, if all the sniffs work with the current dependencies
   - vendor/bin/phpunit # Run tests
   - vendor/bin/phpcs # Stylecheck against PHPCS's ruleset
-  - vendor/bin/phpstan analyse --level=max --no-progress -c .phpstan.neon MO4 tests # Run PHPStan
+  - vendor/bin/phpstan analyse --no-progress # Run PHPStan
   - if [ "${DEPENDENCIES}" = "highest" ]; then vendor/bin/phan -i; fi; # Run phan
   - if [ "${TRAVIS_PHP_VERSION}" != "7.3" ]; then php -d zend_extension=xdebug.so vendor/bin/phpunit --coverage-clover=coverage.xml; fi; # Generate Code coverage report
 
@@ -58,7 +58,7 @@ jobs:
         - vendor/bin/phpcs -s --standard=MO4 integrationtests/testfile.php # Check, if all the sniffs work with the current dependencies
         - vendor/bin/phpunit # Run tests
         - vendor/bin/phpcs # Stylecheck against PHPCS's ruleset
-        - vendor/bin/phpstan analyse --level=max --no-progress -c .phpstan.neon MO4 tests # Run PHPStan
+        - vendor/bin/phpstan analyse --no-progress # Run PHPStan
 
 after_success:
 - curl -s https://codecov.io/bash | bash

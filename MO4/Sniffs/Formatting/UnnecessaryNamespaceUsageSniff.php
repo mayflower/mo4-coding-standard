@@ -35,7 +35,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
     /**
      * Tokens used in full class name.
      *
-     * @var array
+     * @var array<int, int>
      */
     private $classNameTokens = [
         T_NS_SEPARATOR,

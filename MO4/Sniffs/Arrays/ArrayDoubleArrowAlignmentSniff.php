@@ -173,7 +173,7 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
 
             $beforeArrowPtr = ($ptr - 1);
             $currentIndent  = \strlen($tokens[$beforeArrowPtr]['content']);
-            $correctIndent  = (int) ($currentIndent - $column + $doubleArrowStartColumn);
+            $correctIndent  = ($currentIndent - $column + $doubleArrowStartColumn);
             if ($column !== $doubleArrowStartColumn) {
                 $fixable = $phpcsFile->addFixableError("each \"=>\" assignments must be aligned; current indentation before \"=>\" are $currentIndent space(s), must be $correctIndent space(s)", $ptr, 'AssignmentsNotAligned');
 

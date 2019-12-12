@@ -30,7 +30,7 @@ $ignoredStandardsStr = implode(
     ',',
     array_filter(
         $standards,
-        function ($v) use ($myStandardName) {
+        static function ($v) use ($myStandardName): bool {
             return $v !== $myStandardName;
         }
     )

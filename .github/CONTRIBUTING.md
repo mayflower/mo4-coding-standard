@@ -47,7 +47,7 @@ To run the integration tests, execute
 We use [PHPStan](https://github.com/phpstan/phpstan) and [Phan](https://github.com/phan/phan), please refer to the
 respective documentation for installation instructions.
 
-    ./vendor/bin/phpstan analyse --level=max -c .phpstan.neon MO4/ tests/
+    ./vendor/bin/phpstan analyse
     ./vendor/bin/phan -i
 
 ## Code Coverage
