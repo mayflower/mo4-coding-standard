@@ -3,6 +3,18 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [5.0.0] - 2019-12-16
+### Added
+- Add `Squiz.WhiteSpace.FunctionSpacing`
+- Add `Squiz.WhiteSpace.MemberVarSpacing`
+- Add `PSR12.Traits.UseDeclaration`
+- Add `SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions`
+### Changed
+- Raised minimum Slevomat CS release and adapt MO4 ruleset
+- Raised minimum Symfony CS release
+- Raised minimum PHPCS release
+- Support PHP 7.4
+
 ## [4.0.0] - 2019-09-25
 ### Added
 - New sniffs from Slevomat, see comments in [the ruleset](https://github.com/mayflower/mo4-coding-standard/blob/master/MO4/ruleset.xml)
