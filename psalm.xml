@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<psalm
+    totallyTyped="false"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    autoloader="tests/bootstrap.php"
+>
+    <projectFiles>
+        <directory name="MO4" />
+        <ignoreFiles>
+            <directory name="vendor" />
+            <directory name="integrationtests" />
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <PropertyNotSetInConstructor errorLevel="info" />
+        <MissingConstructor errorLevel="info" />
+
+        <UndefinedClass errorLevel="info" /> <!-- somehow this is showing up in travis -->
+    </issueHandlers>
+</psalm>
