@@ -160,13 +160,17 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                         $docCommentTags[$content]
                     );
                     // phpcs:enable
+
                     foreach ($docLineTokens as $docLineToken) {
+                        // phpcs:disable
+                        /** @var array<string> $typeTokens */
                         $typeTokens = PregLibrary::mo4_preg_split(
                             '/\|/',
                             $docLineToken,
                             -1,
                             PREG_SPLIT_NO_EMPTY
                         );
+                        // phpcs:enable
 
                         foreach ($typeTokens as $typeToken) {
                             if (\in_array($typeToken, $useStatements, true) === true) {
@@ -348,7 +352,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         $code    = 'UnnecessaryNamespaceUsage';
         $fixable = false;
         $replaceClassName = false;
-        $replacement      = null;
+        $replacement      = '';
 
         $fullClassName = $this->getFullyQualifiedClassName($className);
 

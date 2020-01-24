@@ -60,6 +60,8 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
      *                        the stack passed in $tokens.
      *
      * @return void
+     *
+     * @psalm-suppress LoopInvalidation
      */
     public function process(File $phpcsFile, $stackPtr): void
     {
