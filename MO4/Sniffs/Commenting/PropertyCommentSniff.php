@@ -160,7 +160,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
             $isCommentOneLiner
                 = $tokens[$commentStart]['line'] === $tokens[$commentEnd]['line'];
 
-            $length         = (int) ($commentEnd - $commentStart + 1);
+            $length         = ($commentEnd - $commentStart + 1);
             $tokensAsString = $phpcsFile->getTokensAsString(
                 $commentStart,
                 $length
