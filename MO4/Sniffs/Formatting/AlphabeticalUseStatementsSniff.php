@@ -182,7 +182,6 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
             return false;
         }
 
-        $start  = (int) $start;
         $end    = (int) $phpcsFile->findNext($importTokens, $start, null, true);
         $import = $phpcsFile->getTokensAsString($start, ($end - $start));
 
@@ -307,18 +306,18 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
                 $line = $prevLine;
             }
 
-            $prevPtr = $phpcsFile->findPrevious(T_USE, ((int) $ptr - 1));
+            $prevPtr = $phpcsFile->findPrevious(T_USE, ($ptr - 1));
             if ($prevPtr === false) {
                 break;
             }
 
             $prevLine      = $tokens[$prevPtr]['line'];
-            $prevImportArr = $this->getUseImport($phpcsFile, (int) $prevPtr);
+            $prevImportArr = $this->getUseImport($phpcsFile, $prevPtr);
         } while ($prevLine === ($line - 1)
             && ($this->compareString($prevImportArr['content'], $import) > 0)
         );
 
-        return (int) $ptr;
+        return $ptr;
 
     }//end findNewDestination()
 
