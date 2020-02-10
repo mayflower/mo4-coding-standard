@@ -23,8 +23,7 @@ cache:
 before_script:
   - if [ "${DEPENDENCIES}" = "lowest" ]; then composer update --prefer-lowest --prefer-dist --no-interaction --no-progress; fi;
   - if [ "${DEPENDENCIES}" = "highest" ]; then composer update --prefer-dist --no-interaction --no-progress; fi;
-  - if [ "${DEPENDENCIES}" = "highest" ]; then pecl install -f ast-1.0.5; fi; # Install AST extension, as phan requires it
-  - if [ "${DEPENDENCIES}" = "highest" ]; then composer require phan/phan --dev; fi; # Install phan, now that we have the AST extension
+  - if [ "${DEPENDENCIES}" = "highest" ]; then pecl install -f ast-1.0.5; fi; # Install AST extension, as phan uses it
 
 script:
   - xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd MO4/ruleset.xml # validate MO4's ruleset XML

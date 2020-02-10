@@ -90,8 +90,6 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         $nsSep = $phpcsFile->findNext($scanTokens, ($stackPtr + 1));
 
         while ($nsSep !== false) {
-            $nsSep = (int) $nsSep;
-
             $classNameEnd = (int) $phpcsFile->findNext(
                 $this->classNameTokens,
                 $nsSep,
@@ -144,8 +142,6 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                     if ($docCommentStringPtr === false) {
                         continue;
                     }
-
-                    $docCommentStringPtr = (int) $docCommentStringPtr;
 
                     $docLine = $tokens[$docCommentStringPtr]['content'];
 
@@ -219,7 +215,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         while ($useTokenPtr !== false) {
             $classNameStart = (int) $phpcsFile->findNext(
                 PHP_CodeSniffer_Tokens::$emptyTokens,
-                ((int) $useTokenPtr + 1),
+                ($useTokenPtr + 1),
                 $end,
                 true
             );
@@ -244,7 +240,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
 
             $aliasNamePtr = $phpcsFile->findPrevious(
                 PHP_CodeSniffer_Tokens::$emptyTokens,
-                ((int) $useEnd - 1),
+                ($useEnd - 1),
                 null,
                 true
             );
@@ -254,7 +250,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
 
             $className = $this->getFullyQualifiedClassName($className);
             $useStatements[$className] = $tokens[$aliasNamePtr]['content'];
-            $i = ((int) $useEnd + 1);
+            $i = ($useEnd + 1);
 
             if ($tokens[$useEnd]['code'] === T_COMMA) {
                 $useTokenPtr = $i;
@@ -290,8 +286,6 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         if ($namespaceStart === false) {
             return '';
         }
-
-        $namespaceStart = (int) $namespaceStart;
 
         $namespaceEnd = (int) $phpcsFile->findNext(
             $this->classNameTokens,
