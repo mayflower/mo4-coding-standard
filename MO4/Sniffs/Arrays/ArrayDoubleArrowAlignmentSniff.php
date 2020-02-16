@@ -108,6 +108,8 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
                 continue;
             }
 
+            $i = (int) $i;
+
             if ($current['code'] === T_DOUBLE_ARROW) {
                 $assignments[] = $i;
                 $column        = $previous['column'];
@@ -136,7 +138,7 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
 
                 $hasKeyInLine = false;
 
-                $j = ((int) $i - 1);
+                $j = ($i - 1);
                 while (($j >= 0) && ($tokens[$j]['line'] === $current['line'])) {
                     if (\in_array($tokens[$j]['code'], PHP_CodeSniffer_Tokens::$emptyTokens, true) === false) {
                         $hasKeyInLine = true;
