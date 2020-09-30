@@ -1,6 +1,6 @@
 parameters:
     level: max
-    autoload_files:
+    bootstrapFiles:
         - %rootDir%/../../../tests/bootstrap.php
     ignoreErrors:
         - '#^Strict comparison using === between \*NEVER\* and (.*) will always evaluate to false.$#'
