@@ -34,8 +34,9 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
      * @var array
      */
     protected  $arrayTokens = [
-        T_ARRAY,
+        // @phan-suppress-next-line PhanUndeclaredConstant
         T_OPEN_SHORT_ARRAY,
+        T_ARRAY,
     ];
 
 

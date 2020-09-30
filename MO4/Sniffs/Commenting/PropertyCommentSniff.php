@@ -218,7 +218,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
                 $commentStart = $phpcsFile->findPrevious(
                     T_COMMENT,
                     $commentEnd,
-                    null,
+                    0,
                     true
                 );
                 $phpcsFile->addError(

@@ -245,7 +245,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
             $aliasNamePtr = $phpcsFile->findPrevious(
                 PHP_CodeSniffer_Tokens::$emptyTokens,
                 ($useEnd - 1),
-                null,
+                0,
                 true
             );
 
