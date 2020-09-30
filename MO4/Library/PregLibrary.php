@@ -34,6 +34,8 @@ class PregLibrary
      * @return string[]|array[]
      *
      * @throws RuntimeException
+     *
+     * @psalm-suppress ArgumentTypeCoercion
      */
     public static function mo4_preg_split($pattern, $subject, $limit=-1, $flags=0): array
     {

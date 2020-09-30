@@ -234,7 +234,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
         $prev = $phpcsFile->findPrevious(
             PHP_CodeSniffer_Tokens::$emptyTokens,
             ($stackPtr - 1),
-            null,
+            0,
             true,
             null,
             true
