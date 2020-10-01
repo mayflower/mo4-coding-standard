@@ -9,6 +9,8 @@
         <!-- exclude sniffs that are extended by this standard -->
         <exclude name="PEAR.Functions.FunctionCallSignature"/>
         <exclude name="PSR2.Namespaces.UseDeclaration"/>
+        <!-- SlevomatCodingStandard.Classes.DisallowMultiPropertyDefinition supports autofixing -->
+        <exclude name="PSR2.Classes.PropertyDeclaration.Multiple"/>
         <!-- exclude sniffs that are disabled on purpose by this standard -->
         <exclude name="Symfony.Commenting.ClassComment.Missing"/>
         <exclude name="Symfony.Commenting.License"/>
@@ -66,6 +68,10 @@
 
     <!-- Require presence of constant visibility -->
     <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
+    <!-- Forbid multi constant definition -->
+    <rule ref="SlevomatCodingStandard.Classes.DisallowMultiConstantDefinition" />
+    <!-- Forbid multi property definition -->
+    <rule ref="SlevomatCodingStandard.Classes.DisallowMultiPropertyDefinition" />
     <!-- Forbid empty lines after class/interface/trait opening and before closing braces -->
     <rule ref="SlevomatCodingStandard.Classes.EmptyLinesAroundClassBraces">
         <properties>
@@ -77,6 +83,8 @@
     <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
     <!-- report invalid format of inline phpDocs with @var -->
     <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration"/>
+    <!-- Forbid useless @inheritDoc comments -->
+    <rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
     <!-- Forbid assignments in conditions -->
     <rule ref="SlevomatCodingStandard.ControlStructures.AssignmentInCondition"/>
     <!-- Require consistent spacing for control structures -->
@@ -110,6 +118,8 @@
     </rule>
     <!-- Require global functions to be referenced via a fully qualified name -->
     <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions"/>
+    <!-- Require static closures for microoptimization -->
+    <rule ref="SlevomatCodingStandard.Functions.StaticClosure"/>
     <!-- Forbid multiple use statements on same line -->
     <rule ref="SlevomatCodingStandard.Namespaces.MultipleUsesPerLine"/>
     <!-- Require one newline around namespace declaration -->
