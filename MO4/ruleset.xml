@@ -16,6 +16,17 @@
         <exclude name="Symfony.Commenting.License"/>
     </rule>
 
+    <!-- Also include PSR12 -->
+    <rule ref="PSR12">
+        <!-- exclude sniffs that are disabled on purpose by this standard -->
+        <exclude name="Generic.Files.LineLength.TooLong"/>
+        <!-- not compatible with other rules we have later on -->
+        <exclude name="PSR12.Classes.AnonClassDeclaration.SpaceAfterKeyword"/>
+        <exclude name="PSR12.ControlStructures.ControlStructureSpacing"/>
+        <exclude name="PSR12.Files.DeclareStatement"/>
+        <exclude name="PSR12.Operators.OperatorSpacing"/>
+    </rule>
+
     <!-- Forbid strings in `"` unless necessary -->
     <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired"/>
     <!-- There must be at least one space around operators -->
@@ -140,6 +151,14 @@
     </rule>
     <!-- Forbid useless alias for classes, constants and functions -->
     <rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>
+    <!-- Require empty newlines before and after uses -->
+    <rule ref="SlevomatCodingStandard.Namespaces.UseSpacing">
+        <properties>
+            <property name="linesCountBeforeFirstUse" value="1"/>
+            <property name="linesCountBetweenUseTypes" value="0"/>
+            <property name="linesCountAfterLastUse" value="1"/>
+        </properties>
+    </rule>
     <!-- Require the usage of assignment operators, eg `+=`, `.=` when possible -->
     <rule ref="SlevomatCodingStandard.Operators.RequireCombinedAssignmentOperator"/>
     <!-- Report ++ and minus-minus operators not used standalone -->

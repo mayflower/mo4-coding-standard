@@ -30,7 +30,7 @@ The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://
 * doc blocks of class properties must be multiline and have exactly one `@var` annotation
 
 ### MO4.Formatting.AlphabeticalUseStatements
-* `use` statements must be sorted lexicographically, grouped by empty lines. The order function can be configured.
+* `use` statements must be sorted lexicographically. The order function can be configured.
 
 #### Configuration
 The `order` property of the `MO4.Formatting.AlphabeticalUseStatements` sniff defines
