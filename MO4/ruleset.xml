@@ -103,6 +103,8 @@
     <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
     <!-- report invalid format of inline phpDocs with @var -->
     <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration"/>
+    <!-- TODO -->
+    <rule ref="SlevomatCodingStandard.Commenting.UselessFunctionDocComment"/>
     <!-- Forbid useless @inheritDoc comments -->
     <rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
     <!-- Forbid assignments in conditions -->
@@ -129,6 +131,8 @@
     <rule ref="SlevomatCodingStandard.ControlStructures.NewWithParentheses"/>
     <!-- Require usage of null coalesce operator when possible -->
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"/>
+    <!-- Require usage of null coalesce equal operator when possible -->
+    <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceEqualOperator"/>
     <!-- Require usage of ternary operator when possible -->
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireTernaryOperator">
         <!-- But multiline is useful for readability -->
@@ -207,7 +211,7 @@
         <severity>0</severity>
     </rule>
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification">
-        <severity>0</severity>
+        <severity>9</severity>
     </rule>
     <!-- Require return type hints to be declared -->
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
@@ -217,8 +221,9 @@
         </properties>
     </rule>
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.UselessAnnotation">
-        <severity>0</severity>
+        <severity>9</severity>
     </rule>
+    <!-- TODO -->
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification">
         <severity>0</severity>
     </rule>
