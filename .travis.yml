@@ -23,9 +23,15 @@ before_script:
   - if [ "${DEPENDENCIES}" = "lowest" ]; then composer update --prefer-lowest --prefer-dist --no-interaction --no-progress; fi;
   - if [ "${DEPENDENCIES}" = "highest" ]; then composer update --prefer-dist --no-interaction --no-progress; fi;
   - if [ "${DEPENDENCIES}" = "highest" ]; then pecl install -f ast-1.0.7; fi; # Install AST extension, as phan uses it
+  - export XMLLINT_INDENT="    "
 
 script:
-  - xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd MO4/ruleset.xml # validate MO4's ruleset XML
+  - xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd MO4/ruleset.xml
+  - xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd phpcs.mo4.xml
+  - xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd phpcs.xml.dist
+  - diff -B MO4/ruleset.xml <(xmllint --format MO4/ruleset.xml)
+  - diff -B phpcs.mo4.xml <(xmllint --format phpcs.mo4.xml)
+  - diff -B phpcs.xml.dist <(xmllint --format phpcs.xml.dist)
   - vendor/bin/phpcs -s --standard=MO4 integrationtests/testfile.php # Check, if all the sniffs work with the current dependencies
   - vendor/bin/phpunit # Run tests
   - vendor/bin/phpcs # Stylecheck against PHPCS's ruleset

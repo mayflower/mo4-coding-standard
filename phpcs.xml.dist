@@ -8,7 +8,7 @@
     <!--   1. CLI parameters -->
     <!--   2. followed by configuration settings imported from rulesets, first come, first serve -->
     <!--   3. and finally the configuration from this file itself! -->
-    <rule ref="phpcs.mo4.xml" />
+    <rule ref="phpcs.mo4.xml"/>
 
-    <rule ref="vendor/squizlabs/php_codesniffer/phpcs.xml.dist" />
+    <rule ref="vendor/squizlabs/php_codesniffer/phpcs.xml.dist"/>
 </ruleset>
