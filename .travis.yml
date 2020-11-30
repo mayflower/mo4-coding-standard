@@ -1,4 +1,3 @@
-sudo: false
 os:
   - linux
 language: php
@@ -6,6 +5,7 @@ php:
   - 7.2
   - 7.3
   - 7.4
+  - 8.0
 env:
   - DEPENDENCIES=lowest
   - DEPENDENCIES=highest
@@ -20,8 +20,16 @@ cache:
   - $HOME/.composer/cache
 
 before_script:
-  - if [ "${DEPENDENCIES}" = "lowest" ]; then composer update --prefer-lowest --prefer-dist --no-interaction --no-progress; fi;
-  - if [ "${DEPENDENCIES}" = "highest" ]; then composer update --prefer-dist --no-interaction --no-progress; fi;
+  # PHPUnit 8.x is not (yet) supported, so prevent issues with Travis images using it.
+  - |
+    if [ "${TRAVIS_PHP_VERSION}" != "8.0" ]; then
+      export PHPUNIT_WORKAROUND=""
+    elif [ "${TRAVIS_PHP_VERSION}" = "8.0" ]; then
+      # Allow installing "incompatible" PHPUnit version on PHP 8.
+      export PHPUNIT_WORKAROUND="--ignore-platform-reqs"
+    fi
+  - if [ "${DEPENDENCIES}" = "lowest" ]; then composer update ${PHPUNIT_WORKAROUND} --prefer-lowest --prefer-dist --no-interaction --no-progress; fi;
+  - if [ "${DEPENDENCIES}" = "highest" ]; then composer update ${PHPUNIT_WORKAROUND} --prefer-dist --no-interaction --no-progress; fi;
   - if [ "${DEPENDENCIES}" = "highest" ]; then pecl install -f ast-1.0.10; fi; # Install AST extension, as phan uses it
   - export XMLLINT_INDENT="    "
 
@@ -48,17 +56,18 @@ script:
 jobs:
   include:
     - stage: Test
-      name: PHP:7.3 Windows
+      name: PHP:8.0 Windows
       os: windows
       cache:
         directories:
           - C:/Users/travis/AppData/Local/Composer
-      language: sh # No PHP currently
+      language: shell # No PHP currently
       env:
-        - PHP_VERSION=7.3
+        - TRAVIS_PHP_VERSION=8.0
         - DEPENDENCIES=lowest
       install:
-        - export EXACT_PHP_VERSION=$(choco search php --exact --all-versions --limit-output | grep $PHP_VERSION | cut -d \| -f 2)
+        # this doesn't work since choco 0.10.14 and currently there's no workaround, so the highest available version is used always
+        - export EXACT_PHP_VERSION=$(choco search php --exact --all-versions --limit-output | grep $TRAVIS_PHP_VERSION | cut -d \| -f 2)
         - choco install php --version=${EXACT_PHP_VERSION} --package-parameters="/InstallDir:c:\tools\php"
         - choco install composer --ia "/DEV=C:\tools\php"
         - export PATH=/c/tools/php:$PATH

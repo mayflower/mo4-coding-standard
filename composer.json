@@ -29,7 +29,7 @@
         "vimeo/psalm": "^4.0"
     },
     "require": {
-        "php": "~7.2",
+        "php": "~7.2 || ~8.0",
         "dealerdirect/phpcodesniffer-composer-installer": "~0.7",
         "escapestudios/symfony2-coding-standard": "^3.10.0",
         "slevomat/coding-standard": "^6.2.0",
