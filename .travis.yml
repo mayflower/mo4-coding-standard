@@ -22,7 +22,7 @@ cache:
 before_script:
   - if [ "${DEPENDENCIES}" = "lowest" ]; then composer update --prefer-lowest --prefer-dist --no-interaction --no-progress; fi;
   - if [ "${DEPENDENCIES}" = "highest" ]; then composer update --prefer-dist --no-interaction --no-progress; fi;
-  - if [ "${DEPENDENCIES}" = "highest" ]; then pecl install -f ast-1.0.7; fi; # Install AST extension, as phan uses it
+  - if [ "${DEPENDENCIES}" = "highest" ]; then pecl install -f ast-1.0.10; fi; # Install AST extension, as phan uses it
   - export XMLLINT_INDENT="    "
 
 script:
