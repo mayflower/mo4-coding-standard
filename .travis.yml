@@ -33,7 +33,12 @@ script:
   - vendor/bin/phpstan analyse --no-progress # Run PHPStan
   - vendor/bin/psalm --show-info=false # run psalm
   - if [ "${DEPENDENCIES}" = "highest" ]; then vendor/bin/phan -i; fi; # Run phan
-  - if [ "${TRAVIS_PHP_VERSION}" != "7.3" ]; then php -d zend_extension=xdebug.so vendor/bin/phpunit --coverage-clover=coverage.xml; fi; # Generate Code coverage report
+  # Generate Code coverage report
+  - |
+    if [ "${TRAVIS_PHP_VERSION}" == "7.4" ] && [ "${DEPENDENCIES}" = "highest" ]; then
+      echo 'xdebug.mode = "coverage"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+      php -d zend_extension=xdebug.so vendor/bin/phpunit --coverage-clover=coverage.xml
+    fi
 
 jobs:
   include:
