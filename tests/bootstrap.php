@@ -37,3 +37,20 @@ $ignoredStandardsStr = implode(
 );
 
 putenv("PHPCS_IGNORE_TESTS={$ignoredStandardsStr}");
+
+/*
+ * PHPUnit 9.3 is the first version which supports Xdebug 3, but we're using older versions.
+ *
+ * For now, until a fix is pulled into the whole stack, this will allow older PHPUnit
+ * versions to run with Xdebug 3 for code coverage.
+ */
+
+if ((\extension_loaded('xdebug') === true) && (\version_compare((string) \phpversion('xdebug'), '3', '>=') === true)) {
+    if (defined('XDEBUG_CC_UNUSED') === false) {
+        define('XDEBUG_CC_UNUSED', null);
+    }
+
+    if (defined('XDEBUG_CC_DEAD_CODE') === false) {
+        define('XDEBUG_CC_DEAD_CODE', null);
+    }
+}
