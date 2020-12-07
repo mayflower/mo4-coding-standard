@@ -47,8 +47,7 @@ jobs:
         - PHP_VERSION=7.3
         - DEPENDENCIES=lowest
       install:
-        - export EXACT_PHP_VERSION=$(choco search php --exact --all-versions --limit-output | grep $PHP_VERSION | cut -d \| -f 2)
-        - choco install php --version=${EXACT_PHP_VERSION} --package-parameters="/InstallDir:c:\tools\php"
+        - choco install php --version=7.3 --package-parameters="/InstallDir:c:\tools\php"
         - choco install composer --ia "/DEV=C:\tools\php"
         - export PATH=/c/tools/php:$PATH
       script:
