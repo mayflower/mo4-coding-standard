@@ -73,6 +73,12 @@
             <property name="spacingBeforeFirst" value="0"/>
         </properties>
     </rule>
+    <!-- Forbid spaces between parentheses and their content-->
+    <rule ref="Generic.WhiteSpace.ArbitraryParenthesesSpacing">
+        <properties>
+            <property name="ignoreNewlines" value="1"/>
+        </properties>
+    </rule>
 
     <!-- Forbid multiple assignments -->
     <rule ref="Squiz.PHP.DisallowMultipleAssignments"/>
