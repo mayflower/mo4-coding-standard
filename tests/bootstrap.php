@@ -48,7 +48,7 @@ putenv("PHPCS_IGNORE_TESTS={$ignoredStandardsStr}");
  * versions to run with Xdebug 3 for code coverage.
  */
 
-if ((true === \extension_loaded('xdebug')) && (true === \version_compare((string) \phpversion('xdebug'), '3', '>='))) {
+if ((true === extension_loaded('xdebug')) && (true === version_compare((string) phpversion('xdebug'), '3', '>='))) {
     if (false === defined('XDEBUG_CC_UNUSED')) {
         define('XDEBUG_CC_UNUSED', null);
     }
