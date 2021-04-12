@@ -4,9 +4,12 @@
  * This file is part of the mo4-coding-standard (phpcs standard)
  *
  * @author  Xaver Loppenstedt <xaver@loppenstedt.de>
+ *
  * @license http://spdx.org/licenses/MIT MIT License
+ *
  * @link    https://github.com/mayflower/mo4-coding-standard
  */
+
 declare(strict_types=1);
 
 namespace MO4\Sniffs\Arrays;
@@ -18,40 +21,42 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  * Multi Line Array sniff.
  *
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
+ *
  * @copyright 2013-2017 Xaver Loppenstedt, some rights reserved.
+ *
  * @license   http://spdx.org/licenses/MIT MIT License
+ *
  * @link      https://github.com/mayflower/mo4-coding-standard
  */
 class MultiLineArraySniff implements Sniff
 {
-
     /**
      * Define all types of arrays.
      *
      * @var array
      */
-    protected  $arrayTokens = [
+    protected $arrayTokens = [
         // @phan-suppress-next-line PhanUndeclaredConstant
         T_OPEN_SHORT_ARRAY,
         T_ARRAY,
     ];
 
-
     /**
      * Registers the tokens that this sniff wants to listen for.
      *
      * @return array<int, int>
+     *
      * @see    Tokens.php
      */
     public function register(): array
     {
         return $this->arrayTokens;
-
-    }//end register()
-
+    }
 
     /**
      * Processes this test, when one of its tokens is encountered.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
      *
      * @param File $phpcsFile The file being scanned.
      * @param int  $stackPtr  The position of the current token in
@@ -64,7 +69,7 @@ class MultiLineArraySniff implements Sniff
         $tokens  = $phpcsFile->getTokens();
         $current = $tokens[$stackPtr];
 
-        if ($current['code'] === T_ARRAY) {
+        if (T_ARRAY === $current['code']) {
             $arrayType = 'parenthesis';
             $start     = $current['parenthesis_opener'];
             $end       = $current['parenthesis_closer'];
@@ -88,31 +93,32 @@ class MultiLineArraySniff implements Sniff
                 'OpeningMustBeFollowedByNewline'
             );
 
-            if ($fixable === true) {
+            if (true === $fixable) {
                 $phpcsFile->fixer->beginChangeset();
                 $phpcsFile->fixer->addNewline($start);
                 $phpcsFile->fixer->endChangeset();
             }
         }
 
-        if ($tokens[($end - 2)]['line'] === $tokens[$end]['line']) {
-            $fixable = $phpcsFile->addFixableError(
-                \sprintf(
-                    'closing %s of multi line array must in own line',
-                    $arrayType
-                ),
-                $end,
-                'ClosingMustBeInOwnLine'
-            );
-
-            if ($fixable === true) {
-                $phpcsFile->fixer->beginChangeset();
-                $phpcsFile->fixer->addNewlineBefore($end);
-                $phpcsFile->fixer->endChangeset();
-            }
+        if ($tokens[($end - 2)]['line'] !== $tokens[$end]['line']) {
+            return;
         }
 
-    }//end process()
+        $fixable = $phpcsFile->addFixableError(
+            \sprintf(
+                'closing %s of multi line array must in own line',
+                $arrayType
+            ),
+            $end,
+            'ClosingMustBeInOwnLine'
+        );
 
+        if (true !== $fixable) {
+            return;
+        }
 
-}//end class
+        $phpcsFile->fixer->beginChangeset();
+        $phpcsFile->fixer->addNewlineBefore($end);
+        $phpcsFile->fixer->endChangeset();
+    }
+}

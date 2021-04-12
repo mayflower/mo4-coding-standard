@@ -1,11 +1,14 @@
 <?php
+
 /**
  * This file is part of the mo4-coding-standard (phpcs standard)
  *
  * Bootstrap file for PHP_CodeSniffer MO4 Coding Standard unit tests.
  *
  * @author  Xaver Loppenstedt <xaver@loppenstedt.de>
+ *
  * @license http://spdx.org/licenses/MIT MIT License
+ *
  * @link    https://github.com/mayflower/mo4-coding-standard
  */
 
@@ -45,12 +48,12 @@ putenv("PHPCS_IGNORE_TESTS={$ignoredStandardsStr}");
  * versions to run with Xdebug 3 for code coverage.
  */
 
-if ((\extension_loaded('xdebug') === true) && (\version_compare((string) \phpversion('xdebug'), '3', '>=') === true)) {
-    if (defined('XDEBUG_CC_UNUSED') === false) {
+if ((true === \extension_loaded('xdebug')) && (true === \version_compare((string) \phpversion('xdebug'), '3', '>='))) {
+    if (false === defined('XDEBUG_CC_UNUSED')) {
         define('XDEBUG_CC_UNUSED', null);
     }
 
-    if (defined('XDEBUG_CC_DEAD_CODE') === false) {
+    if (false === defined('XDEBUG_CC_DEAD_CODE')) {
         define('XDEBUG_CC_DEAD_CODE', null);
     }
 }

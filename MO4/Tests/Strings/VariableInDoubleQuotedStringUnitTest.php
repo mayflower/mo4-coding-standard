@@ -4,9 +4,12 @@
  * This file is part of the mo4-coding-standard (phpcs standard)
  *
  * @author  Xaver Loppenstedt <xaver@loppenstedt.de>
+ *
  * @license http://spdx.org/licenses/MIT MIT License
+ *
  * @link    https://github.com/mayflower/mo4-coding-standard
  */
+
 declare(strict_types=1);
 
 namespace MO4\Tests\Strings;
@@ -21,14 +24,15 @@ use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
  * coding standard. Expected errors and warnings are stored in this class.
  *
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
+ *
  * @copyright 2013 Xaver Loppenstedt, some rights reserved.
+ *
  * @license   http://spdx.org/licenses/MIT MIT License
+ *
  * @link      https://github.com/mayflower/mo4-coding-standard
  */
 class VariableInDoubleQuotedStringUnitTest extends AbstractSniffUnitTest
 {
-
-
     /**
      * Returns the lines where errors should occur.
      *
@@ -38,31 +42,32 @@ class VariableInDoubleQuotedStringUnitTest extends AbstractSniffUnitTest
      * @param string $testFile test file
      *
      * @return array<int, int>
+     *
      * @throws RuntimeException
      */
-    protected function getErrorList(string $testFile=''): array
+    protected function getErrorList(string $testFile = ''): array
     {
         switch ($testFile) {
-        case 'VariableInDoubleQuotedStringUnitTest.pass.inc':
-            return [];
-        case 'VariableInDoubleQuotedStringUnitTest.fail.inc':
-            return [
-                3  => 1,
-                4  => 1,
-                5  => 2,
-                6  => 2,
-                7  => 1,
-                8  => 1,
-                9  => 1,
-                10 => 1,
-                11 => 1,
-            ];
+            case 'VariableInDoubleQuotedStringUnitTest.pass.inc':
+                return [];
+            case 'VariableInDoubleQuotedStringUnitTest.fail.inc':
+                return [
+                    3  => 1,
+                    4  => 1,
+                    5  => 2,
+                    6  => 2,
+                    7  => 1,
+                    8  => 1,
+                    9  => 1,
+                    10 => 1,
+                    11 => 1,
+                ];
         }
 
-        throw new RuntimeException("Testfile {$testFile} in ".__DIR__.' is not handled by '.self::class);
-
-    }//end getErrorList()
-
+        throw new RuntimeException(
+            \sprintf('%s%s is not handled by %s', \sprintf('Testfile %s in ', $testFile), __DIR__, self::class)
+        );
+    }
 
     /**
      * Returns the lines where warnings should occur.
@@ -75,8 +80,5 @@ class VariableInDoubleQuotedStringUnitTest extends AbstractSniffUnitTest
     protected function getWarningList(): array
     {
         return [];
-
-    }//end getWarningList()
-
-
-}//end class
+    }
+}

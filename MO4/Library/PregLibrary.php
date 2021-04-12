@@ -1,11 +1,15 @@
 <?php
+
 /**
  * This file is part of the mo4-coding-standard (phpcs standard)
  *
  * @author  Michael Moll <mmoll@mmoll.at>
+ *
  * @license http://spdx.org/licenses/MIT MIT License
+ *
  * @link    https://github.com/mayflower/mo4-coding-standard
  */
+
 declare(strict_types=1);
 
 namespace MO4\Library;
@@ -14,8 +18,6 @@ use PHP_CodeSniffer\Exceptions\RuntimeException;
 
 class PregLibrary
 {
-
-
     /**
      * Split string by a regular expression
      *
@@ -31,23 +33,21 @@ class PregLibrary
      *                        PREG_SPLIT_OFFSET_CAPTURE: If this flag is set, for every occurring match the appendant
      *                        string offset will also be returned.
      *
-     * @return string[]|array[]
+     * @return array<string>|array<array>
      *
      * @throws RuntimeException
      *
      * @psalm-suppress ArgumentTypeCoercion
      */
-    public static function mo4_preg_split($pattern, $subject, $limit=-1, $flags=0): array
+    public static function MO4PregSplit(string $pattern, string $subject, int $limit = -1, int $flags = 0): array
     {
         $pregSplitResult = \preg_split($pattern, $subject, $limit, $flags);
-        // @phan-suppress-next-line PhanTypeComparisonFromArray
-        if ($pregSplitResult === false) {
+
+        // @phan-suppress-next-line PhanTypeComparisonToArray
+        if (false === $pregSplitResult) {
             throw new RuntimeException('Unexpected Error in MO4 Coding Standard.');
         }
 
         return $pregSplitResult;
-
-    }//end mo4_preg_split()
-
-
-}//end class
+    }
+}

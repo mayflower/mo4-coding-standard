@@ -4,9 +4,12 @@
  * This file is part of the mo4-coding-standard (phpcs standard)
  *
  * @author  Xaver Loppenstedt <xaver@loppenstedt.de>
+ *
  * @license http://spdx.org/licenses/MIT MIT License
+ *
  * @link    https://github.com/mayflower/mo4-coding-standard
  */
+
 declare(strict_types=1);
 
 namespace MO4\Sniffs\Commenting;
@@ -23,13 +26,15 @@ use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
  * annotation.
  *
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
+ *
  * @copyright 2013-2014 Xaver Loppenstedt, some rights reserved.
+ *
  * @license   http://spdx.org/licenses/MIT MIT License
+ *
  * @link      https://github.com/mayflower/mo4-coding-standard
  */
 class PropertyCommentSniff extends AbstractScopeSniff
 {
-
     /**
      * A list of tokenizers this sniff supports.
      *
@@ -47,7 +52,6 @@ class PropertyCommentSniff extends AbstractScopeSniff
         T_CONST,
     ];
 
-
     /**
      * Construct PropertyCommentSniff
      *
@@ -58,13 +62,13 @@ class PropertyCommentSniff extends AbstractScopeSniff
         $scopes = [T_CLASS];
 
         parent::__construct($scopes, $this->myTokenTypes, true);
-
-    }//end __construct()
-
+    }
 
     /**
      * Processes a token that is found within the scope that this test is
      * listening to.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
      *
      * @param File $phpcsFile The file where this token was found.
      * @param int  $stackPtr  The position in the stack where this
@@ -77,11 +81,8 @@ class PropertyCommentSniff extends AbstractScopeSniff
      *
      * @throws RuntimeException
      */
-    protected function processTokenWithinScope(
-        File $phpcsFile,
-        $stackPtr,
-        $currScope
-    ): void {
+    protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope): void
+    {
         $find   = [
             T_COMMENT,
             T_DOC_COMMENT_CLOSE_TAG,
@@ -103,18 +104,19 @@ class PropertyCommentSniff extends AbstractScopeSniff
             ],
             $stackPtr
         );
-        if ($postComment !== false
+
+        if (false !== $postComment
             && $tokens[$postComment]['line'] === $tokens[$stackPtr]['line']
         ) {
-            if ($tokens[$postComment]['content'] === '/**') {
+            if ('/**' === $tokens[$postComment]['content']) {
                 // That's an error already.
                 $phpcsFile->addError(
                     'no doc blocks are allowed directly after declaration',
                     $stackPtr,
                     'NoDocBlockAllowed'
                 );
-            } else if (\strpos($tokens[$postComment]['content'], '//') !== 0
-                && \substr($tokens[$postComment]['content'], -2) !== '*/'
+            } elseif (0 !== \strpos($tokens[$postComment]['content'], '//')
+                && '*/' !== \substr($tokens[$postComment]['content'], -2)
             ) {
                 $phpcsFile->addError(
                     'no multiline comments after declarations allowed',
@@ -122,10 +124,10 @@ class PropertyCommentSniff extends AbstractScopeSniff
                     'MustBeOneLine'
                 );
             }
-        }//end if
+        }
 
         // Don't do constants for now.
-        if ($tokens[$stackPtr]['code'] === T_CONST) {
+        if (T_CONST === $tokens[$stackPtr]['code']) {
             return;
         }
 
@@ -133,13 +135,14 @@ class PropertyCommentSniff extends AbstractScopeSniff
 
         $conditions    = $tokens[$commentEnd]['conditions'];
         $lastCondition = \array_pop($conditions);
-        if ($lastCondition !== T_CLASS) {
+
+        if (T_CLASS !== $lastCondition) {
             return;
         }
 
         $code = $tokens[$commentEnd]['code'];
 
-        if ($code === T_DOC_COMMENT_CLOSE_TAG) {
+        if (T_DOC_COMMENT_CLOSE_TAG === $code) {
             $commentStart = $tokens[$commentEnd]['comment_opener'];
 
             // Check if this comment is completely in one line,
@@ -150,7 +153,8 @@ class PropertyCommentSniff extends AbstractScopeSniff
                 $this->myTokenTypes,
                 $commentEnd
             );
-            if ($firstTokenOnLine !== false
+
+            if (false !== $firstTokenOnLine
                 && $tokens[$commentStart]['line'] === $tokens[$commentEnd]['line']
                 && $tokens[$stackPtr]['line'] > $tokens[$commentEnd]['line']
             ) {
@@ -166,10 +170,11 @@ class PropertyCommentSniff extends AbstractScopeSniff
                 $length
             );
 
-            $vars = PregLibrary::mo4_preg_split('/\s+@var\s+/', $tokensAsString);
+            $vars = PregLibrary::MO4PregSplit('/\s+@var\s+/', $tokensAsString);
 
             $varCount = (\count($vars) - 1);
-            if (($varCount === 0) || ($varCount > 1)) {
+
+            if ((0 === $varCount) || ($varCount > 1)) {
                 $phpcsFile->addError(
                     'property doc comment must have exactly one @var annotation',
                     $commentStart,
@@ -177,15 +182,15 @@ class PropertyCommentSniff extends AbstractScopeSniff
                 );
             }
 
-            if ($varCount === 1) {
-                if ($isCommentOneLiner === true) {
+            if (1 === $varCount) {
+                if (true === $isCommentOneLiner) {
                     $fix = $phpcsFile->addFixableError(
                         'property doc comment must be multi line',
                         $commentEnd,
                         'NotMultiLineDocBlock'
                     );
 
-                    if ($fix === true) {
+                    if (true === $fix) {
                         $phpcsFile->fixer->beginChangeset();
                         $phpcsFile->fixer->addContent($commentStart, "\n     *");
                         $phpcsFile->fixer->replaceToken(
@@ -196,14 +201,15 @@ class PropertyCommentSniff extends AbstractScopeSniff
                         $phpcsFile->fixer->endChangeset();
                     }
                 }
-            } else if ($isCommentOneLiner === true) {
+            } elseif (true === $isCommentOneLiner) {
                 $phpcsFile->addError(
                     'property doc comment must be multi line',
                     $commentEnd,
                     'NotMultiLineDocBlock'
                 );
-            }//end if
-        } else if ($code === T_COMMENT) {
+            }
+        // phpcs:disable SlevomatCodingStandard.ControlStructures.EarlyExit
+        } elseif (T_COMMENT === $code) {
             // It seems that when we are in here,
             // then we have a line comment at $commentEnd.
             // Now, check if the same comment has
@@ -214,7 +220,8 @@ class PropertyCommentSniff extends AbstractScopeSniff
                 $commentEnd
             );
 
-            if ($firstOnLine === false) {
+            // phpcs:enable SlevomatCodingStandard.ControlStructures.EarlyExit
+            if (false === $firstOnLine) {
                 $commentStart = $phpcsFile->findPrevious(
                     T_COMMENT,
                     $commentEnd,
@@ -227,13 +234,13 @@ class PropertyCommentSniff extends AbstractScopeSniff
                     'NotADocBlock'
                 );
             }
-        }//end if
-
-    }//end processTokenWithinScope()
-
+        }
+    }
 
     /**
      * Process tokens outside scope.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
      *
      * @param File $phpcsFile The file where this token was found.
      * @param int  $stackPtr  The position in the stack where this
@@ -243,8 +250,5 @@ class PropertyCommentSniff extends AbstractScopeSniff
      */
     protected function processTokenOutsideScope(File $phpcsFile, $stackPtr): void
     {
-
-    }//end processTokenOutsideScope()
-
-
-}//end class
+    }
+}

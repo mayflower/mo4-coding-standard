@@ -4,15 +4,18 @@
  * This file is part of the mo4-coding-standard (phpcs standard)
  *
  * @author  Xaver Loppenstedt <xaver@loppenstedt.de>
+ *
  * @license http://spdx.org/licenses/MIT MIT License
+ *
  * @link    https://github.com/mayflower/mo4-coding-standard
  */
+
 declare(strict_types=1);
 
 namespace MO4\Sniffs\Strings;
 
-use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Variable in Double Quoted String sniff.
@@ -20,20 +23,21 @@ use PHP_CodeSniffer\Files\File;
  * Variables in double quoted strings must be surrounded by { }
  *
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
+ *
  * @copyright 2013 Xaver Loppenstedt, some rights reserved.
+ *
  * @license   http://spdx.org/licenses/MIT MIT License
+ *
  * @link      https://github.com/mayflower/mo4-coding-standard
  */
 class VariableInDoubleQuotedStringSniff implements Sniff
 {
-
     /**
      * The PHP_CodeSniffer object controlling this run.
      *
      * @var File
      */
     private $phpCsFile;
-
 
     /**
      * Registers the tokens that this sniff wants to listen for.
@@ -45,13 +49,13 @@ class VariableInDoubleQuotedStringSniff implements Sniff
     public function register(): array
     {
         return [T_DOUBLE_QUOTED_STRING];
-
-    }//end register()
-
+    }
 
     /**
      * Called when one of the token types that this sniff is listening for
      * is found.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
      *
      * @param File $phpcsFile The PHP_CodeSniffer file where the
      *                        token was found.
@@ -76,49 +80,52 @@ class VariableInDoubleQuotedStringSniff implements Sniff
 
         foreach ($matches as $match) {
             foreach ($match as [$var, $pos]) {
-                if ($pos === 1 || $content[($pos - 1)] !== '{') {
-                    if (\strpos(\substr($content, 0, $pos), '{') > 0
-                        && \strpos(\substr($content, 0, $pos), '}') === false
+                if (1 !== $pos && '{' === $content[($pos - 1)]) {
+                    continue;
+                }
+
+                if (\strpos(\substr($content, 0, $pos), '{') > 0
+                    && false === \strpos(\substr($content, 0, $pos), '}')
+                ) {
+                    continue;
+                }
+
+                $lastOpeningBrace = \strrpos(\substr($content, 0, $pos), '{');
+
+                if (false !== $lastOpeningBrace
+                    && '$' === $content[($lastOpeningBrace + 1)]
+                ) {
+                    $lastClosingBrace = \strrpos(\substr($content, 0, $pos), '}');
+
+                    if (false !== $lastClosingBrace
+                        && $lastClosingBrace < $lastOpeningBrace
                     ) {
                         continue;
                     }
+                }
 
-                    $lastOpeningBrace = \strrpos(\substr($content, 0, $pos), '{');
-                    if ($lastOpeningBrace !== false
-                        && $content[($lastOpeningBrace + 1)] === '$'
-                    ) {
-                        $lastClosingBrace = \strrpos(\substr($content, 0, $pos), '}');
+                $fix = $this->phpCsFile->addFixableError(
+                    \sprintf(
+                        'must surround variable %s with { }',
+                        $var
+                    ),
+                    $stackPtr,
+                    'NotSurroundedWithBraces'
+                );
 
-                        if ($lastClosingBrace !== false
-                            && $lastClosingBrace < $lastOpeningBrace
-                        ) {
-                            continue;
-                        }
-                    }
+                if (true !== $fix) {
+                    continue;
+                }
 
-                    $fix = $this->phpCsFile->addFixableError(
-                        \sprintf(
-                            'must surround variable %s with { }',
-                            $var
-                        ),
-                        $stackPtr,
-                        'NotSurroundedWithBraces'
-                    );
-
-                    if ($fix === true) {
-                        $correctVariable = $this->surroundVariableWithBraces(
-                            $content,
-                            $pos,
-                            $var
-                        );
-                        $this->fixPhpCsFile($stackPtr, $correctVariable);
-                    }
-                }//end if
-            }//end foreach
-        }//end foreach
-
-    }//end process()
-
+                $correctVariable = $this->surroundVariableWithBraces(
+                    $content,
+                    $pos,
+                    $var
+                );
+                $this->fixPhpCsFile($stackPtr, $correctVariable);
+            }
+        }
+    }
 
     /**
      * Surrounds a variable with curly brackets
@@ -135,9 +142,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
         $after  = \substr($content, ($pos + \strlen($var)));
 
         return $before.'{'.$var.'}'.$after;
-
-    }//end surroundVariableWithBraces()
-
+    }
 
     /**
      * Fixes the file
@@ -154,8 +159,5 @@ class VariableInDoubleQuotedStringSniff implements Sniff
         $phpCsFile->fixer->beginChangeset();
         $phpCsFile->fixer->replaceToken($stackPtr, $correctVariable);
         $phpCsFile->fixer->endChangeset();
-
-    }//end fixPhpCsFile()
-
-
-}//end class
+    }
+}

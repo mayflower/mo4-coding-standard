@@ -4,17 +4,20 @@
  * This file is part of the mo4-coding-standard (phpcs standard)
  *
  * @author  Xaver Loppenstedt <xaver@loppenstedt.de>
+ *
  * @license http://spdx.org/licenses/MIT MIT License
+ *
  * @link    https://github.com/mayflower/mo4-coding-standard
  */
+
 declare(strict_types=1);
 
 namespace MO4\Sniffs\Formatting;
 
 use MO4\Library\PregLibrary;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
-use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
 
 /**
@@ -25,13 +28,15 @@ use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
  * @author    Marco Jantke <marco.jantke@gmail.com>
  * @author    Steffen Ritter <steffenritter1@gmail.com>
+ *
  * @copyright 2013 Xaver Loppenstedt, some rights reserved.
+ *
  * @license   http://spdx.org/licenses/MIT MIT License
+ *
  * @link      https://github.com/mayflower/mo4-coding-standard
  */
 class UnnecessaryNamespaceUsageSniff implements Sniff
 {
-
     /**
      * Tokens used in full class name.
      *
@@ -42,23 +47,23 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         T_STRING,
     ];
 
-
     /**
      * Registers the tokens that this sniff wants to listen for.
      *
      * @return array<int, int>
+     *
      * @see    Tokens.php
      */
     public function register(): array
     {
         return [T_CLASS];
-
-    }//end register()
-
+    }
 
     /**
      * Called when one of the token types that this sniff is listening for
      * is found.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
      *
      * @param File $phpcsFile The PHP_CodeSniffer file where the
      *                        token was found.
@@ -89,7 +94,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
 
         $nsSep = $phpcsFile->findNext($scanTokens, ($stackPtr + 1));
 
-        while ($nsSep !== false) {
+        while (false !== $nsSep) {
             $classNameEnd = (int) $phpcsFile->findNext(
                 $this->classNameTokens,
                 $nsSep,
@@ -97,8 +102,8 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                 true
             );
 
-            if ($tokens[$nsSep]['code'] === T_NS_SEPARATOR) {
-                if ($tokens[($nsSep - 1)]['code'] === T_STRING) {
+            if (T_NS_SEPARATOR === $tokens[$nsSep]['code']) {
+                if (T_STRING === $tokens[($nsSep - 1)]['code']) {
                     --$nsSep;
                 }
 
@@ -119,7 +124,8 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                 // Doc comment block.
                 foreach ($tokens[$nsSep]['comment_tags'] as $tag) {
                     $content = $tokens[$tag]['content'];
-                    if (\array_key_exists($content, $docCommentTags) === false) {
+
+                    if (false === \array_key_exists($content, $docCommentTags)) {
                         continue;
                     }
 
@@ -139,13 +145,13 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                         (int) $lineEnd
                     );
 
-                    if ($docCommentStringPtr === false) {
+                    if (false === $docCommentStringPtr) {
                         continue;
                     }
 
                     $docLine = $tokens[$docCommentStringPtr]['content'];
 
-                    $docLineTokens = PregLibrary::mo4_preg_split(
+                    $docLineTokens = PregLibrary::MO4PregSplit(
                         '/\s+/',
                         $docLine,
                         -1,
@@ -164,7 +170,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                     foreach ($docLineTokens as $docLineToken) {
                         // phpcs:disable
                         /** @var array<string> $typeTokens */
-                        $typeTokens = PregLibrary::mo4_preg_split(
+                        $typeTokens = PregLibrary::MO4PregSplit(
                             '/\|/',
                             $docLineToken,
                             -1,
@@ -173,7 +179,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                         // phpcs:enable
 
                         foreach ($typeTokens as $typeToken) {
-                            if (\in_array($typeToken, $useStatements, true) === true) {
+                            if (true === \in_array($typeToken, $useStatements, true)) {
                                 continue;
                             }
 
@@ -186,16 +192,14 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                                 $docCommentStringPtr,
                                 true
                             );
-                        }//end foreach
-                    }//end foreach
-                }//end foreach
-            }//end if
+                        }
+                    }
+                }
+            }
 
             $nsSep = $phpcsFile->findNext($scanTokens, ($classNameEnd + 1));
-        }//end while
-
-    }//end process()
-
+        }
+    }
 
     /**
      * Get all use statements in range
@@ -206,17 +210,14 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      *
      * @return array
      */
-    protected function getUseStatements(
-        File $phpcsFile,
-        int $start,
-        int $end
-    ): array {
+    protected function getUseStatements(File $phpcsFile, int $start, int $end): array
+    {
         $useStatements = [];
-        $i           = $start;
-        $tokens      = $phpcsFile->getTokens();
-        $useTokenPtr = $phpcsFile->findNext(T_USE, $i, $end);
+        $i             = $start;
+        $tokens        = $phpcsFile->getTokens();
+        $useTokenPtr   = $phpcsFile->findNext(T_USE, $i, $end);
 
-        while ($useTokenPtr !== false) {
+        while (false !== $useTokenPtr) {
             $classNameStart = (int) $phpcsFile->findNext(
                 PHP_CodeSniffer_Tokens::$emptyTokens,
                 ($useTokenPtr + 1),
@@ -237,8 +238,9 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                 $classNameEnd,
                 $end
             );
+
             // Prevent endless loop when 'use ;' is the last use statement.
-            if ($useEnd === false) {
+            if (false === $useEnd) {
                 break;
             }
 
@@ -252,21 +254,15 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
             $length    = ($classNameEnd - $classNameStart);
             $className = $phpcsFile->getTokensAsString($classNameStart, $length);
 
-            $className = $this->getFullyQualifiedClassName($className);
+            $className                 = $this->getFullyQualifiedClassName($className);
             $useStatements[$className] = $tokens[$aliasNamePtr]['content'];
-            $i = ($useEnd + 1);
+            $i                         = ($useEnd + 1);
 
-            if ($tokens[$useEnd]['code'] === T_COMMA) {
-                $useTokenPtr = $i;
-            } else {
-                $useTokenPtr = $phpcsFile->findNext(T_USE, $i, $end);
-            }
-        }//end while
+            $useTokenPtr = T_COMMA === $tokens[$useEnd]['code'] ? $i : $phpcsFile->findNext(T_USE, $i, $end);
+        }
 
         return $useStatements;
-
-    }//end getUseStatements()
-
+    }
 
     /**
      * Get the namespace of the current class file
@@ -287,7 +283,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
             true
         );
 
-        if ($namespaceStart === false) {
+        if (false === $namespaceStart) {
             return '';
         }
 
@@ -302,9 +298,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         $name  = $phpcsFile->getTokensAsString($namespaceStart, $nslen);
 
         return "\\{$name}\\";
-
-    }//end getNamespace()
-
+    }
 
     /**
      * Return the fully qualified class name, e.g. '\Foo\Bar\Faz'
@@ -315,16 +309,14 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      */
     private function getFullyQualifiedClassName(string $className): string
     {
-        if ($className[0] !== '\\') {
+        if ('\\' !== $className[0]) {
             $className = "\\{$className}";
 
             return $className;
         }
 
         return $className;
-
-    }//end getFullyQualifiedClassName()
-
+    }
 
     /**
      * Check if short hand is possible.
@@ -339,24 +331,17 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      *
      * @return void
      */
-    private function checkShorthandPossible(
-        File $phpcsFile,
-        array $useStatements,
-        string $className,
-        string $namespace,
-        int $startPtr,
-        int $endPtr,
-        bool $isDocBlock=false
-    ): void {
-        $msg     = 'Shorthand possible. Replace "%s" with "%s"';
-        $code    = 'UnnecessaryNamespaceUsage';
-        $fixable = false;
+    private function checkShorthandPossible(File $phpcsFile, array $useStatements, string $className, string $namespace, int $startPtr, int $endPtr, bool $isDocBlock = false): void
+    {
+        $msg              = 'Shorthand possible. Replace "%s" with "%s"';
+        $code             = 'UnnecessaryNamespaceUsage';
+        $fixable          = false;
         $replaceClassName = false;
         $replacement      = '';
 
         $fullClassName = $this->getFullyQualifiedClassName($className);
 
-        if (\array_key_exists($fullClassName, $useStatements) === true) {
+        if (true === \array_key_exists($fullClassName, $useStatements)) {
             $replacement = $useStatements[$fullClassName];
 
             $data = [
@@ -372,7 +357,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
             );
 
             $replaceClassName = true;
-        } else if ($namespace !== '' && \strpos($fullClassName, $namespace) === 0) {
+        } elseif ('' !== $namespace && 0 === \strpos($fullClassName, $namespace)) {
             $replacement = \substr($fullClassName, \strlen($namespace));
 
             $data    = [
@@ -385,29 +370,29 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                 $code,
                 $data
             );
-        }//end if
+        }
 
-        if ($fixable === true) {
-            $phpcsFile->fixer->beginChangeset();
-            if ($isDocBlock === true) {
-                $tokens     = $phpcsFile->getTokens();
-                $oldContent = $tokens[$startPtr]['content'];
-                $newContent = \str_replace($className, $replacement, $oldContent);
-                $phpcsFile->fixer->replaceToken($startPtr, $newContent);
-            } else {
-                for ($i = $startPtr; $i < $endPtr; $i++) {
-                    $phpcsFile->fixer->replaceToken($i, '');
-                }
+        if (true !== $fixable) {
+            return;
+        }
 
-                if ($replaceClassName === true) {
-                    $phpcsFile->fixer->replaceToken($endPtr, $replacement);
-                }
+        $phpcsFile->fixer->beginChangeset();
+
+        if (true === $isDocBlock) {
+            $tokens     = $phpcsFile->getTokens();
+            $oldContent = $tokens[$startPtr]['content'];
+            $newContent = \str_replace($className, $replacement, $oldContent);
+            $phpcsFile->fixer->replaceToken($startPtr, $newContent);
+        } else {
+            for ($i = $startPtr; $i < $endPtr; $i++) {
+                $phpcsFile->fixer->replaceToken($i, '');
             }
 
-            $phpcsFile->fixer->endChangeset();
-        }//end if
+            if (true === $replaceClassName) {
+                $phpcsFile->fixer->replaceToken($endPtr, $replacement);
+            }
+        }
 
-    }//end checkShorthandPossible()
-
-
-}//end class
+        $phpcsFile->fixer->endChangeset();
+    }
+}
