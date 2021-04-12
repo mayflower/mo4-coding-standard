@@ -110,14 +110,14 @@
     <!-- Require consistent spacing for control structures -->
     <rule ref="SlevomatCodingStandard.ControlStructures.BlockControlStructureSpacing">
         <properties>
-            <property name="tokensToCheck" type="array">
-                <element value="T_IF"/>
-                <element value="T_DO"/>
-                <element value="T_WHILE"/>
-                <element value="T_FOR"/>
-                <element value="T_FOREACH"/>
-                <element value="T_SWITCH"/>
-                <element value="T_TRY"/>
+            <property name="controlStructures" type="array">
+                <element value="if"/>
+                <element value="do"/>
+                <element value="while"/>
+                <element value="for"/>
+                <element value="foreach"/>
+                <element value="switch"/>
+                <element value="try"/>
             </property>
         </properties>
     </rule>
@@ -195,7 +195,8 @@
     <!-- Require parameter type hints to be declared -->
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
         <properties>
-            <property name="enableObjectTypeHint" value="false"/>
+            <property name="enableMixedTypeHint" value="false"/>
+            <property name="enableUnionTypeHint" value="false"/>
         </properties>
     </rule>
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.UselessAnnotation">
@@ -207,7 +208,8 @@
     <!-- Require return type hints to be declared -->
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
         <properties>
-            <property name="enableNativeTypeHint" value="false"/>
+            <property name="enableMixedTypeHint" value="false"/>
+            <property name="enableUnionTypeHint" value="false"/>
         </properties>
     </rule>
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.UselessAnnotation">
