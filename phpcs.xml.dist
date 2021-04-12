@@ -10,5 +10,5 @@
     <!--   3. and finally the configuration from this file itself! -->
     <rule ref="phpcs.mo4.xml"/>
 
-    <rule ref="vendor/squizlabs/php_codesniffer/phpcs.xml.dist"/>
+    <rule ref="MO4/ruleset.xml"/>
 </ruleset>

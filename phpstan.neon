@@ -2,8 +2,6 @@ parameters:
     level: max
     bootstrapFiles:
         - %rootDir%/../../../tests/bootstrap.php
-    ignoreErrors:
-        - '#^Strict comparison using === between \*NEVER\* and (.*) will always evaluate to false.$#'
     paths:
        - %rootDir%/../../../MO4
        - %rootDir%/../../../tests

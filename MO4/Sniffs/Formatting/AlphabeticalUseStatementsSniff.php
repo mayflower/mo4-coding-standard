@@ -4,9 +4,12 @@
  * This file is part of the mo4-coding-standard (phpcs standard)
  *
  * @author  Xaver Loppenstedt <xaver@loppenstedt.de>
+ *
  * @license http://spdx.org/licenses/MIT MIT License
+ *
  * @link    https://github.com/mayflower/mo4-coding-standard
  */
+
 declare(strict_types=1);
 
 namespace MO4\Sniffs\Formatting;
@@ -24,13 +27,15 @@ use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
  * @author    Steffen Ritter <steffenritter1@gmail.com>
  * @author    Christian Albrecht <christian.albrecht@mayflower.de>
+ *
  * @copyright 2013-2017 Xaver Loppenstedt, some rights reserved.
+ *
  * @license   http://spdx.org/licenses/MIT MIT License
+ *
  * @link      https://github.com/mayflower/mo4-coding-standard
  */
 class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 {
-
     private const NAMESPACE_SEPARATOR_STRING = '\\';
 
     private const SUPPORTED_ORDERING_METHODS = [
@@ -60,7 +65,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
     /**
      * Line number of the last seen use statement
      *
-     * @var integer
+     * @var int
      */
     private $lastLine = -1;
 
@@ -71,9 +76,10 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      */
     private $currentFile;
 
-
     /**
      * Processes this test, when one of its tokens is encountered.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
      *
      * @param File $phpcsFile The file being scanned.
      * @param int  $stackPtr  The position of the current token in
@@ -83,7 +89,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      */
     public function process(File $phpcsFile, $stackPtr): void
     {
-        if (\in_array($this->order, self::SUPPORTED_ORDERING_METHODS, true) === false) {
+        if (false === \in_array($this->order, self::SUPPORTED_ORDERING_METHODS, true)) {
             $error = \sprintf(
                 "'%s' is not a valid order function for %s! Pick one of: %s",
                 $this->order,
@@ -109,12 +115,14 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 
         // Ignore function () use () {...}.
         $isNonImportUse = $this->checkIsNonImportUse($phpcsFile, $stackPtr);
-        if ($isNonImportUse === true) {
+
+        if (true === $isNonImportUse) {
             return;
         }
 
         $currentImportArr = $this->getUseImport($phpcsFile, $stackPtr);
-        if ($currentImportArr === false) {
+
+        if (false === $currentImportArr) {
             return;
         }
 
@@ -129,7 +137,8 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
         }
 
         $fixable = false;
-        if ($this->lastImport !== ''
+
+        if ('' !== $this->lastImport
             && $this->compareString($this->lastImport, $currentImport) > 0
         ) {
             $msg     = 'USE statements must be sorted alphabetically, order %s';
@@ -137,7 +146,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
             $fixable = $phpcsFile->addFixableError($msg, $currentPtr, $code, [$this->order]);
         }
 
-        if ($fixable === true) {
+        if (true === $fixable) {
             // Find the correct position in current use block.
             $newDestinationPtr
                 = $this->findNewDestination($phpcsFile, $stackPtr, $currentImport);
@@ -148,13 +157,11 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
             $phpcsFile->fixer->addContentBefore($newDestinationPtr, $currentUseStr);
             $this->fixerClearLine($phpcsFile, $stackPtr);
             $phpcsFile->fixer->endChangeset();
-        }//end if
+        }
 
         $this->lastImport = $currentImport;
         $this->lastLine   = $line;
-
-    }//end process()
-
+    }
 
     /**
      * Get the import class name for use statement pointed by $stackPtr.
@@ -177,8 +184,9 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
             null,
             true
         );
+
         // $start is false when "use" is the last token in file...
-        if ($start === false) {
+        if (false === $start) {
             return false;
         }
 
@@ -189,9 +197,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
             'startPtr' => $start,
             'content'  => $import,
         ];
-
-    }//end getUseImport()
-
+    }
 
     /**
      * Get the full use statement as string, including trailing white space.
@@ -201,22 +207,19 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      *
      * @return string
      */
-    private function getUseStatementAsString(
-        File $phpcsFile,
-        int $stackPtr
-    ): string {
+    private function getUseStatementAsString(File $phpcsFile, int $stackPtr): string
+    {
         $tokens = $phpcsFile->getTokens();
 
         $useEndPtr = (int) $phpcsFile->findNext([T_SEMICOLON], ($stackPtr + 2));
         $useLength = ($useEndPtr - $stackPtr + 1);
-        if ($tokens[($useEndPtr + 1)]['code'] === T_WHITESPACE) {
+
+        if (T_WHITESPACE === $tokens[($useEndPtr + 1)]['code']) {
             $useLength++;
         }
 
         return $phpcsFile->getTokensAsString($stackPtr, $useLength);
-
-    }//end getUseStatementAsString()
-
+    }
 
     /**
      * Check if "use" token is not used for import.
@@ -240,18 +243,16 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
             true
         );
 
-        if ($prev !== false) {
+        if (false !== $prev) {
             $prevToken = $tokens[$prev];
 
-            if ($prevToken['code'] === T_CLOSE_PARENTHESIS) {
+            if (T_CLOSE_PARENTHESIS === $prevToken['code']) {
                 return true;
             }
         }
 
         return false;
-
-    }//end checkIsNonImportUse()
-
+    }
 
     /**
      * Replace all the token in same line as the element pointed to by $stackPtr
@@ -275,9 +276,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
         for ($i = $stackPtr; $tokens[$i]['line'] === $line; $i++) {
             $phpcsFile->fixer->replaceToken($i, '');
         }
-
-    }//end fixerClearLine()
-
+    }
 
     /**
      * Find a new destination pointer for the given import string in current
@@ -289,25 +288,25 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      *
      * @return int
      */
-    private function findNewDestination(
-        File $phpcsFile,
-        int $stackPtr,
-        string $import
-    ): int {
+    private function findNewDestination(File $phpcsFile, int $stackPtr, string $import): int
+    {
         $tokens = $phpcsFile->getTokens();
 
         $line     = $tokens[$stackPtr]['line'];
         $prevLine = false;
         $prevPtr  = $stackPtr;
+
         do {
             $ptr = $prevPtr;
+
             // Use $line for the first iteration.
-            if ($prevLine !== false) {
+            if (false !== $prevLine) {
                 $line = $prevLine;
             }
 
             $prevPtr = $phpcsFile->findPrevious(T_USE, ($ptr - 1));
-            if ($prevPtr === false) {
+
+            if (false === $prevPtr) {
                 break;
             }
 
@@ -321,9 +320,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
         );
 
         return $ptr;
-
-    }//end findNewDestination()
-
+    }
 
     /**
      * Compare namespace strings according defined order function.
@@ -336,19 +333,17 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
     private function compareString(string $a, string $b): int
     {
         switch ($this->order) {
-        case 'string':
-            return \strcmp($a, $b);
-        case 'string-locale':
-            return \strcoll($a, $b);
-        case 'string-case-insensitive':
-            return \strcasecmp($a, $b);
-        default:
-            // Default is 'dictionary'.
-            return $this->dictionaryCompare($a, $b);
+            case 'string':
+                return \strcmp($a, $b);
+            case 'string-locale':
+                return \strcoll($a, $b);
+            case 'string-case-insensitive':
+                return \strcasecmp($a, $b);
+            default:
+                // Default is 'dictionary'.
+                return $this->dictionaryCompare($a, $b);
         }
-
-    }//end compareString()
-
+    }
 
     /**
      * Lexicographical namespace string compare.
@@ -373,11 +368,11 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
                 continue;
             }
 
-            if ($a[$i] === self::NAMESPACE_SEPARATOR_STRING) {
+            if (self::NAMESPACE_SEPARATOR_STRING === $a[$i]) {
                 return -1;
             }
 
-            if ($b[$i] === self::NAMESPACE_SEPARATOR_STRING) {
+            if (self::NAMESPACE_SEPARATOR_STRING === $b[$i]) {
                 return 1;
             }
 
@@ -388,11 +383,8 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
             if ($a[$i] > $b[$i]) {
                 return 1;
             }
-        }//end for
+        }
 
         return \strcmp(\substr($a, $min), \substr($b, $min));
-
-    }//end dictionaryCompare()
-
-
-}//end class
+    }
+}
