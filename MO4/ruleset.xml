@@ -136,10 +136,14 @@
             <property name="ignoreMultiline" value="true"/>
         </properties>
     </rule>
-    <!-- Require global functions to be referenced via a fully qualified name -->
-    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions"/>
     <!-- Require static closures for microoptimization -->
     <rule ref="SlevomatCodingStandard.Functions.StaticClosure"/>
+    <!-- Forbid unused function parameters -->
+    <rule ref="SlevomatCodingStandard.Functions.UnusedParameter"/>
+    <!-- Forbids useless parameter default values -->
+    <rule ref="SlevomatCodingStandard.Functions.UselessParameterDefaultValue"/>
+    <!-- Require global functions to be referenced via a fully qualified name -->
+    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions"/>
     <!-- Forbid multiple use statements on same line -->
     <rule ref="SlevomatCodingStandard.Namespaces.MultipleUsesPerLine"/>
     <!-- Require one newline around namespace declaration -->

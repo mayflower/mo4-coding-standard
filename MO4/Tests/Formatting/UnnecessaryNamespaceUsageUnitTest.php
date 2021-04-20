@@ -41,11 +41,9 @@ class UnnecessaryNamespaceUsageUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
-     * @param string $testFile test file
-     *
      * @return array<int, int>
      */
-    protected function getErrorList(string $testFile = ''): array
+    protected function getErrorList(): array
     {
         return [];
     }

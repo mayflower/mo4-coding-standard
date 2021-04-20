@@ -69,6 +69,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
      * listening to.
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      *
      * @param File $phpcsFile The file where this token was found.
      * @param int  $stackPtr  The position in the stack where this
@@ -241,6 +242,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
      * Process tokens outside scope.
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      *
      * @param File $phpcsFile The file where this token was found.
      * @param int  $stackPtr  The position in the stack where this
