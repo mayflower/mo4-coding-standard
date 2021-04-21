@@ -81,6 +81,8 @@ jobs:
         - vendor/bin/phpstan analyse --no-progress # Run PHPStan
 
 after_success:
+- set
+- env
 - curl -s https://codecov.io/bash | bash
 
 notifications:
