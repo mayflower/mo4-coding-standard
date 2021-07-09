@@ -85,8 +85,6 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         $nsSep = $phpcsFile->findNext($scanTokens, ($stackPtr + 1));
 
         while ($nsSep !== false) {
-            $nsSep = (int) $nsSep;
-
             $classNameEnd = $phpcsFile->findNext(
                 $this->classNameTokens,
                 $nsSep,
@@ -139,8 +137,6 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                     if ($docCommentStringPtr === false) {
                         continue;
                     }
-
-                    $docCommentStringPtr = (int) $docCommentStringPtr;
 
                     $docLine = $tokens[$docCommentStringPtr]['content'];
 
@@ -280,8 +276,6 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         if ($namespaceStart === false) {
             return '';
         }
-
-        $namespaceStart = (int) $namespaceStart;
 
         $namespaceEnd = $phpcsFile->findNext(
             $this->classNameTokens,
