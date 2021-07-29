@@ -77,9 +77,11 @@ To change the sorting order for your project, add this snippet to your custom `r
 ### MO4.Strings.VariableInDoubleQuotedString
 * Interpolated variables in double quoted strings must be surrounded by `{ }`, e.g. `{$VAR}` instead of `$VAR`.
 
-## MO4.WhiteSpace.ConstantSpacing
-
+### MO4.WhiteSpace.ConstantSpacing
 * const must be followed by a single space.
+
+### MO4.WhiteSpace.MultipleEmptyLines
+* No more than one empty consecutive line is allowed. Taken from [mediawiki/mediawiki-codesniffer](https://github.com/wikimedia/mediawiki-tools-codesniffer).
 
 ### Further rules (imported from other standards)
 * See `MO4/ruleset.xml`, which has each imported rule commented.
