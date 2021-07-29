@@ -5,7 +5,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [8.0.0] -
 ### Added
-- Add MO4.WhiteSpace.ConstantSpacing
+- Add `MO4.WhiteSpace.ConstantSpacing`
+- Add `MO4.WhiteSpace.MultipleEmptyLinesSniff`
 ### Changed
 - refactored tests
 
