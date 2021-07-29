@@ -36,13 +36,6 @@ use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 class PropertyCommentSniff extends AbstractScopeSniff
 {
     /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array<string>
-     */
-    public $supportedTokenizers = ['PHP'];
-
-    /**
      * List of token types this sniff analyzes
      *
      * @var array<int, int>
@@ -116,7 +109,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
                     $stackPtr,
                     'NoDocBlockAllowed'
                 );
-            } elseif (0 !== \strpos($tokens[$postComment]['content'], '//')
+            } elseif (0 !== \strncmp($tokens[$postComment]['content'], '//', 2)
                 && '*/' !== \substr($tokens[$postComment]['content'], -2)
             ) {
                 $phpcsFile->addError(

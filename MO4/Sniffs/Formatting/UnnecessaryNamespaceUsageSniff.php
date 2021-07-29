@@ -244,6 +244,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                 break;
             }
 
+            /** @var int $aliasNamePtr */
             $aliasNamePtr = $phpcsFile->findPrevious(
                 PHP_CodeSniffer_Tokens::$emptyTokens,
                 ($useEnd - 1),
@@ -309,13 +310,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      */
     private function getFullyQualifiedClassName(string $className): string
     {
-        if ('\\' !== $className[0]) {
-            $className = "\\{$className}";
-
-            return $className;
-        }
-
-        return $className;
+        return '\\' !== $className[0] ? "\\{$className}" : $className;
     }
 
     /**
