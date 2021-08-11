@@ -74,7 +74,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      *
      * @var string
      */
-    private $currentFile;
+    private $currentFile = '';
 
     /**
      * Processes this test, when one of its tokens is encountered.

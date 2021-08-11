@@ -44,7 +44,7 @@ script:
   - vendor/bin/phpunit # Run tests
   - vendor/bin/phpcs # Stylecheck against MO4
   - vendor/bin/phpstan analyse --no-progress # Run PHPStan
-  - vendor/bin/psalm --show-info=false # run psalm
+  - vendor/bin/psalm --show-info=true # run psalm
   - if [ "${DEPENDENCIES}" = "highest" ]; then vendor/bin/phan; fi; # Run phan
   # Generate Code coverage report
   - |

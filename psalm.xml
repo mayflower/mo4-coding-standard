@@ -15,10 +15,7 @@
         </ignoreFiles>
     </projectFiles>
 
-    <issueHandlers>
-        <PropertyNotSetInConstructor errorLevel="info" />
-        <MissingConstructor errorLevel="info" />
-
-        <UndefinedClass errorLevel="info" /> <!-- somehow this is showing up in travis -->
-    </issueHandlers>
+    <plugins>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin" />
+    </plugins>
 </psalm>
