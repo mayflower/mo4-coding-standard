@@ -30,7 +30,7 @@ before_script:
     fi
   - if [ "${DEPENDENCIES}" = "lowest" ]; then composer update ${PHPUNIT_WORKAROUND} --prefer-lowest --prefer-dist --no-interaction --no-progress; fi;
   - if [ "${DEPENDENCIES}" = "highest" ]; then composer update ${PHPUNIT_WORKAROUND} --prefer-dist --no-interaction --no-progress; fi;
-  - if [ "${DEPENDENCIES}" = "highest" ]; then pecl install -f ast-1.0.12; fi; # Install AST extension, as phan uses it
+  - if [ "${DEPENDENCIES}" = "highest" ]; then pecl install -f ast-1.0.14; fi; # Install AST extension, as phan uses it
   - export XMLLINT_INDENT="    "
 
 script:
