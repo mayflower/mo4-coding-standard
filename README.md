@@ -77,6 +77,10 @@ To change the sorting order for your project, add this snippet to your custom `r
 ### MO4.Strings.VariableInDoubleQuotedString
 * Interpolated variables in double quoted strings must be surrounded by `{ }`, e.g. `{$VAR}` instead of `$VAR`.
 
+## MO4.WhiteSpace.ConstantSpacing
+
+* const must be followed by a single space.
+
 ### Further rules (imported from other standards)
 * See `MO4/ruleset.xml`, which has each imported rule commented.
 
