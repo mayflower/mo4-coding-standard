@@ -13,12 +13,17 @@
 
 namespace Acme;
 
+const BAM = 1;
+
 /**
  * Coding standards demonstration.
  */
 class FooBar
 {
     public const SOME_CONST = 42;
+    public const STR_CONST  = '43';
+    protected const PROTECT = 0;
+    public const LALA       = 'lala';
 
     /**
      * @var string
