@@ -14,8 +14,7 @@ declare(strict_types=1);
 
 namespace MO4\Tests\Arrays;
 
-use PHP_CodeSniffer\Exceptions\RuntimeException;
-use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+use MO4\Tests\AbstractMo4SniffUnitTest;
 
 /**
  * Unit test class for @see MultiLineArraySniff
@@ -25,58 +24,24 @@ use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
  *
  * @author    Xaver Loppenstedt <xaver@loppenstedt.de>
  *
- * @copyright 2013-2017 Xaver Loppenstedt, some rights reserved.
+ * @copyright 2013-2021 Xaver Loppenstedt, some rights reserved.
  *
  * @license   http://spdx.org/licenses/MIT MIT License
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
  */
-class MultiLineArrayUnitTest extends AbstractSniffUnitTest
+class MultiLineArrayUnitTest extends AbstractMo4SniffUnitTest
 {
-    /**
-     * Returns the lines where errors should occur.
-     *
-     * The key of the array should represent the line number and the value
-     * should represent the number of errors that should occur on that line.
-     *
-     * @param string $testFile test file
-     *
-     * @return array<int, int>
-     *
-     * @throws RuntimeException
-     */
-    protected function getErrorList(string $testFile = ''): array
-    {
-        switch ($testFile) {
-            case 'MultiLineArrayUnitTest.pass.inc':
-                return [];
-            case 'MultiLineArrayUnitTest.fail.inc':
-                return [
-                    4  => 1,
-                    12 => 1,
-                    18 => 2,
-                    22 => 1,
-                    24 => 1,
-                    28 => 1,
-                    32 => 1,
-                ];
-        }
-
-        throw new RuntimeException(
-            \sprintf('%s%s is not handled by %s', \sprintf('Testfile %s in ', $testFile), __DIR__, self::class)
-        );
-    }
-
-    /**
-     * Returns the lines where warnings should occur.
-     *
-     * The key of the array should represent the line number and the value
-     * should represent the number of warnings that should occur on that line.
-     *
-     * @return array<int, int>
-     */
-    protected function getWarningList(): array
-    {
-        return [];
-    }
+    protected $expectedErrorList = [
+        'MultiLineArrayUnitTest.pass.inc' => [],
+        'MultiLineArrayUnitTest.fail.inc' => [
+            4  => 1,
+            12 => 1,
+            18 => 2,
+            22 => 1,
+            24 => 1,
+            28 => 1,
+            32 => 1,
+        ],
+    ];
 }
