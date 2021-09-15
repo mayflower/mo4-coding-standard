@@ -85,4 +85,4 @@ after_success:
 
 notifications:
   slack:
-    secure: MIe1/HFMQb3ES5uXVyjRohjP2FQoEFTO7luYAxqv20WBlchPIAlcvv8YucqMX/Nj6w082bvZL832eUZC8Fj7jSizv4l5EmPgIZKofzP8Lbth6yFrWvPwRu8SIJlQFr0Y8Yf0A92bp5EsK4MyG6y8W1p6MY4Smt3NX74pm5eqp4o=
+    secure: Ea8yfBKPwSgikU6H0NLCpwBDDueYCP6zpzFTL3VhX1Ws0Ef8XfUJQ2QWUEVdQ/WlkQ+Io3EPBObgDcI9rH9+HimCzyPy/W9vSjUgkEE3QbD5615N5cS/hSkZXrVcWofP+BojvCFyuJ1PTX8QwsBIEwEeO6OkfKbh+LU6smprSig=
