@@ -22,12 +22,12 @@
         "source": "https://github.com/mayflower/mo4-coding-standard"
     },
     "require-dev": {
-        "phan/phan": "^5.1.0",
-        "phpstan/phpstan": "^0.12.58",
-        "phpstan/phpstan-strict-rules": "^0.12.4",
+        "phan/phan": "^5.4.2",
+        "phpstan/phpstan": "^1.0.0",
+        "phpstan/phpstan-strict-rules": "^1.0.0",
         "phpunit/phpunit": "^7.0",
-        "psalm/plugin-phpunit": "^0.16.1",
-        "vimeo/psalm": "^4.5.2"
+        "psalm/plugin-phpunit": "^0.18",
+        "vimeo/psalm": "^4.30"
     },
     "require": {
         "php": "~7.2 || ~8.0",
