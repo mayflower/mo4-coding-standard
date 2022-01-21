@@ -1,0 +1,99 @@
+name: MO4 Coding Standard CI
+on:
+  pull_request:
+  push:
+  schedule:
+  - cron: '30 5 * * 1'
+jobs:
+  style-checks:
+    env:
+      XMLLINT_INDENT: "    "
+    runs-on: ubuntu-latest
+    steps:
+      - name: install dependencies
+        run: sudo apt update -qq && sudo apt -y install libxml2-utils
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          coverage: 'none'
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: '~/.cache/composer'
+          key: "cache-composer-${{ hashFiles('composer.json') }}"
+          restore-keys: 'cache-composer-'
+      - name: run composer
+        run: composer update --prefer-lowest --prefer-dist --no-interaction --no-progress
+      - run: xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd MO4/ruleset.xml
+      - run: xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd phpcs.mo4.xml
+      - run: xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd phpcs.xml.dist
+      - run: diff -B MO4/ruleset.xml <(xmllint --format MO4/ruleset.xml)
+      - run: diff -B phpcs.mo4.xml <(xmllint --format phpcs.mo4.xml)
+      - run: diff -B phpcs.xml.dist <(xmllint --format phpcs.xml.dist)
+      - name: Stylecheck against MO4 itself
+        run: vendor/bin/phpcs
+  run-tests:
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+        php_version:
+          - 7.2
+          - 7.3
+          - 7.4
+          - 8.0
+        dependencies_level:
+          - --prefer-lowest
+          - ""
+        include:
+          - os: windows-latest
+            php_version: 8.0
+            dependencies_level: --prefer-lowest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Set git to use LF on windows
+        if:  ${{ matrix.os == 'windows-latest' }}
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: 'xdebug'
+          php-version: ${{ matrix.php_version }}
+          extensions: ast-1.0.14
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: '~/.cache/composer'
+          key: "cache-composer-${{ hashFiles('composer.json') }}"
+          restore-keys: 'cache-composer-'
+      - name: Run composer
+        if: ${{ matrix.php_version != '8.0' }}
+        run: composer update ${{ matrix.dependencies_level }} --prefer-dist --no-interaction --no-progress
+      - name: Run composer with workaround for PHP 8 and incompatible PHPUnit
+        if: ${{ matrix.php_version == '8.0' }}
+        run: composer update ${{ matrix.dependencies_level }} --ignore-platform-reqs --prefer-dist --no-interaction --no-progress
+      - name: Run tests with coverage
+        if: ${{ matrix.php_version != '8.0' }}
+        run: php vendor/bin/phpunit --coverage-clover=coverage.xml
+      - name: Run tests
+        if: ${{ matrix.php_version == '8.0' }}
+        run: vendor/bin/phpunit
+      - name: Run integration tests
+        run: vendor/bin/phpcs -s --standard=MO4 integrationtests/testfile.php
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse --no-progress
+      - name: Run psalm
+        run: vendor/bin/psalm --show-info=true
+      - name: Run phan
+        run: vendor/bin/phan
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
