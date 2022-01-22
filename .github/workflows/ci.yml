@@ -97,3 +97,41 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: true
+
+  slack-notify:
+    needs: [run-tests, style-checks]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: technote-space/workflow-conclusion-action@v2
+      - name: Post to a Slack channel
+        id: slack
+        uses: slackapi/slack-github-action@v1.17.0
+        with:
+          # Slack channel id, channel name, or user id to post message.
+          # See also: https://api.slack.com/methods/chat.postMessage#channels
+          channel-id: '#mo4'
+          # For posting a simple plain text message
+          slack-message: "GitHub build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      - name: Send status to Slack workflow
+        id: slack2
+        uses: slackapi/slack-github-action@v1.17.0
+        with:
+          payload: |
+            {
+              "text": "GitHub Action build result: ${{ env.WORKFLOW_CONCLUSION }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "GitHub Action build result: ${{ env.WORKFLOW_CONCLUSION }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
