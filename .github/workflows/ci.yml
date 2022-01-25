@@ -1,0 +1,128 @@
+name: MO4 Coding Standard CI
+on:
+  pull_request:
+  push:
+  schedule:
+  - cron: '30 5 1 * *'
+jobs:
+  style-checks:
+    env:
+      XMLLINT_INDENT: "    "
+    runs-on: ubuntu-latest
+    steps:
+      - name: install dependencies
+        run: sudo apt update -qq && sudo apt -y install libxml2-utils
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          coverage: 'none'
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: '~/.cache/composer'
+          key: "cache-composer-${{ hashFiles('composer.json') }}"
+          restore-keys: 'cache-composer-'
+      - name: run composer
+        run: composer update --prefer-lowest --prefer-dist --no-interaction --no-progress
+      - run: xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd MO4/ruleset.xml
+      - run: xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd phpcs.mo4.xml
+      - run: xmllint --noout --schema vendor/squizlabs/php_codesniffer/phpcs.xsd phpcs.xml.dist
+      - run: diff -B MO4/ruleset.xml <(xmllint --format MO4/ruleset.xml)
+      - run: diff -B phpcs.mo4.xml <(xmllint --format phpcs.mo4.xml)
+      - run: diff -B phpcs.xml.dist <(xmllint --format phpcs.xml.dist)
+      - name: Stylecheck against MO4 itself
+        run: vendor/bin/phpcs
+  run-tests:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        php_version:
+          - 7.2
+          - 7.3
+          - 7.4
+          - 8.0
+          - 8.1
+          - 8.2
+          - 8.3
+        dependencies_level:
+          - --prefer-lowest
+          - ""
+        include:
+          - os: windows-latest
+            php_version: 8.0
+            dependencies_level: --prefer-lowest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Set git to use LF on windows
+        if:  ${{ matrix.os == 'windows-latest' }}
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: 'xdebug'
+          php-version: ${{ matrix.php_version }}
+          extensions: ast-1.1.1
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: '~/.cache/composer'
+          key: "cache-composer-${{ hashFiles('composer.json') }}"
+          restore-keys: 'cache-composer-'
+      - name: Run composer
+        if: ${{ matrix.php_version != '8.0' && matrix.php_version != '8.1' && matrix.php_version != '8.2' && matrix.php_version != '8.3' }}
+        run: composer update ${{ matrix.dependencies_level }} --prefer-dist --no-interaction --no-progress
+      - name: Run composer with workaround for PHP 8 and incompatible PHPUnit
+        if: ${{ matrix.php_version == '8.0' || matrix.php_version == '8.1' || matrix.php_version == '8.2' || matrix.php_version == '8.3' }}
+        run: composer update ${{ matrix.dependencies_level }} --ignore-platform-reqs --prefer-dist --no-interaction --no-progress
+      - name: Run tests with coverage
+        if: ${{ matrix.php_version != '8.0' && matrix.php_version != '8.1' && matrix.php_version != '8.2' && matrix.php_version != '8.3' }}
+        run: php vendor/bin/phpunit --coverage-clover=coverage.xml
+      - name: Run tests
+        if: ${{ matrix.php_version == '8.0' }}
+        run: vendor/bin/phpunit
+      - name: Run tests
+        if: ${{ matrix.php_version == '8.1' }}
+        run: vendor/bin/phpunit --no-configuration --bootstrap=tests/bootstrap.php --dont-report-useless-tests vendor/squizlabs/php_codesniffer/tests/Standards/AllSniffs.php
+      - name: Run integration tests
+        run: vendor/bin/phpcs -s --standard=MO4 integrationtests/testfile.php
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse --no-progress
+      - name: Run psalm
+        if: ${{ matrix.os != 'windows-latest' }}
+        run: vendor/bin/psalm --show-info=true
+      - name: Run phan
+        if: ${{ matrix.os != 'windows-latest' }}
+        run: vendor/bin/phan
+      # AST 1.1 binary for Windows seems to be missing on PECL
+      - name: Run phan with polyfill
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: vendor/bin/phan --allow-polyfill-parser
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          verbose: true
+
+  slack-notify:
+    needs: [run-tests, style-checks]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: technote-space/workflow-conclusion-action@v3
+      - name: Post to a Slack channel
+        id: slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          # Slack channel id, channel name, or user id to post message.
+          # See also: https://api.slack.com/methods/chat.postMessage#channels
+          channel-id: '#mo4'
+          # For posting a simple plain text message
+          slack-message: "GitHub build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
