@@ -79,6 +79,8 @@ jobs:
       - name: Run composer with workaround for PHP 8 and incompatible PHPUnit
         if: ${{ matrix.php_version == '8.0' || matrix.php_version == '8.1' }}
         run: composer update ${{ matrix.dependencies_level }} --ignore-platform-reqs --prefer-dist --no-interaction --no-progress
+      - name: Check composer.json
+        run: composer normalize --dry-run
       - name: Run tests with coverage
         if: ${{ matrix.php_version != '8.0' && matrix.php_version != '8.1' }}
         run: php vendor/bin/phpunit --coverage-clover=coverage.xml
