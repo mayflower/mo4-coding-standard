@@ -36,5 +36,11 @@
         "phpunit/phpunit": "^7.0",
         "psalm/plugin-phpunit": "^0.16.1",
         "vimeo/psalm": "^4.5.2"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "ergebnis/composer-normalize": true
+        }
     }
 }
