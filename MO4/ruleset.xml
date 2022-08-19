@@ -201,6 +201,7 @@
         <properties>
             <property name="enableMixedTypeHint" value="false"/>
             <property name="enableUnionTypeHint" value="false"/>
+            <property name="enableIntersectionTypeHint" value="false"/>
         </properties>
     </rule>
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.UselessAnnotation">
@@ -214,6 +215,7 @@
         <properties>
             <property name="enableMixedTypeHint" value="false"/>
             <property name="enableUnionTypeHint" value="false"/>
+            <property name="enableIntersectionTypeHint" value="false"/>
         </properties>
     </rule>
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.UselessAnnotation">
