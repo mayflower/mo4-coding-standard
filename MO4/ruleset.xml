@@ -86,6 +86,8 @@
     <!-- Require exactly one blank line after trait use -->
     <rule ref="PSR12.Traits.UseDeclaration"/>
 
+    <!-- Force Enum Spacing-->
+    <rule ref="SlevomatCodingStandard.Classes.BackedEnumTypeSpacing"/>
     <!-- Require presence of constant visibility -->
     <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
     <!-- Forbid multi constant definition -->
