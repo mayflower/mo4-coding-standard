@@ -101,6 +101,12 @@
             <property name="linesCountBeforeClosingBrace" value="0"/>
         </properties>
     </rule>
+    <!-- Forbid properties to be public -->
+    <rule ref="SlevomatCodingStandard.Classes.ForbiddenPublicProperty">
+        <properties>
+            <property name="checkPromoted" value="true"/>
+        </properties>
+    </rule>
     <!-- Require usage of ::class instead of __CLASS__, get_class(), get_class($this), get_called_class() and get_parent_class() -->
     <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
     <!-- report invalid format of inline phpDocs with @var -->
