@@ -94,7 +94,7 @@ Most of the issues can be auto-fixed with `phpcbf`.
 
 ## Requires
 
-* [PHP](http://php.net) version 7.1 or later
+* [PHP](http://php.net)
 * [Composer](https://getcomposer.org/) is optional, but strongly recommended
 
 ## Installation
@@ -144,10 +144,10 @@ If `phpcs` complains that MO4 is not installed, please check the installed codin
 
 ## Dependencies
 
-* [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) version 3.5 or later
-* [David Joos's Symfony Coding Standard](https://github.com/djoos/Symfony-coding-standard) version 3.10 or later
+* [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+* [David Joos's Symfony Coding Standard](https://github.com/djoos/Symfony-coding-standard)
 * [Composer installer for PHP_CodeSniffer coding standards](https://github.com/DealerDirect/phpcodesniffer-composer-installer)
-* [Slevomat Coding Standard](https://github.com/slevomat/coding-standard) version 6.2 or later
+* [Slevomat Coding Standard](https://github.com/slevomat/coding-standard)
 
 ## Contributing
 
