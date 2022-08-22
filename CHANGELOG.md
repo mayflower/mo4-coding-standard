@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [9.0.0] - 2022-08-23
+### Added
+- Add PHP 8.1 support
+- Add `SlevomatCodingStandard.Classes.BackedEnumTypeSpacing`
+- Add `SlevomatCodingStandard.Classes.ForbiddenPublicProperty`
+
 ## [8.0.0] - 2021-08-31
 ### Added
 - Add `MO4.WhiteSpace.ConstantSpacing`
