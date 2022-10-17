@@ -5,6 +5,7 @@
     "type": "phpcodesniffer-standard",
     "keywords": [
         "phpcs",
+        "static analysis",
         "Symfony",
         "mo4",
         "standards",
