@@ -86,6 +86,19 @@
     <!-- Require exactly one blank line after trait use -->
     <rule ref="PSR12.Traits.UseDeclaration"/>
 
+    <!-- Forbid whitespace between array access operator and the variable or between array access operators. -->
+    <rule ref="SlevomatCodingStandard.Arrays.ArrayAccess"/>
+    <!-- Sort attributes alphabetically -->
+    <rule ref="SlevomatCodingStandard.Attributes.AttributesOrder">
+        <properties>
+            <property name="orderAlphabetically" value="true"/>
+        </properties>
+    </rule>
+    <!-- Disallow multiple attributes inside one #[] -->
+    <rule ref="SlevomatCodingStandard.Attributes.DisallowAttributesJoining"/>
+    <!-- Require only one attribute per line -->
+    <rule ref="SlevomatCodingStandard.Attributes.DisallowMultipleAttributesPerLine"/>
+
     <!-- Force Enum Spacing-->
     <rule ref="SlevomatCodingStandard.Classes.BackedEnumTypeSpacing"/>
     <!-- Require presence of constant visibility -->
@@ -99,6 +112,15 @@
         <properties>
             <property name="linesCountAfterOpeningBrace" value="0"/>
             <property name="linesCountBeforeClosingBrace" value="0"/>
+        </properties>
+    </rule>
+    <!-- Forbid empty lines around Enum cases -->
+    <rule ref="SlevomatCodingStandard.Classes.EnumCaseSpacing">
+        <properties>
+            <property name="minLinesCountBeforeWithComment" value="0"/>
+            <property name="maxLinesCountBeforeWithComment" value="0"/>
+            <property name="minLinesCountBeforeWithoutComment" value="0"/>
+            <property name="maxLinesCountBeforeWithoutComment" value="0"/>
         </properties>
     </rule>
     <!-- Forbid properties to be public -->
@@ -144,6 +166,8 @@
             <property name="ignoreMultiLine" value="true"/>
         </properties>
     </rule>
+    <!-- Enforce consistent spacing of named arguments -->
+    <rule ref="SlevomatCodingStandard.Functions.NamedArgumentSpacing"/>
     <!-- Require static closures for microoptimization -->
     <rule ref="SlevomatCodingStandard.Functions.StaticClosure"/>
     <!-- Forbid unused function parameters -->
