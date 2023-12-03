@@ -13,14 +13,14 @@ jobs:
       - name: install dependencies
         run: sudo apt update -qq && sudo apt -y install libxml2-utils
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
           coverage: 'none'
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: '~/.cache/composer'
           key: "cache-composer-${{ hashFiles('composer.json') }}"
@@ -60,7 +60,7 @@ jobs:
           git config --global core.autocrlf false
           git config --global core.eol lf
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -68,7 +68,7 @@ jobs:
           php-version: ${{ matrix.php_version }}
           extensions: ast-1.0.14
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: '~/.cache/composer'
           key: "cache-composer-${{ hashFiles('composer.json') }}"
@@ -99,7 +99,7 @@ jobs:
       - name: Run phan
         run: vendor/bin/phan
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           verbose: true
 
@@ -108,10 +108,10 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - uses: technote-space/workflow-conclusion-action@v2
+      - uses: technote-space/workflow-conclusion-action@v3
       - name: Post to a Slack channel
         id: slack
-        uses: slackapi/slack-github-action@v1.17.0
+        uses: slackapi/slack-github-action@v1.23.0
         with:
           # Slack channel id, channel name, or user id to post message.
           # See also: https://api.slack.com/methods/chat.postMessage#channels
