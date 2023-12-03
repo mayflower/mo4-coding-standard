@@ -45,6 +45,8 @@ jobs:
           - 7.4
           - 8.0
           - 8.1
+          - 8.2
+          - 8.3
         dependencies_level:
           - --prefer-lowest
           - ""
@@ -66,7 +68,7 @@ jobs:
         with:
           coverage: 'xdebug'
           php-version: ${{ matrix.php_version }}
-          extensions: ast-1.0.14
+          extensions: ast-1.1.1
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
@@ -74,15 +76,15 @@ jobs:
           key: "cache-composer-${{ hashFiles('composer.json') }}"
           restore-keys: 'cache-composer-'
       - name: Run composer
-        if: ${{ matrix.php_version != '8.0' && matrix.php_version != '8.1' }}
+        if: ${{ matrix.php_version != '8.0' && matrix.php_version != '8.1' && matrix.php_version != '8.2' && matrix.php_version != '8.3' }}
         run: composer update ${{ matrix.dependencies_level }} --prefer-dist --no-interaction --no-progress
       - name: Run composer with workaround for PHP 8 and incompatible PHPUnit
-        if: ${{ matrix.php_version == '8.0' || matrix.php_version == '8.1' }}
+        if: ${{ matrix.php_version == '8.0' || matrix.php_version == '8.1' || matrix.php_version == '8.2' || matrix.php_version == '8.3' }}
         run: composer update ${{ matrix.dependencies_level }} --ignore-platform-reqs --prefer-dist --no-interaction --no-progress
       - name: Check composer.json
         run: composer normalize --dry-run
       - name: Run tests with coverage
-        if: ${{ matrix.php_version != '8.0' && matrix.php_version != '8.1' }}
+        if: ${{ matrix.php_version != '8.0' && matrix.php_version != '8.1' && matrix.php_version != '8.2' && matrix.php_version != '8.3' }}
         run: php vendor/bin/phpunit --coverage-clover=coverage.xml
       - name: Run tests
         if: ${{ matrix.php_version == '8.0' }}
@@ -95,9 +97,15 @@ jobs:
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse --no-progress
       - name: Run psalm
+        if: ${{ matrix.os != 'windows-latest' }}
         run: vendor/bin/psalm --show-info=true
       - name: Run phan
+        if: ${{ matrix.os != 'windows-latest' }}
         run: vendor/bin/phan
+      # AST 1.1 binary for Windows seems to be missing on PECL
+      - name: Run phan with polyfill
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: vendor/bin/phan --allow-polyfill-parser
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
