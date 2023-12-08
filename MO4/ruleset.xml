@@ -141,7 +141,7 @@
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireTernaryOperator">
         <!-- But multiline is useful for readability -->
         <properties>
-            <property name="ignoreMultiline" value="true"/>
+            <property name="ignoreMultiLine" value="true"/>
         </properties>
     </rule>
     <!-- Require static closures for microoptimization -->
