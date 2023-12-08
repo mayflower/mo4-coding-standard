@@ -14,19 +14,22 @@
 
 declare(strict_types=1);
 
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Util\Standards;
+
 $myStandardName = 'MO4';
 
 require_once __DIR__.'/../vendor/squizlabs/php_codesniffer/tests/bootstrap.php';
 
 // Add this Standard.
-PHP_CodeSniffer\Config::setConfigData(
+Config::setConfigData(
     'installed_paths',
     __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.$myStandardName,
     true
 );
 
 // Ignore all other Standards in tests.
-$standards   = PHP_CodeSniffer\Util\Standards::getInstalledStandards();
+$standards   = Standards::getInstalledStandards();
 $standards[] = 'Generic';
 
 $ignoredStandardsStr = implode(
