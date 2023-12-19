@@ -17,7 +17,7 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.1'
           coverage: 'none'
       - name: Cache dependencies
         uses: actions/cache@v3
@@ -52,8 +52,11 @@ jobs:
           - ""
         include:
           - os: windows-latest
-            php_version: 8.0
+            php_version: 8.1
             dependencies_level: --prefer-lowest
+          - os: windows-latest
+            php_version: 8.1
+            dependencies_level: ''
     runs-on: ${{ matrix.os }}
     steps:
       - name: Set git to use LF on windows
@@ -76,22 +79,14 @@ jobs:
           key: "cache-composer-${{ hashFiles('composer.json') }}"
           restore-keys: 'cache-composer-'
       - name: Run composer
-        if: ${{ matrix.php_version != '8.0' && matrix.php_version != '8.1' && matrix.php_version != '8.2' && matrix.php_version != '8.3' }}
         run: composer update ${{ matrix.dependencies_level }} --prefer-dist --no-interaction --no-progress
-      - name: Run composer with workaround for PHP 8 and incompatible PHPUnit
-        if: ${{ matrix.php_version == '8.0' || matrix.php_version == '8.1' || matrix.php_version == '8.2' || matrix.php_version == '8.3' }}
-        run: composer update ${{ matrix.dependencies_level }} --ignore-platform-reqs --prefer-dist --no-interaction --no-progress
       - name: Check composer.json
         run: composer normalize --dry-run
       - name: Run tests with coverage
-        if: ${{ matrix.php_version != '8.0' && matrix.php_version != '8.1' && matrix.php_version != '8.2' && matrix.php_version != '8.3' }}
+        if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.1' && matrix.dependencies_level != '--prefer-lowest' }}
         run: php vendor/bin/phpunit --coverage-clover=coverage.xml
       - name: Run tests
-        if: ${{ matrix.php_version == '8.0' }}
         run: vendor/bin/phpunit
-      - name: Run tests
-        if: ${{ matrix.php_version == '8.1' }}
-        run: vendor/bin/phpunit --no-configuration --bootstrap=tests/bootstrap.php --dont-report-useless-tests vendor/squizlabs/php_codesniffer/tests/Standards/AllSniffs.php
       - name: Run integration tests
         run: vendor/bin/phpcs -s --standard=MO4 integrationtests/testfile.php
       - name: Run PHPStan
