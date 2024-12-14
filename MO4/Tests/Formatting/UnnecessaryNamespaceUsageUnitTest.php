@@ -40,6 +40,7 @@ class UnnecessaryNamespaceUsageUnitTest extends AbstractMo4SniffUnitTest
         'UnnecessaryNamespaceUsageUnitTest.pass.3.inc' => [],
         'UnnecessaryNamespaceUsageUnitTest.pass.4.inc' => [],
         'UnnecessaryNamespaceUsageUnitTest.pass.5.inc' => [],
+        'UnnecessaryNamespaceUsageUnitTest.pass.6.inc' => [],
         'UnnecessaryNamespaceUsageUnitTest.fail.1.inc' => [
             17 => 1,
             19 => 1,
