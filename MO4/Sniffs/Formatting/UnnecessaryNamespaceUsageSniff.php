@@ -223,13 +223,18 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                 $end,
                 true
             );
-            $classNameEnd   = (int) $phpcsFile->findNext(
+            $classNameEnd   = $phpcsFile->findNext(
                 $this->classNameTokens,
                 ($classNameStart + 1),
                 $end,
                 true
             );
-            $useEnd         = $phpcsFile->findNext(
+
+            if ($classNameEnd === false) {
+                break;
+            }
+
+            $useEnd = $phpcsFile->findNext(
                 [
                     T_SEMICOLON,
                     T_COMMA,
