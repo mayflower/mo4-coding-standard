@@ -30,7 +30,7 @@ use MO4\Tests\AbstractMo4SniffUnitTest;
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
  */
-class MultiLineArrayUnitTest extends AbstractMo4SniffUnitTest
+final class MultiLineArrayUnitTest extends AbstractMo4SniffUnitTest
 {
     protected $expectedErrorList = [
         'MultiLineArrayUnitTest.pass.inc' => [],

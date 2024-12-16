@@ -23,7 +23,7 @@
         "source": "https://github.com/mayflower/mo4-coding-standard"
     },
     "require": {
-        "php": "~7.2 || ~8.0",
+        "php": "~8.1",
         "dealerdirect/phpcodesniffer-composer-installer": "~0.7 || ~1.0",
         "escapestudios/symfony2-coding-standard": "^3.16.0",
         "slevomat/coding-standard": "^8.14",
@@ -31,12 +31,16 @@
     },
     "require-dev": {
         "ergebnis/composer-normalize": ">=2.19 <2.30",
-        "phan/phan": "^5.4.2",
+        "nikic/php-parser": "< 5.0.1",
+        "phan/phan": "^5.4.5",
         "phpstan/phpstan": "^1.12",
         "phpstan/phpstan-strict-rules": "^1.6",
-        "phpunit/phpunit": "^7.5.20 || ^8.5.36 || ^9.6.15",
-        "psalm/plugin-phpunit": "^0.18",
-        "vimeo/psalm": "^4.30"
+        "phpunit/phpunit": "^8.5.36 || ^9.6.15",
+        "psalm/plugin-phpunit": "^0.19",
+        "sabre/event": ">= 5.1.6",
+        "symfony/filesystem": ">= 5.4.45",
+        "symfony/polyfill-php83": "^1.32",
+        "vimeo/psalm": "^6.0.0"
     },
     "config": {
         "allow-plugins": {

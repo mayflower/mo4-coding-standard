@@ -32,6 +32,8 @@ use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
  * @license   http://spdx.org/licenses/MIT MIT License
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
+ *
+ * @psalm-api
  */
 class PropertyCommentSniff extends AbstractScopeSniff
 {
@@ -75,6 +77,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
      *
      * @throws RuntimeException
      */
+    #[\Override]
     protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope): void
     {
         $find   = [
@@ -243,6 +246,7 @@ class PropertyCommentSniff extends AbstractScopeSniff
      *
      * @return void
      */
+    #[\Override]
     protected function processTokenOutsideScope(File $phpcsFile, $stackPtr): void
     {
     }
