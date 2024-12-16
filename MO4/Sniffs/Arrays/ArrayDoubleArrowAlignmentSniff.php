@@ -30,6 +30,8 @@ use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
  * @license   http://spdx.org/licenses/MIT MIT License
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
+ *
+ * @psalm-api
  */
 class ArrayDoubleArrowAlignmentSniff implements Sniff
 {
@@ -51,6 +53,7 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
      *
      * @see    Tokens.php
      */
+    #[\Override]
     public function register(): array
     {
         return $this->arrayTokens;
@@ -67,6 +70,7 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
      *
      * @return void
      */
+    #[\Override]
     public function process(File $phpcsFile, $stackPtr): void
     {
         $tokens  = $phpcsFile->getTokens();

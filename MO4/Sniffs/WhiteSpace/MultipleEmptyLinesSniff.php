@@ -13,6 +13,9 @@ namespace MO4\Sniffs\WhiteSpace;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
+/**
+ * @psalm-api
+ */
 class MultipleEmptyLinesSniff implements Sniff
 {
     /**
@@ -22,6 +25,7 @@ class MultipleEmptyLinesSniff implements Sniff
      *
      * @see Tokens.php
      */
+    #[\Override]
     public function register(): array
     {
         return [
@@ -41,6 +45,7 @@ class MultipleEmptyLinesSniff implements Sniff
      *
      * @return void|int
      */
+    #[\Override]
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();

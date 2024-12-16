@@ -29,6 +29,8 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  * @license   http://spdx.org/licenses/MIT MIT License
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
+ *
+ * @psalm-api
  */
 class VariableInDoubleQuotedStringSniff implements Sniff
 {
@@ -39,6 +41,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
      *
      * @see Tokens.php
      */
+    #[\Override]
     public function register(): array
     {
         return [T_DOUBLE_QUOTED_STRING];
@@ -58,6 +61,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
      *
      * @return void
      */
+    #[\Override]
     public function process(File $phpcsFile, $stackPtr): void
     {
         $varRegExp = '/\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/';
