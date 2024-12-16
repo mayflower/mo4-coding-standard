@@ -32,6 +32,8 @@ use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
  * @license   http://spdx.org/licenses/MIT MIT License
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
+ *
+ * @psalm-api
  */
 class PropertyCommentSniff extends AbstractScopeSniff
 {

@@ -13,6 +13,9 @@ namespace MO4\Sniffs\WhiteSpace;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
+/**
+ * @psalm-api
+ */
 class MultipleEmptyLinesSniff implements Sniff
 {
     /**

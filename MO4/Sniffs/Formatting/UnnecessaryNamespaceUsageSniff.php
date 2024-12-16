@@ -34,6 +34,8 @@ use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
  * @license   http://spdx.org/licenses/MIT MIT License
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
+ *
+ * @psalm-api
  */
 class UnnecessaryNamespaceUsageSniff implements Sniff
 {
@@ -381,6 +383,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         if (true === $isDocBlock) {
             $tokens     = $phpcsFile->getTokens();
             $oldContent = $tokens[$startPtr]['content'];
+            /** @var string $newContent */
             $newContent = \str_replace($className, $replacement, $oldContent);
             $phpcsFile->fixer->replaceToken($startPtr, $newContent);
         } else {

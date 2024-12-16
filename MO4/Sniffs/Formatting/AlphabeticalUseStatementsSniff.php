@@ -33,6 +33,8 @@ use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
  * @license   http://spdx.org/licenses/MIT MIT License
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
+ *
+ * @psalm-api
  */
 class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 {
@@ -292,7 +294,8 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $line     = $tokens[$stackPtr]['line'];
+        $line = $tokens[$stackPtr]['line'];
+        /** @var int|bool $prevLine */
         $prevLine = false;
         $prevPtr  = $stackPtr;
 

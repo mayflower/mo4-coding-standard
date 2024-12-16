@@ -27,6 +27,8 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  * @license   http://spdx.org/licenses/MIT MIT License
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
+ *
+ * @psalm-api
  */
 class MultiLineArraySniff implements Sniff
 {
