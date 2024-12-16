@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [10.0.1] - 2024-12-16
+### Changed
+- Fix uninitialized string offset in UnnecessaryNamespaceUsage, fixes #212
+
 ## [10.0.0] - 2024-03-13
 ### Changed
 Allow dealerdirect/phpcodesniffer-composer-installer 1.x
