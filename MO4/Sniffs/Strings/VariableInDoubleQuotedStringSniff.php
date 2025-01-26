@@ -80,7 +80,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
                 }
 
                 if (\strpos(\substr($content, 0, $pos), '{') > 0
-                    && false === \strpos(\substr($content, 0, $pos), '}')
+                    && !\str_contains(\substr($content, 0, $pos), '}')
                 ) {
                     continue;
                 }

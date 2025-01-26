@@ -361,7 +361,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
             );
 
             $replaceClassName = true;
-        } elseif ('' !== $namespace && 0 === \strpos($fullClassName, $namespace)) {
+        } elseif ('' !== $namespace && \str_starts_with($fullClassName, $namespace)) {
             $replacement = \substr($fullClassName, \strlen($namespace));
 
             $data    = [
