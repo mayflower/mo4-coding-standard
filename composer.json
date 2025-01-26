@@ -35,7 +35,7 @@
         "phan/phan": "^5.4.5",
         "phpstan/phpstan": "^1.12",
         "phpstan/phpstan-strict-rules": "^1.6",
-        "phpunit/phpunit": "^8.5.36 || ^9.6.15",
+        "phpunit/phpunit": "^9.6.15",
         "psalm/plugin-phpunit": "^0.19",
         "sabre/event": ">= 5.1.6",
         "symfony/filesystem": ">= 5.4.45",
