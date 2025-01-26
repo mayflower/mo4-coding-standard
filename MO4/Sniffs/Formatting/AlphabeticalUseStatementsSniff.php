@@ -89,7 +89,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      */
     public function process(File $phpcsFile, $stackPtr): void
     {
-        if (false === \in_array($this->order, self::SUPPORTED_ORDERING_METHODS, true)) {
+        if (!\in_array($this->order, self::SUPPORTED_ORDERING_METHODS, true)) {
             $error = \sprintf(
                 "'%s' is not a valid order function for %s! Pick one of: %s",
                 $this->order,
