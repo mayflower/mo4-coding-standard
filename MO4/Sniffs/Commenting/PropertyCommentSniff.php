@@ -112,8 +112,8 @@ class PropertyCommentSniff extends AbstractScopeSniff
                     $stackPtr,
                     'NoDocBlockAllowed'
                 );
-            } elseif (0 !== \strncmp($tokens[$postComment]['content'], '//', 2)
-                && '*/' !== \substr($tokens[$postComment]['content'], -2)
+            } elseif (!\str_starts_with($tokens[$postComment]['content'], '//')
+                && !\str_ends_with($tokens[$postComment]['content'], '*/')
             ) {
                 $phpcsFile->addError(
                     'no multiline comments after declarations allowed',

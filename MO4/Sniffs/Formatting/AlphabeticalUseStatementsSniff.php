@@ -336,17 +336,13 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      */
     private function compareString(string $a, string $b): int
     {
-        switch ($this->order) {
-            case 'string':
-                return \strcmp($a, $b);
-            case 'string-locale':
-                return \strcoll($a, $b);
-            case 'string-case-insensitive':
-                return \strcasecmp($a, $b);
-            default:
-                // Default is 'dictionary'.
-                return $this->dictionaryCompare($a, $b);
-        }
+        return match ($this->order) {
+            'string' => \strcmp($a, $b),
+            'string-locale' => \strcoll($a, $b),
+            'string-case-insensitive' => \strcasecmp($a, $b),
+            // Default is 'dictionary'.
+            default => $this->dictionaryCompare($a, $b),
+        };
     }
 
     /**
