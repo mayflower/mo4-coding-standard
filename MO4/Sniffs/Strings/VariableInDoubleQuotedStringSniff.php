@@ -29,6 +29,8 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  * @license   http://spdx.org/licenses/MIT MIT License
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
+ *
+ * @psalm-api
  */
 class VariableInDoubleQuotedStringSniff implements Sniff
 {
@@ -76,7 +78,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
                 }
 
                 if (\strpos(\substr($content, 0, $pos), '{') > 0
-                    && false === \strpos(\substr($content, 0, $pos), '}')
+                    && !\str_contains(\substr($content, 0, $pos), '}')
                 ) {
                     continue;
                 }

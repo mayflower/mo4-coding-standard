@@ -5,6 +5,7 @@ parameters:
     paths:
        - %rootDir%/../../../MO4
        - %rootDir%/../../../tests
-    checkMissingIterableValueType: false
+    ignoreErrors:
+       - identifier: missingType.iterableValue
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon

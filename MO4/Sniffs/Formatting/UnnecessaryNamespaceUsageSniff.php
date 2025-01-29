@@ -34,6 +34,8 @@ use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
  * @license   http://spdx.org/licenses/MIT MIT License
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
+ *
+ * @psalm-api
  */
 class UnnecessaryNamespaceUsageSniff implements Sniff
 {
@@ -125,7 +127,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                 foreach ($tokens[$nsSep]['comment_tags'] as $tag) {
                     $content = $tokens[$tag]['content'];
 
-                    if (false === \array_key_exists($content, $docCommentTags)) {
+                    if (!\array_key_exists($content, $docCommentTags)) {
                         continue;
                     }
 
@@ -179,7 +181,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
                         // phpcs:enable
 
                         foreach ($typeTokens as $typeToken) {
-                            if (true === \in_array($typeToken, $useStatements, true)) {
+                            if (\in_array($typeToken, $useStatements, true)) {
                                 continue;
                             }
 
@@ -341,7 +343,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
 
         $fullClassName = $this->getFullyQualifiedClassName($className);
 
-        if (true === \array_key_exists($fullClassName, $useStatements)) {
+        if (\array_key_exists($fullClassName, $useStatements)) {
             $replacement = $useStatements[$fullClassName];
 
             $data = [
@@ -357,7 +359,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
             );
 
             $replaceClassName = true;
-        } elseif ('' !== $namespace && 0 === \strpos($fullClassName, $namespace)) {
+        } elseif ('' !== $namespace && \str_starts_with($fullClassName, $namespace)) {
             $replacement = \substr($fullClassName, \strlen($namespace));
 
             $data    = [
@@ -381,6 +383,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
         if (true === $isDocBlock) {
             $tokens     = $phpcsFile->getTokens();
             $oldContent = $tokens[$startPtr]['content'];
+            /** @var string $newContent */
             $newContent = \str_replace($className, $replacement, $oldContent);
             $phpcsFile->fixer->replaceToken($startPtr, $newContent);
         } else {

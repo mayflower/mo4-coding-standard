@@ -43,7 +43,6 @@ class PregLibrary
     {
         $pregSplitResult = \preg_split($pattern, $subject, $limit, $flags);
 
-        // @phan-suppress-next-line PhanTypeComparisonToArray
         if (false === $pregSplitResult) {
             throw new RuntimeException('Unexpected Error in MO4 Coding Standard.');
         }
