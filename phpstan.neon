@@ -1,7 +1,7 @@
 parameters:
     level: max
     bootstrapFiles:
-        - %rootDir%/../../../tests/bootstrap.php
+        - %rootDir%/../../../tests/static_analysis_bootstrap.php
     paths:
        - %rootDir%/../../../MO4
        - %rootDir%/../../../tests
