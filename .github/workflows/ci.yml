@@ -82,9 +82,6 @@ jobs:
         run: composer update ${{ matrix.dependencies_level }} --prefer-dist --no-interaction --no-progress
       - name: Check composer.json
         run: composer normalize --dry-run
-      - name: Run tests with coverage
-        if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.1' && matrix.dependencies_level != '--prefer-lowest' }}
-        run: php vendor/bin/phpunit --coverage-clover=coverage.xml
       - name: Run tests
         run: vendor/bin/phpunit
       - name: Run integration tests
@@ -101,10 +98,18 @@ jobs:
       - name: Run phan with polyfill
         if: ${{ matrix.os == 'windows-latest' }}
         run: vendor/bin/phan --allow-polyfill-parser
+      - name: Run tests with coverage
+        if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.1' && matrix.dependencies_level != '--prefer-lowest' }}
+        run: php vendor/bin/phpunit --coverage-clover=coverage.xml --log-junit=junit.xml
       - name: Upload coverage to Codecov
+        if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.1' && matrix.dependencies_level != '--prefer-lowest' }}
         uses: codecov/codecov-action@v5
         with:
-          verbose: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload test results to Codecov
+        if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.1' && matrix.dependencies_level != '--prefer-lowest' }}
+        uses: codecov/test-results-action@v1
+        with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
   slack-notify:
