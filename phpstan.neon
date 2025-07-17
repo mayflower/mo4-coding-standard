@@ -1,5 +1,5 @@
 parameters:
-    level: max
+    level: 9
     bootstrapFiles:
         - %rootDir%/../../../tests/static_analysis_bootstrap.php
     paths:

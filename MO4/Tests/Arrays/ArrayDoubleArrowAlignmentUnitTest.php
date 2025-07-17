@@ -30,7 +30,7 @@ use MO4\Tests\AbstractMo4SniffUnitTest;
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
  */
-class ArrayDoubleArrowAlignmentUnitTest extends AbstractMo4SniffUnitTest
+final class ArrayDoubleArrowAlignmentUnitTest extends AbstractMo4SniffUnitTest
 {
     protected $expectedErrorList = [
         'ArrayDoubleArrowAlignmentUnitTest.pass.inc' => [],

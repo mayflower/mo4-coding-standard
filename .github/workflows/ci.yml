@@ -40,13 +40,10 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         php_version:
-          - 7.2
-          - 7.3
-          - 7.4
-          - 8.0
           - 8.1
           - 8.2
           - 8.3
+          - 8.4
         dependencies_level:
           - --prefer-lowest
           - ""
@@ -90,7 +87,7 @@ jobs:
         run: vendor/bin/phpstan analyse --no-progress
       - name: Run psalm
         if: ${{ matrix.os != 'windows-latest' }}
-        run: vendor/bin/psalm --show-info=true
+        run: vendor/bin/psalm
       - name: Run phan
         if: ${{ matrix.os != 'windows-latest' }}
         run: vendor/bin/phan

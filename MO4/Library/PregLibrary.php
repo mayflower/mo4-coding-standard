@@ -16,7 +16,7 @@ namespace MO4\Library;
 
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
-class PregLibrary
+final class PregLibrary
 {
     /**
      * Split string by a regular expression
