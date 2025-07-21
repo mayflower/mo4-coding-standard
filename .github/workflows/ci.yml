@@ -111,6 +111,14 @@ jobs:
         uses: codecov/test-results-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload coverage to Qlty
+        if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.1' && matrix.dependencies_level != '--prefer-lowest' }}
+        uses: qltysh/qlty-action/coverage@v1
+        with:
+          token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+          files: coverage.xml
+        env:
+          QLTY_COVERAGE_TOKEN: ${{ secrets.QLTY_COVERAGE_TOKEN }}
 
   slack-notify:
     needs: [run-tests, style-checks]
@@ -122,7 +130,7 @@ jobs:
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
         with:
-          # Slack channel id, channel name, or user id to post message.
+          # Slack channel id, channel name, or user id to post a message.
           # See also: https://api.slack.com/methods/chat.postMessage#channels
           channel-id: '#mo4'
           # For posting a simple plain text message
