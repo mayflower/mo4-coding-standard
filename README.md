@@ -4,7 +4,7 @@ Provides a PHP CodeSniffer ruleset for the MO4 coding standard
 
 [![Build Status](https://github.com/mayflower/mo4-coding-standard/actions/workflows/ci.yml/badge.svg)](https://github.com/mayflower/mo4-coding-standard/actions)
 [![Code Coverage](https://codecov.io/gh/mayflower/mo4-coding-standard/branch/master/graph/badge.svg)](https://codecov.io/gh/mayflower/mo4-coding-standard/branch/master/)
-[![Codeclimate Maintainability](https://api.codeclimate.com/v1/badges/16114548a0315d993868/maintainability)](https://codeclimate.com/github/mayflower/mo4-coding-standard/maintainability)
+[![Qlty Maintainability](https://qlty.sh/gh/mayflower/projects/mo4-coding-standard/maintainability.svg)](https://qlty.sh/gh/mayflower/projects/mo4-coding-standard)
 [![SonarQube Maintainability](https://sonarcloud.io/api/project_badges/measure?project=mayflower_mo4-coding-standard&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=mayflower_mo4-coding-standard)
 
 [![Latest Stable Version](https://poser.pugx.org/mayflower/mo4-coding-standard/v/stable)](https://packagist.org/packages/mayflower/mo4-coding-standard)
