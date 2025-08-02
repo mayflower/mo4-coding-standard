@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
         backupGlobals="true"
         beStrictAboutTestsThatDoNotTestAnything="false"
         bootstrap="tests/bootstrap.php"
@@ -9,9 +11,9 @@
             <file>vendor/squizlabs/php_codesniffer/tests/Standards/AllSniffs.php</file>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="false">
+    <coverage processUncoveredFiles="false">
+        <include>
             <directory suffix=".php">./MO4/Sniffs</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </coverage>
 </phpunit>

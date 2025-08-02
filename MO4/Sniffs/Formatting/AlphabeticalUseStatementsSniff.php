@@ -33,6 +33,8 @@ use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
  * @license   http://spdx.org/licenses/MIT MIT License
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
+ *
+ * @psalm-api
  */
 class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 {
@@ -87,6 +89,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      *
      * @return void
      */
+    #[\Override]
     public function process(File $phpcsFile, $stackPtr): void
     {
         if (!\in_array($this->order, self::SUPPORTED_ORDERING_METHODS, true)) {
@@ -292,7 +295,8 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $line     = $tokens[$stackPtr]['line'];
+        $line = $tokens[$stackPtr]['line'];
+        /** @var int|bool $prevLine */
         $prevLine = false;
         $prevPtr  = $stackPtr;
 
@@ -332,17 +336,13 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      */
     private function compareString(string $a, string $b): int
     {
-        switch ($this->order) {
-            case 'string':
-                return \strcmp($a, $b);
-            case 'string-locale':
-                return \strcoll($a, $b);
-            case 'string-case-insensitive':
-                return \strcasecmp($a, $b);
-            default:
-                // Default is 'dictionary'.
-                return $this->dictionaryCompare($a, $b);
-        }
+        return match ($this->order) {
+            'string' => \strcmp($a, $b),
+            'string-locale' => \strcoll($a, $b),
+            'string-case-insensitive' => \strcasecmp($a, $b),
+            // Default is 'dictionary'.
+            default => $this->dictionaryCompare($a, $b),
+        };
     }
 
     /**

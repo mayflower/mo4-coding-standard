@@ -27,6 +27,8 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  * @license   http://spdx.org/licenses/MIT MIT License
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
+ *
+ * @psalm-api
  */
 class MultiLineArraySniff implements Sniff
 {
@@ -48,6 +50,7 @@ class MultiLineArraySniff implements Sniff
      *
      * @see    Tokens.php
      */
+    #[\Override]
     public function register(): array
     {
         return $this->arrayTokens;
@@ -64,6 +67,7 @@ class MultiLineArraySniff implements Sniff
      *
      * @return void
      */
+    #[\Override]
     public function process(File $phpcsFile, $stackPtr): void
     {
         $tokens  = $phpcsFile->getTokens();

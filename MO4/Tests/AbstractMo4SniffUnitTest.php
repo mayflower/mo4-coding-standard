@@ -68,6 +68,7 @@ abstract class AbstractMo4SniffUnitTest extends AbstractSniffUnitTest
      *
      * @throws RuntimeException
      */
+    #[\Override]
     protected function getErrorList(string $testFile = ''): array
     {
         return $this->getRecordForTestFile($testFile, $this->expectedErrorList);
@@ -85,6 +86,7 @@ abstract class AbstractMo4SniffUnitTest extends AbstractSniffUnitTest
      *
      * @throws RuntimeException
      */
+    #[\Override]
     protected function getWarningList(string $testFile = ''): array
     {
         return $this->getRecordForTestFile($testFile, $this->expectedWarningList);
