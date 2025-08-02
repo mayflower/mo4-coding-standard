@@ -4,6 +4,7 @@ on:
   push:
   schedule:
   - cron: '30 5 1 * *'
+
 jobs:
   style-checks:
     env:
@@ -97,7 +98,7 @@ jobs:
         run: vendor/bin/phan --allow-polyfill-parser
       - name: Run tests with coverage
         if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.1' && matrix.dependencies_level != '--prefer-lowest' }}
-        run: php vendor/bin/phpunit --coverage-clover=coverage.xml --log-junit=junit.xml
+        run: php vendor/bin/phpunit --coverage-clover=coverage.xml --coverage-cobertura=cobertura.xml --log-junit=junit.xml
       - name: Upload coverage to Codecov
         if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.1' && matrix.dependencies_level != '--prefer-lowest' }}
         uses: codecov/codecov-action@v5
@@ -113,7 +114,9 @@ jobs:
         uses: qltysh/qlty-action/coverage@v1
         with:
           token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
-          files: coverage.xml
+          files: cobertura.xml
+          strip-prefix: '/home/runner/work/mo4-coding-standard'
+          add-prefix: 'MO4/Sniffs/'
         env:
           QLTY_COVERAGE_TOKEN: ${{ secrets.QLTY_COVERAGE_TOKEN }}
 
