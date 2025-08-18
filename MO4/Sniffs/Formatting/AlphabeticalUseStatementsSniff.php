@@ -87,7 +87,6 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      * @param int  $stackPtr  The position of the current token in
      *                        the stack passed in $tokens.
      *
-     * @return void
      */
     #[\Override]
     public function process(File $phpcsFile, $stackPtr): void
@@ -172,7 +171,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      * @param File $phpcsFile PHP CS File
      * @param int  $stackPtr  pointer
      *
-     * @return array|false
+     * @return array{startPtr: int, content: string}|false
      */
     private function getUseImport(File $phpcsFile, int $stackPtr)
     {
@@ -208,7 +207,6 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      * @param File $phpcsFile PHP CS File
      * @param int  $stackPtr  pointer
      *
-     * @return string
      */
     private function getUseStatementAsString(File $phpcsFile, int $stackPtr): string
     {
@@ -231,7 +229,6 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      * @param File $phpcsFile PHP CS File
      * @param int  $stackPtr  pointer
      *
-     * @return bool
      */
     private function checkIsNonImportUse(File $phpcsFile, int $stackPtr): bool
     {
@@ -265,7 +262,6 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      * @param File $phpcsFile PHP CS file
      * @param int  $stackPtr  pointer
      *
-     * @return void
      */
     private function fixerClearLine(File $phpcsFile, int $stackPtr): void
     {
@@ -289,7 +285,6 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      * @param int    $stackPtr  pointer
      * @param string $import    import string requiring new position
      *
-     * @return int
      */
     private function findNewDestination(File $phpcsFile, int $stackPtr, string $import): int
     {
@@ -332,7 +327,6 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      * @param string $a first namespace string
      * @param string $b second namespace string
      *
-     * @return int
      */
     private function compareString(string $a, string $b): int
     {
@@ -357,7 +351,6 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      * @param string $a first namespace string
      * @param string $b second namespace string
      *
-     * @return int
      */
     private function dictionaryCompare(string $a, string $b): int
     {
