@@ -8,7 +8,7 @@
 >
     <testsuites>
         <testsuite name="MO4 Ruleset Test Suite">
-            <file>vendor/squizlabs/php_codesniffer/tests/Standards/AllSniffs.php</file>
+            <directory>MO4/Tests</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="false">

@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace MO4\Tests;
 
 use PHP_CodeSniffer\Exceptions\RuntimeException;
-use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffTestCase;
 
 /**
  * Abstract class to make the writing of tests more convenient.
@@ -34,11 +34,11 @@ use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
  */
-abstract class AbstractMo4SniffUnitTest extends AbstractSniffUnitTest
+abstract class AbstractMo4SniffUnitTest extends AbstractSniffTestCase
 {
     /**
      * Array or Array containing the test file as key and as value the key-value pairs with line number and number of#
-     * errors as describe in @see AbstractSniffUnitTest::getErrorList
+     * errors as describe in @see AbstractSniffTestCase::getErrorList
      *
      * When the array is empty, the test will pass.
      *
@@ -48,7 +48,7 @@ abstract class AbstractMo4SniffUnitTest extends AbstractSniffUnitTest
 
     /**
      * Array or Array containing the test file as key and as value the key-value pairs with line number and number of#
-     * errors as describe in @see AbstractSniffUnitTest::getWarningList
+     * errors as describe in @see AbstractSniffTestCase::getWarningList
      *
      * When the array is empty, the test will pass.
      *

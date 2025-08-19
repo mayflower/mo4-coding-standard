@@ -22,7 +22,7 @@ $myStandardName = 'MO4';
 require_once __DIR__.'/../vendor/squizlabs/php_codesniffer/tests/bootstrap.php';
 
 // Add this Standard.
-Config::setConfigData(
+(new Config())->setConfigData(
     'installed_paths',
     __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.$myStandardName,
     true

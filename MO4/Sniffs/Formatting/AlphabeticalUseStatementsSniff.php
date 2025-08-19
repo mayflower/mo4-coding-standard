@@ -176,12 +176,13 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
     private function getUseImport(File $phpcsFile, int $stackPtr)
     {
         $importTokens = [
-            T_NS_SEPARATOR,
+            T_NAME_FULLY_QUALIFIED,
+            T_NAME_QUALIFIED,
             T_STRING,
         ];
 
         $start = $phpcsFile->findNext(
-            PHP_CodeSniffer_Tokens::$emptyTokens,
+            PHP_CodeSniffer_Tokens::EMPTY_TOKENS,
             ($stackPtr + 1),
             null,
             true
@@ -235,7 +236,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
         $tokens = $phpcsFile->getTokens();
 
         $prev = $phpcsFile->findPrevious(
-            PHP_CodeSniffer_Tokens::$emptyTokens,
+            PHP_CodeSniffer_Tokens::EMPTY_TOKENS,
             ($stackPtr - 1),
             0,
             true,
