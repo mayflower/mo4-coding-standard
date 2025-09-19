@@ -78,7 +78,11 @@ jobs:
           key: "cache-composer-${{ hashFiles('composer.json') }}"
           restore-keys: 'cache-composer-'
       - name: Run composer
+        if: ${{ matrix.php_version != '8.5' }}
         run: composer update ${{ matrix.dependencies_level }} --prefer-dist --no-interaction --no-progress
+      - name: Run composer PHP 8.5 workaround
+        if: ${{ matrix.php_version == '8.5' }}
+        run: composer update ${{ matrix.dependencies_level }} --ignore-platform-reqs --prefer-dist --no-interaction --no-progress
       - name: Check composer.json
         run: composer normalize --dry-run
       - name: Run tests
@@ -88,7 +92,7 @@ jobs:
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse --no-progress
       - name: Run psalm
-        if: ${{ matrix.os != 'windows-latest' }}
+        if: ${{ matrix.os != 'windows-latest' && matrix.php_version != '8.5' }}
         run: vendor/bin/psalm
       - name: Run phan
         if: ${{ matrix.os != 'windows-latest' }}
