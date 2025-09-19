@@ -95,7 +95,7 @@ jobs:
         if: ${{ matrix.os != 'windows-latest' && matrix.php_version != '8.5' }}
         run: vendor/bin/psalm
       - name: Run phan
-        if: ${{ matrix.os != 'windows-latest' }}
+        if: ${{ matrix.os != 'windows-latest' && matrix.php_version != '8.5' }}
         run: vendor/bin/phan
       # AST 1.1 binary for Windows seems to be missing on PECL
       - name: Run phan with polyfill
