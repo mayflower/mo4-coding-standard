@@ -36,7 +36,6 @@
         "phpstan/phpstan-strict-rules": "^2.0",
         "phpunit/phpunit": "^9.6.15",
         "psalm/plugin-phpunit": "^0.19",
-        "sabre/event": ">= 5.1.6",
         "symfony/filesystem": ">= 5.4.45",
         "symfony/polyfill-php83": "^1.32",
         "vimeo/psalm": "^6.0.0"
