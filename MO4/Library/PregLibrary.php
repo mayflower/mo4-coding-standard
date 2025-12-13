@@ -16,6 +16,9 @@ namespace MO4\Library;
 
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
+/**
+ * @psalm-api
+ */
 final class PregLibrary
 {
     /**
