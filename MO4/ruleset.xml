@@ -14,6 +14,10 @@
         <!-- exclude sniffs that are disabled on purpose by this standard -->
         <exclude name="Symfony.Commenting.ClassComment.Missing"/>
         <exclude name="Symfony.Commenting.License"/>
+        <!-- SlevomatCodingStandard.ControlStructures.RequireYodaComparison supports autofixing -->
+        <exclude name="Symfony.ControlStructure.YodaConditions.Invalid"/>
+        <!-- disable forcing of function type hints as we're requiring native types -->
+        <exclude name="Symfony.Commenting.FunctionComment"/>
     </rule>
 
     <!-- Also include PSR12 -->
@@ -131,8 +135,16 @@
     </rule>
     <!-- Require usage of ::class instead of __CLASS__, get_class(), get_class($this), get_called_class() and get_parent_class() -->
     <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
+    <!-- Require use of constructor property promotion -->
+    <rule ref="SlevomatCodingStandard.Classes.RequireConstructorPropertyPromotion"/>
+    <!-- Forbid static:: in final class -->
+    <rule ref="SlevomatCodingStandard.Classes.UselessLateStaticBinding"/>
+    <!-- Forbid empty comments-->
+    <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
     <!-- report invalid format of inline phpDocs with @var -->
     <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration"/>
+    <!-- Forbid useless function doc comments -->
+    <rule ref="SlevomatCodingStandard.Commenting.UselessFunctionDocComment"/>
     <!-- Forbid useless @inheritDoc comments -->
     <rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
     <!-- Forbid assignments in conditions -->
@@ -159,6 +171,10 @@
     <rule ref="SlevomatCodingStandard.ControlStructures.NewWithParentheses"/>
     <!-- Require usage of null coalesce operator when possible -->
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"/>
+    <!-- Require usage of null coalesce equal operator when possible -->
+    <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceEqualOperator"/>
+    <!-- Require usage of null safe operator when possible -->
+    <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullSafeObjectOperator"/>
     <!-- Require usage of ternary operator when possible -->
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireTernaryOperator">
         <!-- But multiline is useful for readability -->
@@ -166,6 +182,10 @@
             <property name="ignoreMultiLine" value="true"/>
         </properties>
     </rule>
+    <!-- Require Yoda comparisons -->
+    <rule ref="SlevomatCodingStandard.ControlStructures.RequireYodaComparison"/>
+    <!-- Formatting of arrow functions -->
+    <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration"/>
     <!-- Enforce consistent spacing of named arguments -->
     <rule ref="SlevomatCodingStandard.Functions.NamedArgumentSpacing"/>
     <!-- Require static closures for microoptimization -->
@@ -229,19 +249,15 @@
     <!-- Require one space after and no space before colon in return types -->
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
     <!-- Require parameter type hints to be declared -->
-    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
-        <properties>
-            <property name="enableMixedTypeHint" value="false"/>
-            <property name="enableUnionTypeHint" value="false"/>
-            <property name="enableIntersectionTypeHint" value="false"/>
-        </properties>
-    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint"/>
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.UselessAnnotation">
-        <severity>0</severity>
+        <severity>9</severity>
     </rule>
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification">
-        <severity>0</severity>
+        <severity>9</severity>
     </rule>
+    <!-- check spacing of parameter type hints -->
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
     <!-- Require return type hints to be declared -->
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
         <properties>
@@ -251,10 +267,21 @@
         </properties>
     </rule>
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.UselessAnnotation">
-        <severity>0</severity>
+        <severity>9</severity>
     </rule>
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification">
-        <severity>0</severity>
+        <severity>9</severity>
+    </rule>
+    <!-- check spacing of return type hints -->
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
+    <!-- DNF (union / intersection) type hint formatting -->
+    <rule ref="SlevomatCodingStandard.TypeHints.DNFTypeHintFormat">
+        <properties>
+            <property name="withSpacesAroundOperators" value="no"/>
+            <property name="withSpacesInsideParentheses" value="no"/>
+            <property name="shortNullable" value="yes"/>
+            <property name="nullPosition" value="last"/>
+        </properties>
     </rule>
     <!-- Forbid useless @var for constants -->
     <rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint"/>

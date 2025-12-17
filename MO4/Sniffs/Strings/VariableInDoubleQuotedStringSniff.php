@@ -59,7 +59,6 @@ class VariableInDoubleQuotedStringSniff implements Sniff
      *                        file's token stack where the token
      *                        was found.
      *
-     * @return void
      */
     #[\Override]
     public function process(File $phpcsFile, $stackPtr): void
@@ -130,7 +129,6 @@ class VariableInDoubleQuotedStringSniff implements Sniff
      * @param int    $pos     position
      * @param string $var     variable
      *
-     * @return string
      */
     private function surroundVariableWithBraces(string $content, int $pos, string $var): string
     {
@@ -147,7 +145,6 @@ class VariableInDoubleQuotedStringSniff implements Sniff
      * @param string $correctVariable correct variable
      * @param File   $phpCsFile       PHP_CodeSniffer File object
      *
-     * @return void
      */
     private function fixPhpCsFile(int $stackPtr, string $correctVariable, File $phpCsFile): void
     {

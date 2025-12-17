@@ -39,8 +39,6 @@ class FooBar
     }
 
     /**
-     * @return string
-     *
      * @deprecated
      */
     public function someDeprecatedMethod(): string
@@ -53,14 +51,14 @@ class FooBar
     /**
      * Transforms the input given as first argument.
      *
-     * @param bool|string $dummy   Some argument description
-     * @param array       $options An options collection to be used within the transformation
+     * @param bool|string   $dummy   Some argument description
+     * @param array<string> $options An options collection to be used within the transformation
      *
      * @return string|null The transformed input
      *
      * @throws \RuntimeException When an invalid option is provided
      */
-    private function transformText($dummy, array $options = []): ?string
+    private function transformText(bool|string $dummy, array $options = []): ?string
     {
         /** @var array<string, string> $defaultOptions */
         $defaultOptions = [
@@ -104,7 +102,7 @@ class FooBar
      *
      * @return bool|void The resultant check if $theSwitch isn't false, void otherwise
      */
-    private function reverseBoolean($value = null, bool $theSwitch = false)
+    private function reverseBoolean(mixed $value = null, bool $theSwitch = false)
     {
         if (!$theSwitch) {
             return;

@@ -70,7 +70,7 @@ class MultipleEmptyLinesSniff implements Sniff
         $next = $stackPtr + 1;
 
         while (isset($tokens[$next + 1]) &&
-            $tokens[$next]['code'] === T_WHITESPACE &&
+            T_WHITESPACE === $tokens[$next]['code'] &&
             $tokens[$next]['line'] !== $tokens[$next + 1]['line']
         ) {
             $next++;

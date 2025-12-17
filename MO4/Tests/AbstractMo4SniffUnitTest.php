@@ -98,8 +98,8 @@ abstract class AbstractMo4SniffUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of warnings that should occur on that line.
      *
-     * @param string $testFile test file
-     * @param array  $list     record for test file
+     * @param string               $testFile test file
+     * @param array<array<int>> $list     record for test file
      *
      * @return array<int, int>
      *

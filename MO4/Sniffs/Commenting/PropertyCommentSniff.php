@@ -73,7 +73,6 @@ class PropertyCommentSniff extends AbstractScopeSniff
      *                        opened the scope that this test is
      *                        listening for.
      *
-     * @return void
      *
      * @throws RuntimeException
      */
@@ -244,7 +243,6 @@ class PropertyCommentSniff extends AbstractScopeSniff
      * @param int  $stackPtr  The position in the stack where this
      *                        token was found.
      *
-     * @return void
      */
     #[\Override]
     protected function processTokenOutsideScope(File $phpcsFile, $stackPtr): void

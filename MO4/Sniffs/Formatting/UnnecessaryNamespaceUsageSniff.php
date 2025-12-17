@@ -74,7 +74,6 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      *                        file's token stack where the token
      *                        was found.
      *
-     * @return void
      *
      * @throws RuntimeException
      */
@@ -212,7 +211,7 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      * @param int  $start     start pointer
      * @param int  $end       end pointer
      *
-     * @return array
+     * @return array<string, string>
      */
     protected function getUseStatements(File $phpcsFile, int $start, int $end): array
     {
@@ -281,7 +280,6 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      * @param int  $start     start pointer
      * @param int  $end       end pointer
      *
-     * @return string
      */
     protected function getNamespace(File $phpcsFile, int $start, int $end): string
     {
@@ -315,7 +313,6 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      *
      * @param string $className class name
      *
-     * @return string
      */
     private function getFullyQualifiedClassName(string $className): string
     {
@@ -325,15 +322,14 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
     /**
      * Check if short hand is possible.
      *
-     * @param File   $phpcsFile     PHP CS File
-     * @param array  $useStatements array with class use statements
-     * @param string $className     class name
-     * @param string $namespace     name space
-     * @param int    $startPtr      start token pointer
-     * @param int    $endPtr        end token pointer
-     * @param bool   $isDocBlock    true if fixing doc block
+     * @param File                  $phpcsFile     PHP CS File
+     * @param array<string, string> $useStatements array with class use statements
+     * @param string                $className     class name
+     * @param string                $namespace     name space
+     * @param int                   $startPtr      start token pointer
+     * @param int                   $endPtr        end token pointer
+     * @param bool                  $isDocBlock    true if fixing doc block
      *
-     * @return void
      */
     private function checkShorthandPossible(File $phpcsFile, array $useStatements, string $className, string $namespace, int $startPtr, int $endPtr, bool $isDocBlock = false): void
     {
