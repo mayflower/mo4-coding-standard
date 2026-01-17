@@ -51,9 +51,7 @@
     <rule ref="Generic.Formatting.SpaceAfterCast"/>
     <!-- Align corresponding assignment statement tokens -->
     <rule ref="Generic.Formatting.MultipleStatementAlignment">
-        <properties>
-            <property name="error" value="true"/>
-        </properties>
+        <type>error</type>
     </rule>
     <!-- Forbid useless inline string concatenation -->
     <rule ref="Generic.Strings.UnnecessaryStringConcat">
