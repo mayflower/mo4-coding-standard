@@ -34,7 +34,7 @@ use PHP_CodeSniffer\Tests\Standards\AbstractSniffTestCase;
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
  */
-abstract class AbstractMo4SniffUnitTest extends AbstractSniffTestCase
+abstract class AbstractMo4SniffUnitTestCase extends AbstractSniffTestCase
 {
     /**
      * Array or Array containing the test file as key and as value the key-value pairs with line number and number of#

@@ -97,10 +97,10 @@ jobs:
         if: ${{ matrix.os == 'windows-latest' && matrix.php_version != '8.1' && matrix.php_version != '8.2' }}
         run: vendor/bin/phan --allow-polyfill-parser
       - name: Run tests with coverage
-        if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.1' && matrix.dependencies_level != '--prefer-lowest' }}
+        if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.4' && matrix.dependencies_level != '--prefer-lowest' }}
         run: php vendor/bin/phpunit --coverage-clover=coverage.xml --coverage-cobertura=cobertura.xml --log-junit=junit.xml
       - name: Upload coverage to Codecov
-        if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.1' && matrix.dependencies_level != '--prefer-lowest' }}
+        if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.4' && matrix.dependencies_level != '--prefer-lowest' }}
         uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -108,7 +108,7 @@ jobs:
           disable_search: true
           files: ./coverage.xml
       - name: Upload test results to Codecov
-        if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.1' && matrix.dependencies_level != '--prefer-lowest' }}
+        if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.4' && matrix.dependencies_level != '--prefer-lowest' }}
         uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -116,7 +116,7 @@ jobs:
           disable_search: true
           files: ./junit.xml
       - name: Upload coverage to Qlty
-        if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.1' && matrix.dependencies_level != '--prefer-lowest' }}
+        if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.4' && matrix.dependencies_level != '--prefer-lowest' }}
         uses: qltysh/qlty-action/coverage@fd52dc852530a708d68c3b7342f8d33d1df4cd55 # v2.2.1
         with:
           token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
