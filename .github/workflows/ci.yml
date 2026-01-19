@@ -50,10 +50,10 @@ jobs:
           - ""
         include:
           - os: windows-latest
-            php_version: 8.1
+            php_version: 8.3
             dependencies_level: --prefer-lowest
           - os: windows-latest
-            php_version: 8.1
+            php_version: 8.3
             dependencies_level: ''
     runs-on: ${{ matrix.os }}
     steps:
@@ -69,7 +69,7 @@ jobs:
         with:
           coverage: 'xdebug'
           php-version: ${{ matrix.php_version }}
-          extensions: ast-1.1.1
+          extensions: ast-1.1.3
       - name: Cache dependencies
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
@@ -90,11 +90,11 @@ jobs:
         if: ${{ matrix.os != 'windows-latest' }}
         run: vendor/bin/psalm
       - name: Run phan
-        if: ${{ matrix.os != 'windows-latest' }}
+        if: ${{ matrix.os != 'windows-latest' && matrix.php_version != '8.1' && matrix.php_version != '8.2' }}
         run: vendor/bin/phan
       # AST 1.1 binary for Windows seems to be missing on PECL
       - name: Run phan with polyfill
-        if: ${{ matrix.os == 'windows-latest' }}
+        if: ${{ matrix.os == 'windows-latest' && matrix.php_version != '8.1' && matrix.php_version != '8.2' }}
         run: vendor/bin/phan --allow-polyfill-parser
       - name: Run tests with coverage
         if: ${{ matrix.os != 'windows-latest' && matrix.php_version == '8.1' && matrix.dependencies_level != '--prefer-lowest' }}

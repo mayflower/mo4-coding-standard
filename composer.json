@@ -32,7 +32,7 @@
     "require-dev": {
         "ergebnis/composer-normalize": "^2.45",
         "nikic/php-parser": "< 5.0.1",
-        "phan/phan": "^5.4.5",
+        "phan/phan": "^6.0.0",
         "phpstan/phpstan": "^2.0",
         "phpstan/phpstan-strict-rules": "^2.0",
         "phpunit/phpunit": "^9.6.15",
@@ -44,6 +44,7 @@
     },
     "config": {
         "allow-plugins": {
+            "cweagans/composer-patches": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "ergebnis/composer-normalize": true
         }
