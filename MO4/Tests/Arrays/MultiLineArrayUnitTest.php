@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace MO4\Tests\Arrays;
 
-use MO4\Tests\AbstractMo4SniffUnitTest;
+use MO4\Tests\AbstractMo4SniffUnitTestCase;
 
 /**
  * Unit test class for @see MultiLineArraySniff
@@ -30,7 +30,7 @@ use MO4\Tests\AbstractMo4SniffUnitTest;
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
  */
-final class MultiLineArrayUnitTest extends AbstractMo4SniffUnitTest
+final class MultiLineArrayUnitTest extends AbstractMo4SniffUnitTestCase
 {
     protected $expectedErrorList = [
         'MultiLineArrayUnitTest.pass.inc' => [],
