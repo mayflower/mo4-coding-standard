@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [11.0.0] - 2016-01-19
+### Changed
+- PHPCS 4.0 or later is required.
+- Various updates to rules for PHP 8.1+ code, see [#224](https://github.com/mayflower/mo4-coding-standard/issues/224) for the diff of `ruleset.xml`
+### Removed
+- Support for PHP < 8.1
+
 ## [10.0.2] - 2025-07-28
 ### Changed
 - Raised minimum Symfony CS release, fixes #218
