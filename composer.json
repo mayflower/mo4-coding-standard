@@ -35,7 +35,7 @@
         "phan/phan": "^6.0.0",
         "phpstan/phpstan": "^2.0",
         "phpstan/phpstan-strict-rules": "^2.0",
-        "phpunit/phpunit": "^9.6.15",
+        "phpunit/phpunit": "> 9.6.15 < 9.6.33",
         "psalm/plugin-phpunit": "^0.19",
         "sabre/event": ">= 5.1.6",
         "symfony/filesystem": ">= 5.4.45",
@@ -47,6 +47,9 @@
             "cweagans/composer-patches": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "ergebnis/composer-normalize": true
+        },
+        "audit": {
+            "block-insecure": false
         }
     }
 }
