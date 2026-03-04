@@ -9,3 +9,5 @@ $d = "blafasel {$_a}";
 $f = "100{$missing} needed";
 $g = "foo {$a} bar {$b}";
 $h = " foo } bar { foo {$a}";
+$i = "value is {$this->key} ok";
+$j = "value is {$arr[0]} ok";

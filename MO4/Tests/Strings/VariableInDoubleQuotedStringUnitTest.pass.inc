@@ -22,3 +22,5 @@ $o = "{$a['foo'][$b[0]]}";
 $p = "{$a[$b->foo($c['foo'][$d[0]])]}";
 $p = "{$good[$fail]}";
 $q = "{$prefix}/{$this->resolveName($id)}";
+$r = "{$this->key}";
+$s = "{$arr[0]}";
