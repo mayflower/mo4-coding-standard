@@ -63,7 +63,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
     #[\Override]
     public function process(File $phpcsFile, $stackPtr): void
     {
-        $varRegExp = '/\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/';
+        $varRegExp = '/\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*(?:\->[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*|\[[^\]]*\])?/';
 
         $tokens  = $phpcsFile->getTokens();
         $content = $tokens[$stackPtr]['content'];
