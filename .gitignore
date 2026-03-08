@@ -7,6 +7,7 @@ composer.lock
 /build/
 .atoum.php
 phpunit.xml
+.phpunit.cache
 .phpunit.result.cache
 behat.yml
 
