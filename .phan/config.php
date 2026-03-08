@@ -22,8 +22,7 @@ return [
     'directory_list' => [
         'MO4',
         'tests',
-        'vendor/squizlabs/php_codesniffer',
-        'vendor/symfony/polyfill-php83',
+        'vendor',
     ],
 
     // A directory list that defines files that will be excluded
@@ -38,6 +37,6 @@ return [
     //       should be added to both the `directory_list`
     //       and `exclude_analysis_directory_list` arrays.
     "exclude_analysis_directory_list" => [
-        'vendor/'
+        'vendor/',
     ],
 ];
