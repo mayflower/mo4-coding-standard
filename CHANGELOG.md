@@ -3,7 +3,11 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [11.0.0] - 2016-01-19
+## [11.0.1] - 2026-03-08
+### Changed
+- Fix VariableInDoubleQuotedString sniff wrapping property/array access (#233)
+
+## [11.0.0] - 2026-01-19
 ### Changed
 - PHPCS 4.0 or later is required.
 - Various updates to rules for PHP 8.1+ code, see [#224](https://github.com/mayflower/mo4-coding-standard/issues/224) for the diff of `ruleset.xml`
