@@ -40,7 +40,7 @@
         "sabre/event": ">= 5.1.6",
         "symfony/filesystem": ">= 5.4.45",
         "symfony/polyfill-php83": "^1.32",
-        "vimeo/psalm": "^6.0.0"
+        "vimeo/psalm": ">= 6.0.0 < 6.15.0"
     },
     "config": {
         "allow-plugins": {
