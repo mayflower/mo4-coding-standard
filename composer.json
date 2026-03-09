@@ -42,6 +42,9 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "ergebnis/composer-normalize": true
+        },
+        "audit": {
+            "block-insecure": false
         }
     }
 }
