@@ -35,6 +35,8 @@ final class AlphabeticalUseStatementsUnitTest extends AbstractMo4SniffUnitTest
     protected $expectedErrorList = [
         'AlphabeticalUseStatementsUnitTest.pass.inc'   => [],
         'AlphabeticalUseStatementsUnitTest.pass.1.inc' => [],
+        'AlphabeticalUseStatementsUnitTest.pass.2.inc' => [],
+        'AlphabeticalUseStatementsUnitTest.pass.3.inc' => [],
         'AlphabeticalUseStatementsUnitTest.fail.1.inc' => [
             4  => 1,
             5  => 1,
