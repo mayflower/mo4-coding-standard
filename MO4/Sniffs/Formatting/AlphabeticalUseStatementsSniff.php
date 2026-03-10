@@ -104,6 +104,10 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 
         parent::process($phpcsFile, $stackPtr);
 
+        if (true === $this->checkIsNonImportUse($phpcsFile, $stackPtr)) {
+            return;
+        }
+
         if ($this->currentFile !== $phpcsFile->getFilename()) {
             $this->lastLine    = -1;
             $this->lastImport  = '';
@@ -112,13 +116,6 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 
         $tokens = $phpcsFile->getTokens();
         $line   = $tokens[$stackPtr]['line'];
-
-        // Ignore function () use () {...}.
-        $isNonImportUse = $this->checkIsNonImportUse($phpcsFile, $stackPtr);
-
-        if (true === $isNonImportUse) {
-            return;
-        }
 
         $currentImportArr = $this->getUseImport($phpcsFile, $stackPtr);
 
@@ -234,21 +231,14 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $prev = $phpcsFile->findPrevious(
-            PHP_CodeSniffer_Tokens::$emptyTokens,
-            ($stackPtr - 1),
-            0,
-            true,
-            null,
-            true
-        );
+        // Ignore USE keywords for closures.
+        if (true === isset($tokens[$stackPtr]['parenthesis_owner'])) {
+            return true;
+        }
 
-        if (false !== $prev) {
-            $prevToken = $tokens[$prev];
-
-            if (T_CLOSE_PARENTHESIS === $prevToken['code']) {
-                return true;
-            }
+        // Ignore USE keywords for traits (inside class/trait bodies).
+        if (true === $phpcsFile->hasCondition($stackPtr, [T_CLASS, T_TRAIT])) {
+            return true;
         }
 
         return false;
@@ -262,7 +252,6 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      * @param File $phpcsFile PHP CS file
      * @param int  $stackPtr  pointer
      *
-     * @return void
      */
     private function fixerClearLine(File $phpcsFile, int $stackPtr): void
     {
