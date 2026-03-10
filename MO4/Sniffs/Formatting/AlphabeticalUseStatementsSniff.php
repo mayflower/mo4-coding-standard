@@ -98,6 +98,10 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 
         parent::process($phpcsFile, $stackPtr);
 
+        if ($this->checkIsNonImportUse($phpcsFile, $stackPtr) === true) {
+            return;
+        }
+
         if ($this->currentFile !== $phpcsFile->getFilename()) {
             $this->lastLine    = -1;
             $this->lastImport  = '';
@@ -106,12 +110,6 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
 
         $tokens = $phpcsFile->getTokens();
         $line   = $tokens[$stackPtr]['line'];
-
-        // Ignore function () use () {...}.
-        $isNonImportUse = $this->checkIsNonImportUse($phpcsFile, $stackPtr);
-        if ($isNonImportUse === true) {
-            return;
-        }
 
         $currentImportArr = $this->getUseImport($phpcsFile, $stackPtr);
         if ($currentImportArr === false) {
@@ -230,6 +228,16 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
     private function checkIsNonImportUse(File $phpcsFile, int $stackPtr): bool
     {
         $tokens = $phpcsFile->getTokens();
+
+        // Ignore USE keywords for closures.
+        if (isset($tokens[$stackPtr]['parenthesis_owner']) === true) {
+            return true;
+        }
+
+        // Ignore USE keywords for traits (inside class/trait bodies).
+        if ($phpcsFile->hasCondition($stackPtr, [T_CLASS, T_TRAIT]) === true) {
+            return true;
+        }
 
         $prev = $phpcsFile->findPrevious(
             PHP_CodeSniffer_Tokens::$emptyTokens,

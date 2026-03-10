@@ -45,6 +45,8 @@ class AlphabeticalUseStatementsUnitTest extends AbstractSniffUnitTest
         switch ($testFile) {
         case 'AlphabeticalUseStatementsUnitTest.pass.inc':
         case 'AlphabeticalUseStatementsUnitTest.pass.1.inc':
+        case 'AlphabeticalUseStatementsUnitTest.pass.2.inc':
+        case 'AlphabeticalUseStatementsUnitTest.pass.3.inc':
             return [];
         case 'AlphabeticalUseStatementsUnitTest.fail.1.inc':
             return [
