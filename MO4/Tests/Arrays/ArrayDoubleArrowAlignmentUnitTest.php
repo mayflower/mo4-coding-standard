@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace MO4\Tests\Arrays;
 
-use MO4\Tests\AbstractMo4SniffUnitTest;
+use MO4\Tests\AbstractMo4SniffUnitTestCase;
 
 /**
  * Unit test class for @see ArrayDoubleArrowAlignmentSniff
@@ -30,7 +30,7 @@ use MO4\Tests\AbstractMo4SniffUnitTest;
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
  */
-final class ArrayDoubleArrowAlignmentUnitTest extends AbstractMo4SniffUnitTest
+final class ArrayDoubleArrowAlignmentUnitTest extends AbstractMo4SniffUnitTestCase
 {
     protected $expectedErrorList = [
         'ArrayDoubleArrowAlignmentUnitTest.pass.inc' => [],

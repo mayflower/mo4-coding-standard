@@ -82,7 +82,8 @@ jobs:
       - name: Check composer.json
         run: composer normalize --dry-run
       - name: Run tests
-        run: vendor/bin/phpunit
+        run: |
+          vendor/bin/phpunit
       - name: Run integration tests
         run: vendor/bin/phpcs -s --standard=MO4 integrationtests/testfile.php
       - name: Run PHPStan

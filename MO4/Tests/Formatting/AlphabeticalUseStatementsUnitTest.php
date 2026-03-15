@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace MO4\Tests\Formatting;
 
-use MO4\Tests\AbstractMo4SniffUnitTest;
+use MO4\Tests\AbstractMo4SniffUnitTestCase;
 
 /**
  * Unit test class for the AlphabeticalUseStatements sniff.
@@ -30,7 +30,7 @@ use MO4\Tests\AbstractMo4SniffUnitTest;
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
  */
-final class AlphabeticalUseStatementsUnitTest extends AbstractMo4SniffUnitTest
+final class AlphabeticalUseStatementsUnitTest extends AbstractMo4SniffUnitTestCase
 {
     protected $expectedErrorList = [
         'AlphabeticalUseStatementsUnitTest.pass.inc'   => [],

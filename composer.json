@@ -31,11 +31,10 @@
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.45",
-        "nikic/php-parser": "< 5.0.1",
         "phan/phan": "^6.0.0",
         "phpstan/phpstan": "^2.0",
         "phpstan/phpstan-strict-rules": "^2.0",
-        "phpunit/phpunit": "> 9.6.15 < 9.6.33",
+        "phpunit/phpunit": "^10.5.62 || ^11.5.51",
         "psalm/plugin-phpunit": "^0.19",
         "sabre/event": ">= 5.1.6",
         "symfony/filesystem": ">= 5.4.45",
