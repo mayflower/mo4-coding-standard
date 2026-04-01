@@ -88,7 +88,6 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      *                        the stack passed in $tokens.
      *
      */
-    #[\Override]
     public function process(File $phpcsFile, $stackPtr): void
     {
         if (!\in_array($this->order, self::SUPPORTED_ORDERING_METHODS, true)) {

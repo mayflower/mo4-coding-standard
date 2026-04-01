@@ -76,7 +76,6 @@ class PropertyCommentSniff extends AbstractScopeSniff
      *
      * @throws RuntimeException
      */
-    #[\Override]
     protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope): void
     {
         $find   = [
@@ -244,7 +243,6 @@ class PropertyCommentSniff extends AbstractScopeSniff
      *                        token was found.
      *
      */
-    #[\Override]
     protected function processTokenOutsideScope(File $phpcsFile, $stackPtr): void
     {
     }

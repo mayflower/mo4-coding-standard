@@ -50,7 +50,6 @@ class MultiLineArraySniff implements Sniff
      *
      * @see    Tokens.php
      */
-    #[\Override]
     public function register(): array
     {
         return $this->arrayTokens;
@@ -66,7 +65,6 @@ class MultiLineArraySniff implements Sniff
      *                        the stack passed in $tokens.
      *
      */
-    #[\Override]
     public function process(File $phpcsFile, $stackPtr): void
     {
         $tokens  = $phpcsFile->getTokens();
