@@ -25,7 +25,6 @@ class MultipleEmptyLinesSniff implements Sniff
      *
      * @see Tokens.php
      */
-    #[\Override]
     public function register(): array
     {
         return [
@@ -45,7 +44,6 @@ class MultipleEmptyLinesSniff implements Sniff
      *
      * @return void|int
      */
-    #[\Override]
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();

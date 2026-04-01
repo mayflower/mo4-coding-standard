@@ -48,7 +48,6 @@ class ConstantSpacingSniff implements Sniff
      *
      * @see    Tokens.php
      */
-    #[\Override]
     public function register(): array
     {
         return $this->arrayTokens;
@@ -64,7 +63,6 @@ class ConstantSpacingSniff implements Sniff
      *                        the stack passed in $tokens.
      *
      */
-    #[\Override]
     public function process(File $phpcsFile, $stackPtr): void
     {
         $tokens  = $phpcsFile->getTokens();

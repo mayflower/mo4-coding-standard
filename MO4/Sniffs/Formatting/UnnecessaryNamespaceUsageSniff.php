@@ -56,7 +56,6 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      *
      * @see    Tokens.php
      */
-    #[\Override]
     public function register(): array
     {
         return [T_CLASS];
@@ -77,7 +76,6 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      *
      * @throws RuntimeException
      */
-    #[\Override]
     public function process(File $phpcsFile, $stackPtr): void
     {
         $docCommentTags = [
