@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="MO4">
     <description>The MO4 PHP coding standard.</description>
-    <!-- There should not be any code in the bundle Resources directory. -->
-    <exclude-pattern>*/Resources/*</exclude-pattern>
 
     <!-- Include the whole Symfony standard (which pulls in PSR2) -->
     <rule ref="Symfony">
