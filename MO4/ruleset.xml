@@ -135,6 +135,8 @@
     <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
     <!-- Require use of constructor property promotion -->
     <rule ref="SlevomatCodingStandard.Classes.RequireConstructorPropertyPromotion"/>
+    <!-- Require trait use statements to be sorted alphabetically -->
+    <rule ref="SlevomatCodingStandard.Classes.TraitUseOrder"/>
     <!-- Forbid static:: in final class -->
     <rule ref="SlevomatCodingStandard.Classes.UselessLateStaticBinding"/>
     <!-- Forbid empty comments-->
