@@ -29,47 +29,6 @@ The MO4 Coding Standard is an extension of the [Symfony Coding Standard](http://
 ### MO4.Commenting.PropertyComment
 * doc blocks of class properties must be multiline and have exactly one `@var` annotation
 
-### MO4.Formatting.AlphabeticalUseStatements
-* `use` statements must be sorted lexicographically. The order function can be configured.
-
-#### Configuration
-The `order` property of the `MO4.Formatting.AlphabeticalUseStatements` sniff defines
-which function is used for ordering.
-
-Possible values for order:
-* `dictionary` (default): based on [strcmp](http://php.net/strcmp), the namespace separator
-  precedes any other character
-  ```php
-  use Doctrine\ORM\Query;
-  use Doctrine\ORM\Query\Expr;
-  use Doctrine\ORM\QueryBuilder;
-  ```
-* `string`: binary safe string comparison using [strcmp](http://php.net/strcmp)
-  ```php
-  use Doctrine\ORM\Query;
-  use Doctrine\ORM\QueryBuilder;
-  use Doctrine\ORM\Query\Expr;
-
-  use ExampleSub;
-  use Examples;
-  ```
-* `string-locale`: locale based string comparison using [strcoll](http://php.net/strcoll)
-* `string-case-insensitive`: binary safe case-insensitive string comparison [strcasecmp](http://php.net/strcasecmp)
-   ```php
-   use Examples;
-   use ExampleSub;
-   ```
-
-To change the sorting order for your project, add this snippet to your custom `ruleset.xml`:
-
-```xml
-<rule ref="MO4.Formatting.AlphabeticalUseStatements">
-    <properties>
-        <property name="order" value="string-locale"/>
-    </properties>
-</rule>
-```
-
 ### MO4.Formatting.UnnecessaryNamespaceUsage
 * The imported class name must be used, when it was imported with a `use` statement.
 

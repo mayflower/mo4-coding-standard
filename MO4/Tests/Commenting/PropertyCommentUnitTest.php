@@ -17,7 +17,7 @@ namespace MO4\Tests\Commenting;
 use MO4\Tests\AbstractMo4SniffUnitTest;
 
 /**
- * Unit test class for the AlphabeticalUseStatements sniff.
+ * Unit test class for the PropertyComment sniff.
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.

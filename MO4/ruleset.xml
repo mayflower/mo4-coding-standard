@@ -190,6 +190,12 @@
     <rule ref="SlevomatCodingStandard.Functions.UnusedParameter"/>
     <!-- Forbids useless parameter default values -->
     <rule ref="SlevomatCodingStandard.Functions.UselessParameterDefaultValue"/>
+    <!-- Sort use statements alphabetically -->
+    <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses">
+        <properties>
+            <property name="caseSensitive" value="true"/>
+        </properties>
+    </rule>
     <!-- Require global functions to be referenced via a fully qualified name -->
     <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions"/>
     <!-- Forbid multiple use statements on same line -->
