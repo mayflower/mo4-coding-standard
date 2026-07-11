@@ -20,6 +20,13 @@ const BAM = 1;
  */
 class FooBar
 {
+    use AlphaTrait;
+    /**
+     * @use GenericTrait<foo>
+     */
+    use GenericTrait;
+    use ZebraTrait;
+
     public const SOME_CONST = 42;
     public const STR_CONST  = '43';
     protected const PROTECT = 0;
