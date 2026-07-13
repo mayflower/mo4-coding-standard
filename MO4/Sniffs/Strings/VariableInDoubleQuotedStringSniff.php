@@ -27,13 +27,6 @@ use PHP_CodeSniffer\Files\File;
 class VariableInDoubleQuotedStringSniff implements Sniff
 {
 
-    /**
-     * The PHP_CodeSniffer object controlling this run.
-     *
-     * @var File
-     */
-    private $phpCsFile;
-
 
     /**
      * Registers the tokens that this sniff wants to listen for.
@@ -63,8 +56,6 @@ class VariableInDoubleQuotedStringSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr): void
     {
-        $this->phpCsFile = $phpcsFile;
-
         $varRegExp = '/\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/';
 
         $tokens  = $phpcsFile->getTokens();
@@ -96,7 +87,7 @@ class VariableInDoubleQuotedStringSniff implements Sniff
                         }
                     }
 
-                    $fix = $this->phpCsFile->addFixableError(
+                    $fix = $phpcsFile->addFixableError(
                         \sprintf(
                             'must surround variable %s with { }',
                             $var
@@ -111,7 +102,8 @@ class VariableInDoubleQuotedStringSniff implements Sniff
                             $pos,
                             $var
                         );
-                        $this->fixPhpCsFile($stackPtr, $correctVariable);
+
+                        $this->fixPhpCsFile($stackPtr, $correctVariable, $phpcsFile);
                     }
                 }//end if
             }//end foreach
@@ -144,13 +136,12 @@ class VariableInDoubleQuotedStringSniff implements Sniff
      *
      * @param int    $stackPtr        stack pointer
      * @param string $correctVariable correct variable
+     * @param File   $phpCsFile       PHP_CodeSniffer File object
      *
      * @return void
      */
-    private function fixPhpCsFile(int $stackPtr, string $correctVariable): void
+    private function fixPhpCsFile(int $stackPtr, string $correctVariable, File $phpCsFile): void
     {
-        $phpCsFile = $this->phpCsFile;
-
         $phpCsFile->fixer->beginChangeset();
         $phpCsFile->fixer->replaceToken($stackPtr, $correctVariable);
         $phpCsFile->fixer->endChangeset();

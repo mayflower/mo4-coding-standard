@@ -69,7 +69,7 @@ class AlphabeticalUseStatementsSniff extends UseDeclarationSniff
      *
      * @var string
      */
-    private $currentFile;
+    private $currentFile = '';
 
 
     /**
