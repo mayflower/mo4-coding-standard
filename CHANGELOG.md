@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [9.0.2] - 2026-07-15
+### Changed
+- Fix uninitialized string offset in UnnecessaryNamespaceUsage, fixes #212
+- Fix VariableInDoubleQuotedString sniff wrapping property/array access (#233)
+- Fix AlphabeticalUseStatements sorting trait use statements (#235)
+
 ## [9.0.1] - 2023-12-12
 ### Changed
 - Fix invalid property case (fixes a runtime error when using PHPCS 3.8.0+)
