@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace MO4\Tests\WhiteSpace;
 
-use MO4\Tests\AbstractMo4SniffUnitTest;
+use MO4\Tests\AbstractMo4SniffUnitTestCase;
 
 /**
  * Unit test class for the MultipleEmptyLines sniff.
@@ -30,7 +30,7 @@ use MO4\Tests\AbstractMo4SniffUnitTest;
  *
  * @link      https://github.com/mayflower/mo4-coding-standard
  */
-final class MultipleEmptyLinesUnitTest extends AbstractMo4SniffUnitTest
+final class MultipleEmptyLinesUnitTest extends AbstractMo4SniffUnitTestCase
 {
     protected $expectedErrorList = [
         'MultipleEmptyLinesUnitTest.pass.inc' => [],
