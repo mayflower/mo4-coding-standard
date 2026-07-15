@@ -46,6 +46,7 @@ jobs:
           - 8.2
           - 8.3
           - 8.4
+          - 8.5
         dependencies_level:
           - --prefer-lowest
           - ""
@@ -88,6 +89,7 @@ jobs:
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse --no-progress
       - name: Run psalm
+        if: ${{!(matrix.php_version == '8.5' && matrix.dependencies_level == '--prefer-lowest')}}
         run: vendor/bin/psalm
       - name: Run phan
         if: ${{ matrix.os != 'windows-latest' && matrix.php_version != '8.1' && matrix.php_version != '8.2' }}
