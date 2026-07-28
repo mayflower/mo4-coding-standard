@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [12.0.0] - 2026-07-28
+### Added
+- `SlevomatCodingStandard.Classes.TraitUseOrder`
+### Changed
+- Use `AlphabeticallySortedUses` from Slevomat instead of homegrown one
+### Removed
+- exclusion of `Resources` folder
+
 ## [11.0.2] - 2026-03-15
 ### Changed
 - Fix AlphabeticalUseStatements sorting trait use statements (#235)
