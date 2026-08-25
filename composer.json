@@ -31,6 +31,7 @@
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.45",
+        "nikic/php-parser": "< 5.6.0",
         "phan/phan": "^6.0.0",
         "phpstan/phpstan": "^2.0",
         "phpstan/phpstan-strict-rules": "^2.0",
