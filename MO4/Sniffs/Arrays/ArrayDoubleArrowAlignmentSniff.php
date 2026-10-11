@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace MO4\Sniffs\Arrays;
 
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Sniffs\AbstractArraySniff;
 use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
 
 /**
@@ -33,71 +33,40 @@ use PHP_CodeSniffer\Util\Tokens as PHP_CodeSniffer_Tokens;
  *
  * @psalm-api
  */
-class ArrayDoubleArrowAlignmentSniff implements Sniff
+class ArrayDoubleArrowAlignmentSniff extends AbstractArraySniff
 {
     /**
-     * Define all types of arrays.
+     * Processes a single-line array definition.
      *
-     * @var array
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
-    protected $arrayTokens = [
-        // @phan-suppress-next-line PhanUndeclaredConstant
-        T_OPEN_SHORT_ARRAY,
-        T_ARRAY,
-    ];
-
-    /**
-     * Registers the tokens that this sniff wants to listen for.
-     *
-     * @return array<int, int>
-     *
-     * @see    Tokens.php
-     */
-    public function register(): array
+    protected function processSingleLineArray(File $phpcsFile, int $stackPtr, int $arrayStart, int $arrayEnd, array $indices): void
     {
-        return $this->arrayTokens;
+        // nothing to do for single lines arrays
     }
 
     /**
-     * Processes this test, when one of its tokens is encountered.
+     * Processes a multi-line array definition.
      *
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
-     *
-     * @param File $phpcsFile The file being scanned.
-     * @param int  $stackPtr  The position of the current token in
-     *                        the stack passed in $tokens.
-     *
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
-    public function process(File $phpcsFile, $stackPtr): void
+    protected function processMultiLineArray(File $phpcsFile, int $stackPtr, int $arrayStart, int $arrayEnd, array $indices): void
     {
-        $tokens  = $phpcsFile->getTokens();
-        $current = $tokens[$stackPtr];
+        $tokens = $phpcsFile->getTokens();
 
-        if (T_ARRAY === $current['code']) {
-            $start = $current['parenthesis_opener'];
-            $end   = $current['parenthesis_closer'];
-        } else {
-            $start = $current['bracket_opener'];
-            $end   = $current['bracket_closer'];
-        }
+        $assignments      = [];
+        $keyEndColumn     = -1;
+        $lastLine         = -1;
+        $assignmentsCount = 0;
+        $previousComma    = false;
 
-        if ($tokens[$start]['line'] === $tokens[$end]['line']) {
-            return;
-        }
-
-        // phpcs:disable
-        /** @var array<int> $assignments */
-        $assignments  = [];
-        // phpcs:enable
-        $keyEndColumn = -1;
-        $lastLine     = -1;
-
-        for ($i = ($start + 1); $i < $end; $i++) {
-            $current  = $tokens[$i];
-            $previous = $tokens[($i - 1)];
+        for ($i = ($arrayStart + 1); $i < $arrayEnd; $i++) {
+            $current = $tokens[$i];
 
             // Skip nested arrays.
-            if (\in_array($current['code'], $this->arrayTokens, true)) {
+            if (T_OPEN_SHORT_ARRAY === $current['code'] || T_ARRAY === $current['code']) {
                 $i = T_ARRAY === $current['code'] ? ($current['parenthesis_closer'] + 1) : ($current['bracket_closer'] + 1);
 
                 continue;
@@ -110,19 +79,29 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
                 continue;
             }
 
-            $i = (int) $i;
+            // Track commas
+            if (T_COMMA === $current['code']) {
+                $previousComma = $i;
 
+                continue;
+            }
+
+            // Only process double arrow assignments
             if (T_DOUBLE_ARROW !== $current['code']) {
                 continue;
             }
 
-            $assignments[] = $i;
-            $column        = $previous['column'];
-            $line          = $current['line'];
+            // Record assignment position
+            $previous                       = $tokens[($i - 1)];
+            $assignments[$assignmentsCount] = $i;
+            $assignmentsCount++;
 
+            // Get column info once
+            $column = $previous['column'];
+            $line   = $current['line'];
+
+            // Check for multiple assignments per line
             if ($lastLine === $line) {
-                $previousComma = $this->getPreviousComma($phpcsFile, $i, $start);
-
                 $msg = 'only one "=>" assignments per line is allowed in a multi line array';
 
                 if (false !== $previousComma) {
@@ -135,19 +114,24 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
                     }
                 } else {
                     // Remove current and previous '=>' from array for further processing.
-                    \array_pop($assignments);
-                    \array_pop($assignments);
+                    unset($assignments[$assignmentsCount - 1], $assignments[$assignmentsCount - 2]);
+                    $assignmentsCount -= 2;
                     $phpcsFile->addError($msg, $i, 'OneAssignmentPerLine');
                 }
             }
 
+            // Check if key is on the same line - optimized lookup
             $hasKeyInLine = false;
+            $j            = ($i - 1);
 
-            $j = ($i - 1);
+            // Stop at the beginning of the line for efficiency
+            $lineStart = $current['line'];
 
-            while (($j >= 0) && ($tokens[$j]['line'] === $current['line'])) {
-                if (!\in_array($tokens[$j]['code'], PHP_CodeSniffer_Tokens::EMPTY_TOKENS, true)) {
+            while (($j >= 0) && ($tokens[$j]['line'] === $lineStart)) {
+                if (!isset(PHP_CodeSniffer_Tokens::EMPTY_TOKENS[$tokens[$j]['code']])) {
                     $hasKeyInLine = true;
+
+                    break;
                 }
 
                 $j--;
@@ -167,6 +151,7 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
                 }
             }
 
+            // Track max column position
             if ($column > $keyEndColumn) {
                 $keyEndColumn = $column;
             }
@@ -174,19 +159,21 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
             $lastLine = $line;
         }
 
+        // Calculate alignment offset
         $doubleArrowStartColumn = ($keyEndColumn + 1);
 
+        // Process assignments with minimal overhead
         foreach ($assignments as $ptr) {
             $current = $tokens[$ptr];
             $column  = $current['column'];
 
-            $beforeArrowPtr = ($ptr - 1);
-            $currentIndent  = \strlen($tokens[$beforeArrowPtr]['content']);
-            $correctIndent  = ($currentIndent - $column + $doubleArrowStartColumn);
-
             if ($column === $doubleArrowStartColumn) {
                 continue;
             }
+
+            $beforeArrowPtr = ($ptr - 1);
+            $currentIndent  = \strlen($tokens[$beforeArrowPtr]['content']);
+            $correctIndent  = ($currentIndent - $column + $doubleArrowStartColumn);
 
             $fixable = $phpcsFile->addFixableError("each \"=>\" assignments must be aligned; current indentation before \"=>\" are {$currentIndent} space(s), must be {$correctIndent} space(s)", $ptr, 'AssignmentsNotAligned');
 
@@ -204,39 +191,5 @@ class ArrayDoubleArrowAlignmentSniff implements Sniff
 
             $phpcsFile->fixer->endChangeset();
         }
-    }
-
-    /**
-     * Find previous comma in array.
-     *
-     * @param File $phpcsFile The file being scanned.
-     * @param int  $stackPtr  The position of the current token in
-     *                        the stack passed in $tokens.
-     * @param int  $start     Start of the array
-     *
-     * @return bool|int
-     */
-    private function getPreviousComma(File $phpcsFile, int $stackPtr, int $start)
-    {
-        $previousComma = false;
-        $tokens        = $phpcsFile->getTokens();
-
-        $ptr = $phpcsFile->findPrevious([T_COMMA, T_CLOSE_SHORT_ARRAY], $stackPtr, $start);
-
-        while (false !== $ptr) {
-            if (T_COMMA === $tokens[$ptr]['code']) {
-                $previousComma = $ptr;
-
-                break;
-            }
-
-            if (T_CLOSE_SHORT_ARRAY === $tokens[$ptr]['code']) {
-                $ptr = $tokens[$ptr]['bracket_opener'];
-            }
-
-            $ptr = $phpcsFile->findPrevious([T_COMMA, T_CLOSE_SHORT_ARRAY], ($ptr - 1), $start);
-        }
-
-        return $previousComma;
     }
 }

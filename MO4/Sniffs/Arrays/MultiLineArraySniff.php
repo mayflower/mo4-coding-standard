@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace MO4\Sniffs\Arrays;
 
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Sniffs\AbstractArraySniff;
 
 /**
  * Multi Line Array sniff.
@@ -30,78 +30,53 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  *
  * @psalm-api
  */
-class MultiLineArraySniff implements Sniff
+class MultiLineArraySniff extends AbstractArraySniff
 {
     /**
-     * Define all types of arrays.
+     * Processes a single-line array definition.
      *
-     * @var array
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
-    protected $arrayTokens = [
-        // @phan-suppress-next-line PhanUndeclaredConstant
-        T_OPEN_SHORT_ARRAY,
-        T_ARRAY,
-    ];
-
-    /**
-     * Registers the tokens that this sniff wants to listen for.
-     *
-     * @return array<int, int>
-     *
-     * @see    Tokens.php
-     */
-    public function register(): array
+    protected function processSingleLineArray(File $phpcsFile, int $stackPtr, int $arrayStart, int $arrayEnd, array $indices): void
     {
-        return $this->arrayTokens;
+        // nothing to do for single lines arrays
     }
 
     /**
-     * Processes this test, when one of its tokens is encountered.
+     * Processes a multi-line array definition.
      *
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
-     *
-     * @param File $phpcsFile The file being scanned.
-     * @param int  $stackPtr  The position of the current token in
-     *                        the stack passed in $tokens.
-     *
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification
      */
-    public function process(File $phpcsFile, $stackPtr): void
+    protected function processMultiLineArray(File $phpcsFile, int $stackPtr, int $arrayStart, int $arrayEnd, array $indices): void
     {
-        $tokens  = $phpcsFile->getTokens();
-        $current = $tokens[$stackPtr];
+        $tokens = $phpcsFile->getTokens();
 
-        if (T_ARRAY === $current['code']) {
-            $arrayType = 'parenthesis';
-            $start     = $current['parenthesis_opener'];
-            $end       = $current['parenthesis_closer'];
-        } else {
-            $arrayType = 'bracket';
-            $start     = $current['bracket_opener'];
-            $end       = $current['bracket_closer'];
-        }
+        $arrayType = T_OPEN_PARENTHESIS === $tokens[$arrayStart]['code'] ? 'parenthesis' : 'bracket';
 
-        if ($tokens[$start]['line'] === $tokens[$end]['line']) {
-            return;
-        }
+        $openLine = $tokens[$arrayStart]['line'];
 
-        if ($tokens[($start + 2)]['line'] === $tokens[$start]['line']) {
+        // Check opening delimiter spacing
+        if ($tokens[($arrayStart + 2)]['line'] === $openLine) {
             $fixable = $phpcsFile->addFixableError(
                 \sprintf(
                     'opening %s of multi line array must be followed by newline',
                     $arrayType
                 ),
-                $start,
+                $arrayStart,
                 'OpeningMustBeFollowedByNewline'
             );
 
             if (true === $fixable) {
                 $phpcsFile->fixer->beginChangeset();
-                $phpcsFile->fixer->addNewline($start);
+                $phpcsFile->fixer->addNewline($arrayStart);
                 $phpcsFile->fixer->endChangeset();
             }
         }
 
-        if ($tokens[($end - 2)]['line'] !== $tokens[$end]['line']) {
+        // Check closing delimiter spacing
+        if ($tokens[($arrayEnd - 2)]['line'] !== $tokens[$arrayEnd]['line']) {
             return;
         }
 
@@ -110,7 +85,7 @@ class MultiLineArraySniff implements Sniff
                 'closing %s of multi line array must in own line',
                 $arrayType
             ),
-            $end,
+            $arrayEnd,
             'ClosingMustBeInOwnLine'
         );
 
@@ -119,7 +94,7 @@ class MultiLineArraySniff implements Sniff
         }
 
         $phpcsFile->fixer->beginChangeset();
-        $phpcsFile->fixer->addNewlineBefore($end);
+        $phpcsFile->fixer->addNewlineBefore($arrayEnd);
         $phpcsFile->fixer->endChangeset();
     }
 }
