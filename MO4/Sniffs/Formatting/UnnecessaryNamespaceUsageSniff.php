@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace MO4\Sniffs\Formatting;
 
-use MO4\Library\PregLibrary;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
@@ -41,12 +40,33 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
 {
     /**
      * Tokens used in full class name.
-     *
      */
     private const CLASS_NAME_TOKENS = [
         T_NAME_FULLY_QUALIFIED,
         T_NAME_QUALIFIED,
         T_NAME_RELATIVE,
+    ];
+
+    /**
+     * Doc comment tags that may contain class references to check for shorthand usage.
+     *
+     * The value is the number of leading whitespace-separated tokens treated as a type.
+     */
+    private const DOC_COMMENT_TAGS = [
+        '@param'  => 1,
+        '@return' => 1,
+        '@throws' => 1,
+        '@var'    => 2,
+    ];
+
+    /**
+     * Tokens scanned when searching for the next namespace/class boundary.
+     */
+    private const SCAN_TOKENS = [
+        T_NAME_FULLY_QUALIFIED,
+        T_NAME_QUALIFIED,
+        T_NAME_RELATIVE,
+        T_DOC_COMMENT_OPEN_TAG,
     ];
 
     /**
@@ -65,8 +85,6 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      * Called when one of the token types that this sniff is listening for
      * is found.
      *
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
-     *
      * @param File $phpcsFile The PHP_CodeSniffer file where the
      *                        token was found.
      * @param int  $stackPtr  The position in the PHP_CodeSniffer
@@ -76,20 +94,10 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
      *
      * @throws RuntimeException
      */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
-        $docCommentTags = [
-            '@param'  => 1,
-            '@return' => 1,
-            '@throws' => 1,
-            '@var'    => 2,
-        ];
-        $scanTokens     = [
-            T_NAME_FULLY_QUALIFIED,
-            T_NAME_QUALIFIED,
-            T_NAME_RELATIVE,
-            T_DOC_COMMENT_OPEN_TAG,
-        ];
+        $docCommentTags = self::DOC_COMMENT_TAGS;
+        $scanTokens     = self::SCAN_TOKENS;
 
         $tokens        = $phpcsFile->getTokens();
         $useStatements = $this->getUseStatements($phpcsFile, 0, ($stackPtr - 1));
@@ -149,32 +157,28 @@ class UnnecessaryNamespaceUsageSniff implements Sniff
 
                     $docLine = $tokens[$docCommentStringPtr]['content'];
 
-                    $docLineTokens = PregLibrary::MO4PregSplit(
+                    /** @var list<non-empty-string> $docLineTokens */
+                    $docLineTokens = \preg_split(
                         '/\s+/',
                         $docLine,
                         -1,
                         PREG_SPLIT_NO_EMPTY
                     );
 
-                    // phpcs:disable
-                    /** @var array<string> $docLineTokens */
                     $docLineTokens = \array_slice(
                         $docLineTokens,
                         0,
                         $docCommentTags[$content]
                     );
-                    // phpcs:enable
 
                     foreach ($docLineTokens as $docLineToken) {
-                        // phpcs:disable
-                        /** @var array<string> $typeTokens */
-                        $typeTokens = PregLibrary::MO4PregSplit(
+                        /** @var non-empty-list<non-empty-string> $typeTokens */
+                        $typeTokens = \preg_split(
                             '/\|/',
                             $docLineToken,
                             -1,
                             PREG_SPLIT_NO_EMPTY
                         );
-                        // phpcs:enable
 
                         foreach ($typeTokens as $typeToken) {
                             if (\in_array($typeToken, $useStatements, true)) {
