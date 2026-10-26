@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * Check multiple consecutive newlines in a file.
  * Source: MediaWiki. I didn't want to add dependency to whole package (because of only one sniff).
  *
@@ -37,14 +36,11 @@ class MultipleEmptyLinesSniff implements Sniff
     }
 
     /**
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
-     *
-     * @param File $phpcsFile
-     * @param int  $stackPtr  The current token index.
+     * @param int $stackPtr The current token index.
      *
      * @return void|int
      */
-    public function process(File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, int $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

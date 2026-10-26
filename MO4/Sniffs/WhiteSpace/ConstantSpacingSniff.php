@@ -33,11 +33,11 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class ConstantSpacingSniff implements Sniff
 {
     /**
-     * Define all types of arrays.
+     * Define all types of constants.
      *
      * @var array
      */
-    protected $arrayTokens = [
+    protected array $constantTokens = [
         T_CONST,
     ];
 
@@ -50,20 +50,18 @@ class ConstantSpacingSniff implements Sniff
      */
     public function register(): array
     {
-        return $this->arrayTokens;
+        return $this->constantTokens;
     }
 
     /**
      * Processes this test, when one of its tokens is encountered.
-     *
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint
      *
      * @param File $phpcsFile The file being scanned.
      * @param int  $stackPtr  The position of the current token in
      *                        the stack passed in $tokens.
      *
      */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
         $tokens  = $phpcsFile->getTokens();
         $nextPtr = $stackPtr + 1;
